@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957"
      crossorigin="anonymous"></script>
-     
+
     <style>
         :root {
             --bg-primary-dark: #111827; /* bg-gray-900 */
@@ -361,7 +362,7 @@
             border: 1px solid var(--accent-primary);
             color: var(--text-primary-light);
         }
-        
+
         /* High contrast logo styling */
         .high-contrast #sidebar-logo,
         .high-contrast #cert-logo {
@@ -445,8 +446,6 @@
             max-height: 85vh; /* Limits height on smaller screens */
             overflow-y: auto; /* Allows scrolling if content is too tall */
         }
-
-
     </style>
 </head>
 <body id="appBody" class="bg-gray-900 text-gray-100 min-h-screen flex relative">
@@ -490,7 +489,7 @@
                     <button id="themeToggle" data-tooltip="Toggle Theme" class="p-2 rounded-md hover:bg-gray-700 text-lg">🌙</button>
                 </div>
             </div>
-            <div class="pt-4"> 
+            <div class="pt-4">
               <!-- Example: Sidebar Ad -->
 <!-- Sidebar Display Ad -->
 <div class="ad-placeholder">
@@ -505,7 +504,7 @@
 
               <div class="text-xs text-gray-500 text-center mt-2 px-1">
     This site is free and supported by users like you, affiliate links, and advertisements.
-    <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More (Disclosure)</a> | 
+    <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More (Disclosure)</a> |
     <a href="privacy.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Privacy Policy</a>
 </div>
             </div>
@@ -529,12 +528,12 @@
 </section>
 
 <!-- Lesson Page Ad -->
-<section id="lessonPageAd" class="hidden ad-placeholder ...">
+<section id="lessonPageAd" class="hidden ad-placeholder mx-auto my-4 max-w-screen-md"> <!-- Added common ad styling -->
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-1343070560951957"
-         data-ad-slot="3717756254"          
-         data-ad-format="autorelaxed"      
+         data-ad-slot="3717756254"
+         data-ad-format="autorelaxed"
          data-full-width-responsive="true"></ins>
     <!-- JS will call (adsbygoogle = window.adsbygoogle || []).push({}); -->
 </section>
@@ -746,7 +745,7 @@
             </div>
         </div>
     </main>
-    
+
       <script>
         'use strict';
         // IMPORTANT DEVELOPMENT NOTE:
@@ -910,7 +909,7 @@
                             { name: "Baratza Encore Grinder (Recommended Entry-Level)", url: "https://amzn.to/3SmK8bE", isAffiliate: true },
                                { name: "Semi-Automatic Espresso Machines (Recommended Entry-Level)", url: " https://amzn.to/3SPBT7V", isAffiliate: true }
                         ]
-                       
+
                     },
                     practical: {
                         title: "Identifying Machine & Grinder Parts",
@@ -981,7 +980,7 @@
    resources: [
 
     { name: "Recommended Espresso Tamper", url: "https://amzn.to/3FpsnWa", isAffiliate: true },
-  
+
 ]
                     },
                     practical: {
@@ -2337,138 +2336,172 @@
                     `).join("");
                 },
              showCertificate: () => {
-    if (!BaristaApp.elements.dashboard || !BaristaApp.elements.lessonPage || !BaristaApp.elements.certificate ||
-        !BaristaApp.elements.traineeName || !BaristaApp.elements.certDate || !BaristaApp.elements.certPoints) {
-        console.error("Missing elements required for certificate display.");
-        return;
-    }
-
-    BaristaApp.elements.dashboard.classList.add("hidden");
-    BaristaApp.elements.dashboard.classList.remove("active");
-    BaristaApp.elements.lessonPage.classList.add("hidden");
-    BaristaApp.elements.lessonPage.classList.remove("active");
-    BaristaApp.elements.certificate.classList.remove("hidden");
-    BaristaApp.elements.certificate.classList.add("active");
-
-    // Hide main content ad placeholders
-    document.getElementById('dashboardAd')?.classList.add("hidden");
-    document.getElementById('lessonPageAd')?.classList.add("hidden");
-
-    // Populate certificate details
-    BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
-    BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(
-        BaristaApp.state.language === 'ne' ? 'ne-NP' : 'en-US',
-        { year: 'numeric', month: 'long', day: 'numeric' }
-    );
-    BaristaApp.elements.certPoints.textContent = `${BaristaApp.state.user.points} Points`;
-
-    // Load Lottie animation
-if (BaristaApp.elements.lottieCertificate && typeof lottie !== 'undefined') {
-    if (BaristaApp.elements.lottieCertificate.animInstance) {
-        BaristaApp.elements.lottieCertificate.animInstance.destroy();
-        BaristaApp.elements.lottieCertificate.innerHTML = '';
-    }
-
-    try {
-        // IMPORTANT: Ensure this path is correct relative to your index.html
-        // and that your local server can serve this JSON file.
-        const animationPath = "lottie/certificate-animation.json";
-
-        fetch(animationPath)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch Lottie animation: ${response.status} ${response.statusText} from ${animationPath}. Make sure you are using a local web server.`);
+                if (!BaristaApp.elements.dashboard || !BaristaApp.elements.lessonPage || !BaristaApp.elements.certificate ||
+                    !BaristaApp.elements.traineeName || !BaristaApp.elements.certDate || !BaristaApp.elements.certPoints) {
+                    console.error("Missing elements required for certificate display.");
+                    return;
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Lottie JSON loaded successfully for certificate:", data);
-                BaristaApp.elements.lottieCertificate.animInstance = lottie.loadAnimation(
-                    // Pass the actual animation data, not the path again, if fetched.
-                    // Or, if lottie.loadAnimation can handle the path directly and you've confirmed the server setup:
-                     BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieCertificate, animationPath, false)
+
+                BaristaApp.elements.dashboard.classList.add("hidden");
+                BaristaApp.elements.dashboard.classList.remove("active");
+                BaristaApp.elements.lessonPage.classList.add("hidden");
+                BaristaApp.elements.lessonPage.classList.remove("active");
+                BaristaApp.elements.certificate.classList.remove("hidden");
+                BaristaApp.elements.certificate.classList.add("active");
+
+                BaristaApp.ui.ads.hideAllContentAds(); // Hide other content ads
+
+                // Populate certificate details
+                BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
+                BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(
+                    BaristaApp.state.language === 'ne' ? 'ne-NP' : 'en-US',
+                    { year: 'numeric', month: 'long', day: 'numeric' }
                 );
-            })
-            .catch(error => console.error("Error loading Lottie certificate animation:", error));
+                BaristaApp.elements.certPoints.textContent = `${BaristaApp.state.user.points} Points`;
 
-    } catch (e) {
-        console.error("Error setting up certificate Lottie animation:", e);
-    }
-}
+                // Load Lottie animation
+            if (BaristaApp.elements.lottieCertificate && typeof lottie !== 'undefined') {
+                if (BaristaApp.elements.lottieCertificate.animInstance) {
+                    BaristaApp.elements.lottieCertificate.animInstance.destroy();
+                    BaristaApp.elements.lottieCertificate.innerHTML = '';
+                }
 
-    // Add GSAP animation
-    gsap.fromTo(
-        BaristaApp.elements.certificate.querySelector(".glass"),
-        { opacity: 0, y: 30, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "elastic.out(1, 0.65)" }
-    );
-
-    BaristaApp.util.trackAnalytics("Viewed Certificate");
-},
-ads: {
-        initPageAds: () => {
-            if (typeof adsbygoogle === 'undefined') {
-                console.warn("AdSense library not loaded. Skipping initial ad pushes.");
-                return;
+                try {
+                    const animationPath = "lottie/certificate-animation.json";
+                    // Check if running via file protocol - Lottie from local JSON path won't work
+                    if (window.location.protocol === "file:") {
+                         console.warn("Lottie animation for certificate might not load correctly when running from file:/// protocol. Please use a local web server.");
+                         // Optionally, provide a fallback or hide the Lottie element
+                         if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-gray-500">(Animation disabled on local file view)</p>';
+                    } else {
+                        fetch(animationPath)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error(`Failed to fetch Lottie animation: ${response.status} ${response.statusText} from ${animationPath}.`);
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                console.log("Lottie JSON loaded successfully for certificate.");
+                                BaristaApp.elements.lottieCertificate.animInstance = lottie.loadAnimation(
+                                     BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieCertificate, animationPath, false)
+                                );
+                            })
+                            .catch(error => {
+                                console.error("Error loading Lottie certificate animation:", error);
+                                if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-red-500">(Animation failed to load)</p>';
+                            });
+                    }
+                } catch (e) {
+                    console.error("Error setting up certificate Lottie animation:", e);
+                    if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-red-500">(Animation setup error)</p>';
+                }
             }
 
-            // For sidebar ad
-            const sidebarAdContainer = BaristaApp.elements.sidebar?.querySelector('.ad-placeholder');
-            const sidebarIns = sidebarAdContainer?.querySelector('ins.adsbygoogle[data-ad-slot="7414600322"]');
-            if (sidebarAdContainer && sidebarIns && sidebarAdContainer.offsetParent !== null && sidebarAdContainer.offsetWidth > 0 && sidebarAdContainer.offsetHeight > 0) { // Added offsetHeight check
-                console.log("AdSense: Pushing sidebar ad (7414600322).");
-                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
-                catch (e) { console.error("AdSense: Error pushing sidebar ad:", e); }
-            } else {
-                if(sidebarAdContainer) console.warn("AdSense: Sidebar ad container (7414600322) not ready for push. Visible:", sidebarAdContainer.offsetParent !== null, "Width:", sidebarAdContainer.offsetWidth, "Height:", sidebarAdContainer.offsetHeight);
-            }
+                // Add GSAP animation
+                gsap.fromTo(
+                    BaristaApp.elements.certificate.querySelector(".glass"),
+                    { opacity: 0, y: 30, scale: 0.95 },
+                    { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "elastic.out(1, 0.65)" }
+                );
 
-            // For dashboard ad (if dashboard is active)
-            const dashboardAdContainer = BaristaApp.elements.dashboard?.classList.contains('active') ? document.getElementById('dashboardAd') : null;
-            const dashboardIns = dashboardAdContainer?.querySelector('ins.adsbygoogle[data-ad-slot="3502133839"]');
-            if (dashboardAdContainer && dashboardIns && dashboardAdContainer.offsetParent !== null && dashboardAdContainer.offsetWidth > 0 && dashboardAdContainer.offsetHeight > 0) { // Added offsetHeight check
-                console.log("AdSense: Pushing dashboard ad (3502133839).");
-                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
-                catch (e) { console.error("AdSense: Error pushing dashboard ad:", e); }
-            } else {
-                 if(dashboardAdContainer) console.warn("AdSense: Dashboard ad container (3502133839) not ready for push. Visible:", dashboardAdContainer.offsetParent !== null, "Width:", dashboardAdContainer.offsetWidth, "Height:", dashboardAdContainer.offsetHeight);
+                BaristaApp.util.trackAnalytics("Viewed Certificate");
+            },
+        ads: {
+            initSidebarAd: () => {
+                if (typeof adsbygoogle === 'undefined') {
+                    console.warn("AdSense library not loaded. Skipping sidebar ad.");
+                    return;
+                }
+                const adContainer = BaristaApp.elements.sidebar?.querySelector('.ad-placeholder');
+                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="7414600322"]');
+
+                if (adContainer && adIns) {
+                    // adContainer.classList.remove("hidden"); // Only if it's hidden by default
+
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
+                                console.log("AdSense: Pushing sidebar ad (7414600322).");
+                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
+                                catch (e) { console.error("AdSense: Error pushing sidebar ad:", e); }
+                            } else {
+                                console.warn("AdSense: Sidebar ad container (7414600322) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
+                            }
+                        }, 200); // Slightly increased delay
+                    });
+                }
+            },
+
+            showDashboardAd: () => {
+                if (typeof adsbygoogle === 'undefined') {
+                    console.warn("AdSense library not loaded. Skipping dashboard ad.");
+                    return;
+                }
+                const adContainer = document.getElementById('dashboardAd');
+                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="3502133839"]');
+
+                if (adContainer && adIns && BaristaApp.elements.dashboard?.classList.contains('active')) {
+                    adContainer.classList.remove("hidden");
+
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
+                                console.log("AdSense: Pushing dashboard ad (3502133839).");
+                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
+                                catch (e) { console.error("AdSense: Error pushing dashboard ad:", e); }
+                            } else {
+                                console.warn("AdSense: Dashboard ad (3502133839) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
+                            }
+                        }, 200); // Slightly increased delay
+                    });
+                } else if (adContainer) {
+                    adContainer.classList.add("hidden");
+                }
+            },
+
+            showLessonAd: () => {
+                if (typeof adsbygoogle === 'undefined') {
+                    console.warn("AdSense library not loaded. Skipping lesson ad.");
+                    return;
+                }
+                const adContainer = document.getElementById('lessonPageAd');
+                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="3717756254"]');
+
+                if (adContainer && adIns && BaristaApp.elements.lessonPage?.classList.contains('active')) {
+                    adContainer.classList.remove("hidden");
+
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
+                                console.log("AdSense: Pushing lesson page ad (3717756254).");
+                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
+                                catch (e) { console.error("AdSense: Error pushing lesson page ad:", e); }
+                            } else {
+                                console.warn("AdSense: Lesson page ad (3717756254) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
+                            }
+                        }, 200); // Slightly increased delay
+                    });
+                } else if (adContainer) {
+                    adContainer.classList.add("hidden");
+                }
+            },
+
+            hideAllContentAds: () => {
+                const dashboardAd = document.getElementById('dashboardAd');
+                if (dashboardAd) dashboardAd.classList.add('hidden');
+
+                const lessonPageAd = document.getElementById('lessonPageAd');
+                if (lessonPageAd) lessonPageAd.classList.add('hidden');
+                console.log("AdSense: Hiding all content ads.");
             }
         },
-
-        refreshLessonAd: () => {
-            if (typeof adsbygoogle === 'undefined') {
-                console.warn("AdSense library not loaded. Skipping lesson ad refresh.");
-                return;
-            }
-            const lessonPageAdEl = document.getElementById('lessonPageAd');
-            const lessonIns = lessonPageAdEl?.querySelector('ins.adsbygoogle[data-ad-slot="3717756254"]');
-
-            if (lessonPageAdEl && lessonIns) {
-                lessonPageAdEl.classList.remove("hidden");
-
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        if (lessonPageAdEl.offsetParent !== null && lessonPageAdEl.offsetWidth > 0 && lessonPageAdEl.offsetHeight > 0) {
-                            console.log("AdSense: Programmatically pushing lessonPageAd (3717756254).");
-                            try {
-                                (adsbygoogle = window.adsbygoogle || []).push({});
-                            } catch (e) {
-                                console.error("AdSense: Error during programmatic ad push for lessonPageAd:", e);
-                            }
-                        } else {
-                            console.warn("AdSense: lessonPageAd (3717756254) still has no dimensions or is not visible. Visible:", lessonPageAdEl.offsetParent !== null, "Width:", lessonPageAdEl.offsetWidth, "Height:", lessonPageAdEl.offsetHeight);
-                        }
-                    }, 150); // Timeout to ensure rendering
-                });
-            }
-        }
-    },
 
 
                 downloadCertificate: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
                     const REQUIRED_CERTIFICATE_CODE =  "INCORRECT90"; // User: Change this or set to "" to disable code
-                    const HINT_FOR_CODE = REQUIRED_CERTIFICATE_CODE === "" 
+                    const HINT_FOR_CODE = REQUIRED_CERTIFICATE_CODE === ""
 
 
                     let userEnteredCode = "";
@@ -2521,33 +2554,35 @@ ads: {
                     requestAnimationFrame(() => {
                         html2canvas(certificateElement, {
                             scale: 3,
-                            useCORS: true,
-                            backgroundColor: null,
-                            logging: false,
-                            removeContainer: false,
+                            useCORS: true, // Important for external images, though yours are local
+                            allowTaint: true, // Might help with local images in some cases, but useCORS is better
+                            backgroundColor: null, // Use element's background
+                            logging: false, // Can be true for debugging
+                            removeContainer: false, // Keep original DOM intact
                             windowWidth: certificateElement.scrollWidth,
                             windowHeight: certificateElement.scrollHeight,
                             onclone: (clonedDoc) => {
                                 const content = clonedDoc.querySelector('#certificate .glass');
                                 if (content) {
-                                    content.style.width = '297mm';
-                                    content.style.height = '210mm';
-                                    content.style.padding = '20mm';
-                                    content.style.margin = '0 auto';
+                                    content.style.width = '297mm'; // A4 Landscape width
+                                    content.style.height = '210mm'; // A4 Landscape height
+                                    content.style.padding = '20mm'; // Add some padding
+                                    content.style.margin = '0 auto'; // Center it (though less relevant for direct canvas)
                                     content.style.boxSizing = 'border-box';
-                                    content.style.backgroundColor = 'var(--bg-primary-light)';
-                                    content.style.border = '3mm solid var(--accent-primary)';
-                                    content.style.color = 'var(--text-primary-light)';
+                                    content.style.backgroundColor = 'var(--bg-primary-light)'; // Explicit light background
+                                    content.style.border = '3mm solid var(--accent-primary)'; // Nice border
+                                    content.style.color = 'var(--text-primary-light)'; // Ensure text is dark
 
+                                    // Style adjustments for PDF - ensure fonts are loaded/available
                                     clonedDoc.querySelectorAll('#certificate h2').forEach(h2 => {
                                         h2.style.color = 'var(--accent-primary)';
-                                        h2.style.fontSize = '2.7rem';
+                                        h2.style.fontSize = '2.7rem'; // Adjust as needed
                                     });
                                     clonedDoc.querySelectorAll('#trainee-name').forEach(nameEl => {
                                         nameEl.style.color = 'var(--text-primary-light)';
                                         nameEl.style.fontSize = '2.1rem';
                                     });
-                                    clonedDoc.querySelectorAll('#certificate p, #certificate div > div > p').forEach(p => {
+                                    clonedDoc.querySelectorAll('#certificate p, #certificate div > div >p').forEach(p => {
                                         p.style.color = 'var(--text-secondary-light)';
                                         if (p.classList.contains('font-semibold')) {
                                              p.style.color = 'var(--text-primary-light)';
@@ -2717,6 +2752,19 @@ ads: {
             modalManager: {
                 _openModal: (modalElement, focusElement = null) => {
                     if (!modalElement || !modalElement.querySelector(".modal-content-area")) return;
+
+                    // Check if it's a "full screen" or significant modal that would obscure content ads
+                    const isSignificantModal = modalElement.id === 'onboardingModal' ||
+                                             modalElement.id === 'profileModal' ||
+                                             modalElement.id === 'quizModal' ||
+                                             modalElement.id === 'donationModal' ||
+                                             modalElement.id === 'leaderboardModal' ||
+                                             modalElement.id === 'glossaryModal';
+
+                    if (isSignificantModal) {
+                        BaristaApp.ui.ads.hideAllContentAds();
+                    }
+
                     modalElement.classList.remove("hidden");
                     modalElement.classList.add("flex");
                     gsap.to(modalElement.querySelector(".modal-content-area"), { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
@@ -2731,6 +2779,23 @@ ads: {
                         onComplete: () => {
                             modalElement.classList.add("hidden");
                             modalElement.classList.remove("flex");
+
+                            // After modal closes, decide which ad to show based on active content
+                            const isSignificantModal = modalElement.id === 'onboardingModal' ||
+                                                     modalElement.id === 'profileModal' ||
+                                                     modalElement.id === 'quizModal' ||
+                                                     modalElement.id === 'donationModal' ||
+                                                     modalElement.id === 'leaderboardModal' ||
+                                                     modalElement.id === 'glossaryModal';
+
+                            if (isSignificantModal) { // Only restore if it was a modal that hid ads
+                                if (BaristaApp.elements.dashboard?.classList.contains('active')) {
+                                    BaristaApp.ui.ads.showDashboardAd();
+                                } else if (BaristaApp.elements.lessonPage?.classList.contains('active')) {
+                                    BaristaApp.ui.ads.showLessonAd();
+                                }
+                                // If certificate page is active, its own logic keeps ads hidden.
+                            }
                         }
                     });
                 },
@@ -2755,12 +2820,12 @@ ads: {
                 },
                 closeGlossary: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.glossaryModal),
                 // New Donation Modal functions
-          showDonationModal: () => {
-    BaristaApp.modalManager._openModal(BaristaApp.elements.donationModal);
-    BaristaApp.util.trackAnalytics("Viewed Donation Modal");
-},
-closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.donationModal)
-},
+              showDonationModal: () => {
+                BaristaApp.modalManager._openModal(BaristaApp.elements.donationModal);
+                BaristaApp.util.trackAnalytics("Viewed Donation Modal");
+            },
+            closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.donationModal)
+            },
             lessonManager: {
                 openPage: (day) => {
                     BaristaApp.state.currentDay = day;
@@ -2778,8 +2843,6 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
 
                     BaristaApp.elements.dashboard.classList.add("hidden");
                     BaristaApp.elements.dashboard.classList.remove("active");
-                    document.getElementById('dashboardAd')?.classList.add("hidden");
-                    document.getElementById('dashboardAd')?.classList.remove("active");
 
                     BaristaApp.elements.certificate.classList.add("hidden");
                     BaristaApp.elements.certificate.classList.remove("active");
@@ -2787,29 +2850,8 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
                     BaristaApp.elements.lessonPage.classList.remove("hidden");
                     BaristaApp.elements.lessonPage.classList.add("active");
 
-                const lessonPageAdEl = document.getElementById('lessonPageAd');
-                if (lessonPageAdEl) {
-                    lessonPageAdEl.classList.remove("hidden");
-
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            if (typeof adsbygoogle !== 'undefined') {
-                                if (lessonPageAdEl.offsetParent !== null && lessonPageAdEl.offsetWidth > 0 && lessonPageAdEl.offsetHeight > 0) {
-                                    console.log("AdSense: Programmatically pushing lessonPageAd (3717756254).");
-                                    try {
-                                        (adsbygoogle = window.adsbygoogle || []).push({});
-                                    } catch (e) {
-                                        console.error("AdSense: Error during programmatic ad push for lessonPageAd:", e);
-                                    }
-                                } else {
-                                     console.warn("AdSense: lessonPageAd (3717756254) not ready for push. Visible:", lessonPageAdEl.offsetParent !== null, "Width:", lessonPageAdEl.offsetWidth, "Height:", lessonPageAdEl.offsetHeight);
-                                }
-                            } else {
-                                console.warn("AdSense library not loaded, cannot push lessonPageAd.");
-                            }
-                        }, 150); // Adjusted timeout
-                    });
-                }
+                    BaristaApp.ui.ads.hideAllContentAds(); // Hide other content ads
+                    BaristaApp.ui.ads.showLessonAd();     // Show lesson ad for this page
 
                     gsap.fromTo(BaristaApp.elements.lessonPage.querySelector(".glass"),
                         {opacity:0, y:30, scale: 0.98},
@@ -3213,6 +3255,7 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
                             BaristaApp.elements.onboardingModal.classList.add("hidden");
                             BaristaApp.elements.onboardingModal.classList.remove("flex");
                             BaristaApp.ui.animateDashboardElements();
+                            BaristaApp.ui.ads.showDashboardAd(); // MODIFIED
                         }
                     });
                     BaristaApp.util.trackAnalytics("Completed Onboarding");
@@ -3259,7 +3302,7 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
                         localStorage.removeItem("baristaIO_progress");
                         localStorage.removeItem("baristaIO_notes");
                         localStorage.removeItem("baristaIO_feedback");
-                       
+
                         localStorage.setItem("baristaIO_user", JSON.stringify(BaristaApp.state.user));
 
                         BaristaApp.ui.updateProgressDisplay();
@@ -3353,7 +3396,7 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
         return;
     }
 
-  
+
     const DAY1_CONFIG = {
         POINTS_AROMA_EXPLORE: 2,
         MAP_REGIONS: [
@@ -3487,7 +3530,7 @@ closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.element
         item.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleGallerySelection(); }});
     });
 
-    const aromaSection = BaristaApp.util.createInteractiveSection('Aroma Explorer');
+ const aromaSection = BaristaApp.util.createInteractiveSection('Aroma Explorer');
     let aromaCardsHTML = '';
     DAY1_CONFIG.AROMAS.forEach(aroma => {
         aromaCardsHTML += `
@@ -3550,7 +3593,7 @@ setupDay2: function () {
         });
     };
 
-  
+
     const createResetButton = (id, defaultMessage, interactiveSelector, infoBoxId) => {
         const button = document.createElement('button');
         button.id = id;
@@ -3585,7 +3628,7 @@ setupDay2: function () {
         return button;
     };
 
-  
+
     let modal = document.getElementById('imageModal');
     if (!modal) {
         modal = document.createElement('div');
@@ -3776,7 +3819,8 @@ setupDay2: function () {
             modalImage.alt = grinderImageElement.alt + ' - Enlarged';
             modalCaption.textContent = grinderImageElement.alt;
             gsap.fromTo(modal, {autoAlpha: 0}, {autoAlpha: 1, duration: 0.3, onStart: () => modal.style.display = 'flex'});
-            gsap.fromTo(modal.querySelector('.modal-content-area'), {scale: 0.7, opacity:0}, {scale:1, opacity:1, duration:0.4, ease:'back.out(1.7)'});
+            gsap.fromTo(modal.querySelector('.modal-content-area'), {scale:
+0.7, opacity:0}, {scale:1, opacity:1, duration:0.4, ease:'back.out(1.7)'});
         });
     }
 
@@ -3891,7 +3935,7 @@ setupDay2: function () {
             modalImage.alt = `${img.alt} - Enlarged`;
             modalCaption.innerHTML = `<strong class="text-sky-400">${img.alt}:</strong> ${img.dataset.info}`;
             gsap.fromTo(modal, {autoAlpha: 0}, {autoAlpha: 1, duration: 0.3, onStart: () => modal.style.display = 'flex'});
-            gsap.fromTo(modal.querySelector('.modal-content-area'), {scale: 
+            gsap.fromTo(modal.querySelector('.modal-content-area'), {scale:
 0.7, opacity:0}, {scale:1, opacity:1, duration:0.4, ease:'back.out(1.7)'});
         });
     });
@@ -5476,7 +5520,7 @@ setupDay12: function() {
         if (!aromaMatchSection) return;
         aromaMatchSection.innerHTML = '';
         const titleEl = document.createElement('h4');
-        // titleEl.className = "text-xl font-semibold mb-4 text-amber-400 border-l-3 border-amber-300 pl-3"; // Corrected class
+        titleEl.className = "text-xl font-semibold mb-4 text-amber-400";
         titleEl.textContent = "Match the Aroma to the Object";
         aromaMatchSection.appendChild(titleEl);
 
@@ -5556,7 +5600,7 @@ setupDay12: function() {
         if (!describeCoffeeSection) return;
         describeCoffeeSection.innerHTML = '';
         const titleEl = document.createElement('h4');
-        // titleEl.className = "text-xl font-semibold mb-4 text-amber-400 border-l-3 border-amber-300 pl-3";
+        titleEl.className = "text-xl font-semibold mb-4 text-amber-400";
         titleEl.textContent = "Describe this Virtual Coffee";
         describeCoffeeSection.appendChild(titleEl);
 
@@ -5668,6 +5712,7 @@ setupDay13: function() {
         greetingSection.innerHTML = '';
 
         const sectionTitle = document.createElement('h4');
+        sectionTitle.className = "text-xl font-semibold mb-4 text-amber-400";
         sectionTitle.textContent = "Choose the Best Greeting/Response";
         greetingSection.appendChild(sectionTitle);
 
@@ -5775,6 +5820,7 @@ const allOrderComponents = [
         orderSimSection.innerHTML = '';
 
         const sectionTitle = document.createElement('h4');
+        sectionTitle.className = "text-xl font-semibold mb-4 text-amber-400";
         sectionTitle.textContent = "Order Taking Simulator";
         orderSimSection.appendChild(sectionTitle);
 
@@ -6059,10 +6105,10 @@ setupDay14: function() {
     BaristaApp.ui.updateTranslations();
     BaristaApp.ui.updateProgressDisplay();
     BaristaApp.ui.populateDays();
-    BaristaApp.setupEventListeners(); 
+    BaristaApp.setupEventListeners();
     BaristaApp.ui.animateDashboardElements();
     BaristaApp.ui.loadLottieAnimations();
-    
+
     if (BaristaApp.state.isFirstVisit && BaristaApp.elements.onboardingModal) {
         BaristaApp.modalManager.showOnboarding();
     }
@@ -6092,6 +6138,10 @@ setupDay14: function() {
                 BaristaApp.elements.dashboard.classList.remove("hidden");
                 BaristaApp.elements.dashboard.classList.add("active");
             }
+
+            BaristaApp.ui.ads.hideAllContentAds(); // Hide lesson/certificate ads
+            BaristaApp.ui.ads.showDashboardAd();   // Show dashboard ad
+
             BaristaApp.state.currentDay = 0;
             BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
             BaristaApp.ui.animateDashboardElements();
@@ -6282,21 +6332,30 @@ window.onerror = (message, source, lineno, colno, error) => {
 document.addEventListener("DOMContentLoaded", () => {
     BaristaApp.init(); // Your existing init runs
 
-    // AdSense initialization should happen after the main layout is stable
-    const initAds = () => {
-        if (BaristaApp && BaristaApp.ui && BaristaApp.ui.ads && BaristaApp.ui.ads.initPageAds) {
-            BaristaApp.ui.ads.initPageAds();
+    const initAdsSafe = () => {
+        if (BaristaApp && BaristaApp.ui && BaristaApp.ui.ads && BaristaApp.ui.ads.initSidebarAd) {
+            BaristaApp.ui.ads.initSidebarAd(); // Initialize sidebar ad
+
+            // Dashboard or Lesson ad will be shown based on initial view determined in BaristaApp.init
+            if (!BaristaApp.state.isFirstVisit && BaristaApp.elements.dashboard?.classList.contains('active')) {
+                 BaristaApp.ui.ads.showDashboardAd();
+            } else if (BaristaApp.elements.lessonPage?.classList.contains('active') && !BaristaApp.state.isFirstVisit) {
+                 // This case is unlikely on true initial load unless deep-linked and onboarding is skipped.
+                 BaristaApp.ui.ads.showLessonAd();
+            }
+            // If isFirstVisit, onboarding modal will be shown, and ads will be handled after it closes.
+
         } else {
-            console.warn("BaristaApp.ui.ads.initPageAds not available at time of execution.");
+            console.warn("BaristaApp.ui.ads.initSidebarAd not available at time of execution.");
         }
     };
 
+    // Wait for the full page load and a slight delay to ensure layout is stable
     if (document.readyState === "complete") {
-        // If already complete, run after a slightly longer delay to ensure everything is settled
-        setTimeout(initAds, 250); // Increased delay
+        setTimeout(initAdsSafe, 300); // Increased delay
     } else {
         window.addEventListener("load", () => {
-            setTimeout(initAds, 250); // Increased delay
+            setTimeout(initAdsSafe, 300); // Increased delay
         });
     }
 });
