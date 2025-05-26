@@ -670,59 +670,7 @@
             </div>
         </div>
 
-        <div id="donationModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
-            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
-                <button onclick="BaristaApp.modalManager.closeDonationModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close donation modal">×</button>
-                <img src="images/logo.png" alt="Logo Icon" class="w-16 h-16 mx-auto mb-3">
-                <h3 class="text-2xl font-bold text-amber-400 mb-4">Support This Project</h3>
-                <p class="text-gray-300 mb-6 text-sm">Your contribution helps keep this resource free and accessible!</p>
-                <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-sky-300 mb-3">For Donors in Nepal (नेपाल भित्रबाट सहयोग गर्नको लागि)</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
-                        <div class="bg-gray-800/50 p-4 rounded-lg">
-                            <h5 class="text-md font-semibold text-green-400 mb-2 text-center">eSewa</h5>
-                            <img src="images/esewa_qr_placeholder.png" alt="eSewa QR Code (Placeholder)" class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white max-w-full">
-                            <p class="text-sm text-gray-300 text-center">Scan QR or use eSewa ID:</p>
-                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">YOUR_ESEWA_ID</p>
-                        </div>
-                        <div class="bg-gray-800/50 p-4 rounded-lg">
-                            <h5 class="text-md font-semibold text-indigo-400 mb-2 text-center">Khalti</h5>
-                            <img src="images/khalti_qr_placeholder.png" alt="Khalti QR Code (Placeholder)" class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white max-w-full">
-                            <p class="text-sm text-gray-300 text-center">Scan QR or use Khalti ID:</p>
-                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">YOUR_KHALTI_ID</p>
-                        </div>
-                    </div>
-                    <p class="text-xs text-gray-400 mt-2 text-center">कृपया रिमार्कमा "Barista Training Support" उल्लेख गर्नुहोला।</p>
-                </div>
-                <div class="mb-6 pt-4 border-t border-gray-700">
-                    <h4 class="text-lg font-semibold text-sky-300 mb-3">For International Donors</h4>
-                    <p class="text-gray-300 text-sm mb-3">You can support us via PayPal or by direct bank transfer (details below). Thank you!</p>
-                    <div class="mb-4 flex justify-center"> <!-- Added flex justify-center to center the link/image -->
-                        <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" rel="noopener noreferrer" class="inline-block my-2">
-                            <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal" class="h-9 w-auto max-w-full">
-                        </a>
-                    </div>
-                    <p class="text-xs text-gray-400">(User: Replace with your actual PayPal link/button)</p>
-                    <details class="group text-left mt-4"> <!-- Added mt-4 for spacing -->
-                        <summary class="interactive-choice py-2 px-4 rounded-md cursor-pointer list-none flex justify-between items-center">
-                            <span class="font-semibold">International Bank Transfer Details</span>
-                            <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i>
-                        </summary>
-                        <div class="mt-2 p-3 bg-gray-800/40 rounded-md text-sm text-gray-300 space-y-1">
-                            <p><strong>Bank Name:</strong> YOUR BANK NAME</p>
-                            <p><strong>Account Holder Name:</strong> YOUR ACCOUNT NAME</p>
-                            <p><strong>Account Number:</strong> YOUR ACCOUNT NUMBER</p>
-                            <p><strong>SWIFT/BIC Code:</strong> YOUR SWIFT CODE</p>
-                            <p><strong>Bank Address:</strong> YOUR BANK ADDRESS</p>
-                            <p class="text-xs text-gray-400 mt-1">(User: Replace with your actual international bank details. Fees may apply for the donor.)</p>
-                        </div>
-                    </details>
-                </div>
-                <p class="text-sm text-gray-300 text-center mt-4">Sharing this site is also a great way to show support!</p>
-                <button onclick="BaristaApp.modalManager.closeDonationModal()" class="interactive-button bg-sky-600 hover:bg-sky-700 w-full mt-6 py-2.5">Close</button>
-            </div>
-        </div>
-
+        
         <div id="quizModal" class="fixed inset-0 bg-black bg-opacity-85 flex items-center justify-center p-4 z-[1050] hidden">
             <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <button id="quizCloseButton" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl z-10">×</button>
