@@ -101,6 +101,10 @@
             width: 100%;
             max-width: 728px; /* Standard ad width */
         }
+        .ad-placeholder.hidden > ins { /* Hide the ins tag when placeholder is hidden */
+            display:none !important;
+        }
+
 
         .high-contrast .ad-placeholder {
             background-color: var(--bg-tertiary-light);
@@ -265,12 +269,8 @@
             color: var(--text-secondary-light);
         }
 
-        /* Modal-specific input field text color - overrides for readability if modal bg is light-ish */
         .modal-content-area .input-field,
         .edit-profile-modal .input-field {
-            /* color: var(--text-primary-light) !important; /* Use light theme text color for modals */
-             /* This was #000000, but using var(--text-primary-light) might be more theme-consistent */
-             /* Let's keep it as #000000 as per original if it's intentional for specific modals */
              color: #000000 !important;
         }
         .modal-content-area .input-field:focus,
@@ -289,7 +289,7 @@
         }
 
         [data-tooltip] {
-            position: relative; /* For tooltip positioning context */
+            position: relative;
         }
         [data-tooltip]::after {
             content: attr(data-tooltip);
@@ -303,8 +303,8 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.2s, visibility 0.2s;
-            z-index: 1000; /* Ensure tooltip is on top */
-            bottom: 125%; /* Position above the element */
+            z-index: 1000;
+            bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -313,138 +313,101 @@
             visibility: visible;
         }
 
-        /* Sidebar Button Icon Styling */
         .sidebar-btn-icon {
-            width: 1.25rem; /* w-5 */
-            height: 1.25rem; /* h-5 */
-            margin-right: 0.75rem; /* mr-3 */
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.75rem;
         }
 
-        /* Hamburger menu icon transition (if needed, JS handles class swap) */
         #hamburgerMenu .fa-bars,
         #hamburgerMenu .fa-times {
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
-        /* Custom Scrollbar (WebKit) */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: var(--bg-secondary-dark);
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: var(--accent-primary);
-            border-radius: 10px;
-            border: 2px solid var(--bg-secondary-dark);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background-color: #D97706; /* Darker accent on hover */
-        }
-        .high-contrast .custom-scrollbar::-webkit-scrollbar-track {
-            background: var(--bg-secondary-light);
-        }
-        .high-contrast .custom-scrollbar::-webkit-scrollbar-thumb {
-            border-color: var(--bg-secondary-light); /* Match track for border */
-            background-color: #D97706; /* Keep accent for thumb */
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: var(--bg-secondary-dark); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: var(--accent-primary); border-radius: 10px; border: 2px solid var(--bg-secondary-dark); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background-color: #D97706; }
+        .high-contrast .custom-scrollbar::-webkit-scrollbar-track { background: var(--bg-secondary-light); }
+        .high-contrast .custom-scrollbar::-webkit-scrollbar-thumb { border-color: var(--bg-secondary-light); background-color: #D97706; }
 
-        /* Leaderboard current user highlight */
-        .current-user-highlight {
-            background-color: rgba(var(--accent-primary_rgb), 0.2);
-            border: 1px solid var(--accent-primary);
-            color: var(--text-primary-dark);
-        }
-        .high-contrast .current-user-highlight {
-            background-color: rgba(var(--accent-primary_rgb), 0.25);
-            border: 1px solid var(--accent-primary);
-            color: var(--text-primary-light);
-        }
+        .current-user-highlight { background-color: rgba(var(--accent-primary_rgb), 0.2); border: 1px solid var(--accent-primary); color: var(--text-primary-dark); }
+        .high-contrast .current-user-highlight { background-color: rgba(var(--accent-primary_rgb), 0.25); border: 1px solid var(--accent-primary); color: var(--text-primary-light); }
 
-        /* High contrast logo styling */
         .high-contrast #sidebar-logo,
-        .high-contrast #cert-logo {
-            filter: invert(1) contrast(0.8) brightness(1.1);
-        }
+        .high-contrast #cert-logo { filter: invert(1) contrast(0.8) brightness(1.1); }
 
-        /* Quiz Timer Low Time */
-        #quizTimer.low-time {
-            color: var(--error-color);
-            animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        .result-box {
-            padding: 0.75rem 1rem; /* p-3 / p-4 */
-            border-radius: 0.375rem; /* rounded-md */
-            margin-top: 0.75rem; /* mt-3 */
-            font-size: 0.875rem; /* text-sm */
-            line-height: 1.4;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .result-box.correct-result {
-            background-color: rgba(var(--success-color_rgb, 16, 185, 129), 0.15);
-            color: var(--success-color);
-            border: 1px solid rgba(var(--success-color_rgb, 16, 185, 129), 0.3);
-        }
-        .result-box.incorrect-result {
-            background-color: rgba(var(--error-color_rgb, 239, 68, 68), 0.15);
-            color: var(--error-color);
-            border: 1px solid rgba(var(--error-color_rgb, 239, 68, 68), 0.3);
-        }
-        .high-contrast .result-box.correct-result {
-            color: #047857; /* darker green for text */
-            background-color: #D1FAE5; /* lighter green bg */
-            border-color: #6EE7B7;
-        }
-        .high-contrast .result-box.incorrect-result {
-            color: #B91C1C; /* darker red for text */
-            background-color: #FEE2E2; /* lighter red bg */
-            border-color: #FCA5A5;
-        }
-         :root {
-            /* ... other variables ... */
-            --success-color_rgb: 16, 185, 129;
-            --error-color_rgb: 239, 68, 68;
-        }
+        #quizTimer.low-time { color: var(--error-color); animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* Ensure practical images are responsive */
-        #practicalInteractiveContent .image-gallery img {
-            max-width: 100px; /* Adjust as needed, provides a max */
-            height: auto; /* Maintain aspect ratio */
-            border-width: 2px; /* from Tailwind's border-2 */
-            border-style: solid;
-            border-color: transparent; /* from Tailwind's border-transparent */
-            border-radius: 0.375rem; /* Tailwind's rounded-md */
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); /* Tailwind's shadow-md */
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-         #practicalInteractiveContent .image-gallery img:hover,
-         #practicalInteractiveContent .image-gallery img:focus {
-            border-color: var(--accent-secondary); /* Example hover/focus */
-        }
-        #practicalInteractiveContent .image-gallery img.selected-img {
-            border-color: var(--accent-primary) !important; /* Example selected */
-            transform: scale(1.05);
-        }
-         #practicalInteractiveContent .image-gallery img.correct {
-            border-color: var(--success-color) !important;
-        }
-        #practicalInteractiveContent .image-gallery img.incorrect {
-            border-color: var(--error-color) !important;
-        }
+        .result-box { padding: 0.75rem 1rem; border-radius: 0.375rem; margin-top: 0.75rem; font-size: 0.875rem; line-height: 1.4; transition: background-color 0.3s ease, color 0.3s ease; }
+        .result-box.correct-result { background-color: rgba(var(--success-color_rgb, 16, 185, 129), 0.15); color: var(--success-color); border: 1px solid rgba(var(--success-color_rgb, 16, 185, 129), 0.3); }
+        .result-box.incorrect-result { background-color: rgba(var(--error-color_rgb, 239, 68, 68), 0.15); color: var(--error-color); border: 1px solid rgba(var(--error-color_rgb, 239, 68, 68), 0.3); }
+        .high-contrast .result-box.correct-result { color: #047857; background-color: #D1FAE5; border-color: #6EE7B7; }
+        .high-contrast .result-box.incorrect-result { color: #B91C1C; background-color: #FEE2E2; border-color: #FCA5A5; }
+         :root { --success-color_rgb: 16, 185, 129; --error-color_rgb: 239, 68, 68; }
 
-        /* Added for modal responsiveness */
-        .modal-content-area {
-            position: relative; /* Ensures close button is positioned relative to this */
-            max-height: 85vh; /* Limits height on smaller screens */
-            overflow-y: auto; /* Allows scrolling if content is too tall */
+        #practicalInteractiveContent .image-gallery img { max-width: 100px; height: auto; border-width: 2px; border-style: solid; border-color: transparent; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); cursor: pointer; transition: all 0.2s ease-in-out; }
+        #practicalInteractiveContent .image-gallery img:hover,
+        #practicalInteractiveContent .image-gallery img:focus { border-color: var(--accent-secondary); }
+        #practicalInteractiveContent .image-gallery img.selected-img { border-color: var(--accent-primary) !important; transform: scale(1.05); }
+        #practicalInteractiveContent .image-gallery img.correct { border-color: var(--success-color) !important; }
+        #practicalInteractiveContent .image-gallery img.incorrect { border-color: var(--error-color) !important; }
+
+        .modal-content-area { position: relative; max-height: 85vh; overflow-y: auto; }
+
+        /* Theory Content Specific Styling */
+        .prose-enhanced img.theory-image {
+            display: block; margin-left: auto; margin-right: auto;
+            border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            margin-top: 1.5rem; margin-bottom: 1.5rem; max-width: 90%; height: auto;
+        }
+        .high-contrast .prose-enhanced img.theory-image { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.04); }
+
+        .prose-enhanced h4 {
+            font-family: 'Cinzel', serif; font-weight: 700; color: var(--accent-primary);
+            margin-top: 2.5rem; margin-bottom: 0.75rem; padding-bottom: 0.25rem;
+            border-bottom: 1px solid rgba(var(--accent-primary_rgb), 0.3);
+        }
+        .high-contrast .prose-enhanced h4 { color: #B45309; border-bottom-color: rgba(180, 83, 9, 0.4); }
+
+        .prose-enhanced h5 {
+            font-family: 'Playfair Display', serif; font-weight: 700; color: var(--accent-secondary);
+            margin-top: 1.5rem; margin-bottom: 0.5rem;
+        }
+        .high-contrast .prose-enhanced h5 { color: #0369A1; }
+
+
+        .prose-enhanced p { line-height: 1.7; margin-bottom: 1rem; color: var(--text-secondary-dark); }
+        .high-contrast .prose-enhanced p { color: var(--text-secondary-light); }
+        .prose-enhanced strong { color: var(--text-primary-dark); font-weight: 600; }
+        .high-contrast .prose-enhanced strong { color: var(--text-primary-light); }
+
+        .prose-enhanced ul, .prose-enhanced ol { margin-left: 1.25rem; margin-bottom: 1rem; color: var(--text-secondary-dark); }
+        .prose-enhanced ul li::marker, .prose-enhanced ol li::marker { color: var(--accent-secondary); }
+        .high-contrast .prose-enhanced ul, .high-contrast .prose-enhanced ol { color: var(--text-secondary-light); }
+        .high-contrast .prose-enhanced ul li::marker, .high-contrast .prose-enhanced ol li::marker { color: #0EA5E9; } /* sky-500 */
+
+        .prose-enhanced a { color: var(--accent-secondary); text-decoration: underline; transition: color 0.2s ease; }
+        .prose-enhanced a:hover { color: var(--accent-primary); }
+        .high-contrast .prose-enhanced a { color: #0284C7; } /* sky-600 */
+        .high-contrast .prose-enhanced a:hover { color: #EA580C; } /* orange-600 */
+
+        .theory-section-break { height: 1px; background: linear-gradient(to right, transparent, rgba(var(--accent-primary_rgb), 0.3), transparent); margin: 2.5rem 0; }
+        .high-contrast .theory-section-break { background: linear-gradient(to right, transparent, rgba(180, 83, 9, 0.2), transparent); }
+
+        .theory-interactive-block {
+            background-color: rgba(var(--bg-tertiary-dark_rgb, 55, 65, 81), 0.5); /* Assuming bg-tertiary-dark is #374151 */
+            border: 1px solid rgba(var(--accent-secondary_rgb), 0.2);
+            padding: 1.25rem; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .high-contrast .theory-interactive-block {
+             background-color: rgba(var(--bg-tertiary-light_rgb, 229, 231, 235), 0.7); /* Assuming bg-tertiary-light is #E5E7EB */
+             border-color: rgba(var(--accent-secondary_rgb), 0.3);
+        }
+         :root { /* Add RGB versions of tertiary colors if not already present */
+            --bg-tertiary-dark_rgb: 55, 65, 81;
+            --bg-tertiary-light_rgb: 229, 231, 235;
         }
     </style>
 </head>
@@ -460,12 +423,12 @@
             </button>
         </div>
         <div class="relative">
-            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full !p-2.5 text-sm"> <!-- Used input-field class -->
+            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full !p-2.5 text-sm">
             <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
 
         <div class="flex-grow overflow-y-auto custom-scrollbar">
-            <nav> <!-- Removed redundant custom-scrollbar here -->
+            <nav>
                 <ul id="dayList" class="space-y-1.5"></ul>
             </nav>
             <div class="space-y-3 pt-4 border-t border-gray-700">
@@ -490,23 +453,19 @@
                 </div>
             </div>
             <div class="pt-4">
-              <!-- Example: Sidebar Ad -->
-<!-- Sidebar Display Ad -->
-<div class="ad-placeholder">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-1343070560951957"
-         data-ad-slot="7414600322"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <!-- SCRIPT REMOVED FROM HERE -->
-</div>
-
-              <div class="text-xs text-gray-500 text-center mt-2 px-1">
-    This site is free and supported by users like you, affiliate links, and advertisements.
-    <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More (Disclosure)</a> |
-    <a href="privacy.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Privacy Policy</a>
-</div>
+                <div class="ad-placeholder hidden"> <!-- Initially hidden, JS will manage -->
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-1343070560951957"
+                         data-ad-slot="7414600322"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+                <div class="text-xs text-gray-500 text-center mt-2 px-1">
+                    This site is free and supported by users like you, affiliate links, and advertisements.
+                    <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More (Disclosure)</a> |
+                    <a href="privacy.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Privacy Policy</a>
+                </div>
             </div>
         </div>
     </aside>
@@ -517,26 +476,23 @@
             <i class="fas fa-bars text-xl"></i>
         </button>
 
-<section id="dashboardAd" class="active ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-1343070560951957"
-         data-ad-slot="3502133839"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <!-- SCRIPT REMOVED FROM HERE -->
-</section>
+        <section id="dashboardAd" class="hidden ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md"> <!-- Initially hidden -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1343070560951957"
+                 data-ad-slot="3502133839"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </section>
 
-<!-- Lesson Page Ad -->
-<section id="lessonPageAd" class="hidden ad-placeholder mx-auto my-4 max-w-screen-md"> <!-- Added common ad styling -->
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-1343070560951957"
-         data-ad-slot="3717756254"
-         data-ad-format="autorelaxed"
-         data-full-width-responsive="true"></ins>
-    <!-- JS will call (adsbygoogle = window.adsbygoogle || []).push({}); -->
-</section>
+        <section id="lessonPageAd" class="hidden ad-placeholder mx-auto my-4 max-w-screen-md"> <!-- Initially hidden -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1343070560951957"
+                 data-ad-slot="3717756254"
+                 data-ad-format="autorelaxed"
+                 data-full-width-responsive="true"></ins>
+        </section>
 
         <section id="dashboard" class="active">
             <div class="glass p-6 sm:p-8 rounded-xl shadow-2xl">
@@ -593,7 +549,7 @@
                     <button id="quizTab" class="tab">Quiz</button>
                     <button id="notesTab" class="tab">Notes</button>
                 </div>
-                <div id="lessonContent" class="min-h-[300px] prose-enhanced"></div> <!-- Added prose-enhanced for potential typography defaults -->
+                <div id="lessonContent" class="min-h-[300px] prose-enhanced"></div>
             </div>
         </section>
 
@@ -641,7 +597,7 @@
         </div>
 
         <div id="profileModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
-            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md transform scale-95 opacity-0 edit-profile-modal relative max-h-[85vh] overflow-y-auto custom-scrollbar"> <!-- Added edit-profile-modal class for specific input styling if needed -->
+            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md transform scale-95 opacity-0 edit-profile-modal relative max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <button onclick="BaristaApp.modalManager.closeProfile()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">×</button>
                 <h3 class="text-2xl font-bold text-amber-400 mb-6 text-center">Edit Profile</h3>
                 <label for="profileName" class="block text-sm font-medium text-gray-300 mb-1">Name (for Certificate):</label>
@@ -665,12 +621,72 @@
             <div class="modal-content-area glass p-6 rounded-xl shadow-2xl w-full max-w-lg transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <button onclick="BaristaApp.modalManager.closeGlossary()" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl">×</button>
                 <h3 class="text-2xl font-bold text-amber-400 mb-1 text-center">Glossary</h3>
-                <input type="text" id="glossarySearch" placeholder="Search terms..." class="input-field w-full !p-2.5 text-sm mb-3"> <!-- Used input-field class -->
+                <input type="text" id="glossarySearch" placeholder="Search terms..." class="input-field w-full !p-2.5 text-sm mb-3">
                 <ul id="glossaryList" class="space-y-1.5 max-h-80 overflow-y-auto custom-scrollbar pr-1 text-sm"></ul>
             </div>
         </div>
 
-        
+        <div id="donationModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
+            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
+                <button onclick="BaristaApp.modalManager.closeDonationModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close donation modal">×</button>
+                <img src="images/logo.png" alt="Logo Icon" class="w-16 h-16 mx-auto mb-3">
+                <h3 class="text-2xl font-bold text-amber-400 mb-4">Support This Project</h3>
+                <p class="text-gray-300 mb-6 text-sm">Your contribution helps keep this resource free and accessible!</p>
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-sky-300 mb-3">For Donors in Nepal (नेपाल भित्रबाट सहयोग गर्नको लागि)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h5 class="text-md font-semibold text-green-400 mb-2 text-center">eSewa</h5>
+                           <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
+  <img src="images/esewa_qr.png" alt="eSewa QR Code" class="w-full h-full">
+
+</div>
+
+                            <p class="text-sm text-gray-300 text-center">Scan QR or use eSewa ID:</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">9805670970</p>
+                        </div>
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h5 class="text-md font-semibold text-indigo-400 mb-2 text-center">Khalti</h5>
+                          <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
+   <img src="images/khalti_qr_code.png" alt="Khalti QR Code" class="w-full h-full">
+
+</div>
+
+                            <p class="text-sm text-gray-300 text-center">Scan QR or use Khalti ID:</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">9805670970</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2 text-center">कृपया रिमार्कमा "Barista Training Support" उल्लेख गर्नुहोला।</p>
+                </div>
+                <div class="mb-6 pt-4 border-t border-gray-700">
+                    <h4 class="text-lg font-semibold text-sky-300 mb-3">For International Donors</h4>
+                    <p class="text-gray-300 text-sm mb-3">You can support us via PayPal or by direct bank transfer (details below). Thank you!</p>
+                    <div class="mb-4 flex justify-center">
+                        <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" rel="noopener noreferrer" class="inline-block my-2">
+                            <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal" class="h-9 w-auto max-w-full">
+                        </a>
+                    </div>
+                    <p class="text-xs text-gray-400">(User: Replace with your actual PayPal link/button)</p>
+                    <details class="group text-left mt-4">
+                        <summary class="interactive-choice py-2 px-4 rounded-md cursor-pointer list-none flex justify-between items-center">
+                            <span class="font-semibold">International Bank Transfer Details</span>
+                            <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="mt-2 p-3 bg-gray-800/40 rounded-md text-sm text-gray-300 space-y-1">
+                                 <p><strong>Bank Name:</strong> Muktinath Bikash Bank</p>
+                            <p><strong>Account Holder Name:</strong> Sukram Lama</p>
+                            <p><strong>Account Number/IBAN:</strong> 16921101074994000001</p>
+                            <p><strong>SWIFT/BIC Code:</strong>MNBBLNPKA</p>
+                            <p><strong>Bank Address:</strong> Gundu Ext. Counter,Bhaktapur, Nepal</p>
+                            <p class="text-xs text-gray-400 mt-1">( Donor may incur fees.)</p>
+                        </div>
+                    </details>
+                </div>
+                <p class="text-sm text-gray-300 text-center mt-4">Sharing this site is also a great way to show support!</p>
+                <button onclick="BaristaApp.modalManager.closeDonationModal()" class="interactive-button bg-sky-600 hover:bg-sky-700 w-full mt-6 py-2.5">Close</button>
+            </div>
+        </div>
+
         <div id="quizModal" class="fixed inset-0 bg-black bg-opacity-85 flex items-center justify-center p-4 z-[1050] hidden">
             <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <button id="quizCloseButton" class="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl z-10">×</button>
@@ -693,6 +709,7 @@
             </div>
         </div>
     </main>
+
 
       <script>
         'use strict';
@@ -1905,7 +1922,7 @@
                         question: "Which of the following is NOT a primary factor in 'dialing in' an espresso shot?",
                         options: ["Coffee bean origin", "Grind size", "Dose (amount of coffee)", "Yield (amount of espresso)"],
                         correct: 0,
-                        explanation: "While bean origin significantly impacts flavor, 'dialing in' primarily refers to adjusting grind, dose, and yield to optimize extraction for that specific bean. Bean origin is a given that you work with."
+                        explanation: "While bean origin significantly impacts flavor, 'dialing in' primarily refers to adjusting grind, dose, and yield to optimize extraction for that specific bean. Bean origin is a given that you work with. Secret code for certificate: INCORRECT90" // <-- Secret Code Example
                     }
                 },
 
@@ -2034,10 +2051,7 @@
                 { term: "Yield (Espresso)", definition: "The amount (weight or volume) of liquid espresso brewed from a dose of coffee grounds." }
             ]
         };
-
-
-        // --- Main Application Logic ---
-        const BaristaApp = {
+  const BaristaApp = {
             // --- Elements Cache ---
             elements: {},
 
@@ -2045,7 +2059,7 @@
             state: {
                 currentDay: 0,
                 quizDay: 0,
-                totalDays: CONTENT.days.length,
+                totalDays: 0, // Will be set in init after CONTENT is defined
                 progress: [],
                 user: { name: "Trainee", email: "", points: 0 },
                 language: "en",
@@ -2058,139 +2072,103 @@
                 currentQuizAnswer: null,
                 quizAnswered: false,
                 leaderboard: [],
-                activeTheorySlide: 0, // For theory content slideshow
+                activeTheorySlide: 0,
                 notificationTimeout: null,
+                adsInitialized: false,
+                adsCurrentlyHiddenByModal: false,
             },
 
             // --- Utility Functions ---
             util: {
-                showNotification: (message, type = "success", duration = 3500) => { // Added duration parameter
+                showNotification: (message, type = "success", duration = 3500) => {
                     clearTimeout(BaristaApp.state.notificationTimeout);
                     let notificationDiv = document.getElementById('appNotification');
                     if (!notificationDiv) {
                         notificationDiv = document.createElement("div");
                         notificationDiv.id = 'appNotification';
-                        notificationDiv.className = "fixed top-5 right-5 p-4 rounded-lg shadow-xl z-[2000] text-sm font-medium transition-all duration-300 ease-out-cubic max-w-sm"; // Added max-w-sm
+                        notificationDiv.className = "fixed top-5 right-5 p-4 rounded-lg shadow-xl z-[2000] text-sm font-medium transition-all duration-300 ease-out-cubic max-w-sm";
                         notificationDiv.setAttribute('role', 'alert');
                         document.body.appendChild(notificationDiv);
                     }
                     notificationDiv.textContent = message;
+                    notificationDiv.classList.remove('bg-green-600', 'bg-red-600', 'bg-sky-600', 'text-white');
+                    if (type === "success") notificationDiv.classList.add('bg-green-600', 'text-white');
+                    else if (type === "error") notificationDiv.classList.add('bg-red-600', 'text-white');
+                    else notificationDiv.classList.add('bg-sky-600', 'text-white');
 
-                    notificationDiv.classList.remove('bg-green-600', 'bg-red-600', 'bg-sky-600', 'text-white'); // Added sky for info
-                    if (type === "success") {
-                        notificationDiv.classList.add('bg-green-600', 'text-white');
-                    } else if (type === "error") {
-                        notificationDiv.classList.add('bg-red-600', 'text-white');
-                    } else { // Default to info
-                        notificationDiv.classList.add('bg-sky-600', 'text-white');
-                    }
-
-
-                    gsap.fromTo(notificationDiv,
-                        {x: "110%", opacity: 0},
-                        {x: "0%", opacity: 1, duration: 0.4, ease: "power2.out"}
-                    );
-
+                    gsap.fromTo(notificationDiv, { x: "110%", opacity: 0 }, { x: "0%", opacity: 1, duration: 0.4, ease: "power2.out" });
                     BaristaApp.state.notificationTimeout = setTimeout(() => {
-                        gsap.to(notificationDiv,
-                            {x: "110%", opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
-                                 if(notificationDiv.parentNode) notificationDiv.parentNode.removeChild(notificationDiv);
-                            }}
-                        );
+                        gsap.to(notificationDiv, { x: "110%", opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
+                            if (notificationDiv.parentNode) notificationDiv.parentNode.removeChild(notificationDiv);
+                        }});
                     }, duration);
                 },
-                showError: (message) => BaristaApp.util.showNotification(message, "error"),
-                showSuccess: (message) => BaristaApp.util.showNotification(message, "success"),
-                showInfo: (message) => BaristaApp.util.showNotification(message, "info", 4000), // New info type
+                showError: (m) => BaristaApp.util.showNotification(m, "error"),
+                showSuccess: (m) => BaristaApp.util.showNotification(m, "success"),
+                showInfo: (m) => BaristaApp.util.showNotification(m, "info", 4000),
                 trackAnalytics: (event) => {
                     try {
                         BaristaApp.state.analytics.push({ event, timestamp: new Date().toISOString(), day: BaristaApp.state.currentDay || "N/A", url: window.location.pathname });
                         if (BaristaApp.state.analytics.length > 200) BaristaApp.state.analytics.shift();
                         localStorage.setItem("baristaIO_analytics", JSON.stringify(BaristaApp.state.analytics));
-                    } catch (e) {
-                        console.warn("Error tracking analytics or saving to localStorage:", e);
-                    }
+                    } catch (e) { console.warn("Analytics error:", e); }
                 },
                 createInteractiveSection: (title) => {
                     const section = document.createElement('div');
-                    section.className = 'interactive-section glass p-4 rounded-lg shadow-lg my-6'; // Added padding, margin, rounded, shadow
+                    section.className = 'interactive-section glass p-4 rounded-lg shadow-lg my-6';
                     if (title) {
                         const titleEl = document.createElement('h4');
-                        titleEl.className = "text-lg font-semibold text-amber-400 mb-3"; // Enhanced title styling
+                        titleEl.className = "text-lg font-semibold text-amber-400 mb-3";
                         titleEl.textContent = title;
                         section.appendChild(titleEl);
                     }
                     return section;
                 },
-                createButton: (text, onClickFunction, customClasses = '') => {
+                createButton: (text, onClick, classes = '') => {
                     const button = document.createElement('button');
-                    button.className = `interactive-button mt-4 ${customClasses}`;
+                    button.className = `interactive-button mt-4 ${classes}`;
                     button.textContent = text;
-                    if (onClickFunction) button.onclick = onClickFunction;
+                    if (onClick) button.onclick = onClick;
                     return button;
                 }
             },
 
-                // --- UI Update Functions ---
+            // --- UI Update Functions ---
             ui: {
                 applyTheme: () => {
                     if (!BaristaApp.elements.appBody) return;
                     BaristaApp.elements.appBody.classList.toggle("high-contrast", BaristaApp.state.theme === "light");
-                    const logo = document.getElementById('sidebar-logo'); // Sidebar logo
-                    const certLogo = document.getElementById('cert-logo'); // Certificate logo
+                    const logo = document.getElementById('sidebar-logo');
+                    // const certLogo = document.getElementById('cert-logo'); // Handled by its own CSS
                     if (BaristaApp.state.theme === "light") {
                         if (logo) logo.style.filter = 'invert(1) contrast(0.8) brightness(1.1)';
-                        // cert-logo has its own high-contrast style block for filter
                     } else {
                         if (logo) logo.style.filter = 'none';
-                        // cert-logo has its own high-contrast style block for filter
                     }
                 },
-
                 updateProgressDisplay: () => {
                     const completed = BaristaApp.state.progress.filter(Boolean).length;
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-
-                    if (BaristaApp.elements.progress) {
-                        BaristaApp.elements.progress.textContent = `${t.progress}: ${completed}/${BaristaApp.state.totalDays}`;
-                    }
-
-                    if (BaristaApp.elements.progressBarFill) {
-                        gsap.to(BaristaApp.elements.progressBarFill, {
-                            width: `${(completed / BaristaApp.state.totalDays) * 100}%`,
-                            duration: 0.6,
-                            ease: "power2.out"
-                        });
-                    }
-
+                    if (BaristaApp.elements.progress) BaristaApp.elements.progress.textContent = `${t.progress}: ${completed}/${BaristaApp.state.totalDays}`;
+                    if (BaristaApp.elements.progressBarFill) gsap.to(BaristaApp.elements.progressBarFill, { width: `${(BaristaApp.state.totalDays > 0 ? (completed / BaristaApp.state.totalDays) : 0) * 100}%`, duration: 0.6, ease: "power2.out" });
                     localStorage.setItem("baristaIO_progress", JSON.stringify(BaristaApp.state.progress));
-
-                    if (completed === BaristaApp.state.totalDays &&
-                        BaristaApp.elements.dashboard?.classList.contains('active') &&
-                        BaristaApp.elements.certificate?.classList.contains('hidden')) {
-                            BaristaApp.ui.showCertificate();
+                    if (completed === BaristaApp.state.totalDays && BaristaApp.elements.dashboard?.classList.contains('active') && BaristaApp.elements.certificate?.classList.contains('hidden')) {
+                        BaristaApp.ui.showCertificate();
                     }
-
                     BaristaApp.ui.updateDashboardOverview();
                 },
-
                 updateDashboardOverview: () => {
                     if (!BaristaApp.elements.nextLessonInfo || !BaristaApp.elements.funFact) return;
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-
                     const firstUncompletedDayIndex = BaristaApp.state.progress.findIndex(p => !p);
                     if (firstUncompletedDayIndex !== -1) {
                         const nextDayData = CONTENT.days[firstUncompletedDayIndex];
-                        if(nextDayData) {
-                            BaristaApp.elements.nextLessonInfo.textContent = `Next: Day ${nextDayData.day} - ${nextDayData.theory.title}`;
-                        } else {
-                             BaristaApp.elements.nextLessonInfo.textContent = t.allLessonsCompleted;
-                        }
+                        if(nextDayData && nextDayData.theory) BaristaApp.elements.nextLessonInfo.textContent = `Next: Day ${nextDayData.day} - ${nextDayData.theory.title}`;
+                        else BaristaApp.elements.nextLessonInfo.textContent = t.allLessonsCompleted;
                     } else {
                         BaristaApp.elements.nextLessonInfo.textContent = t.allLessonsCompleted;
                     }
-
-                    const funFacts = [
+                     const funFacts = [
                         t.funFactDefault,
                         BaristaApp.state.language === 'ne' ? "कफी इथियोपियामा एक बाख्रा गोठालाले पत्ता लगाएको मानिन्छ।" : "Coffee is believed to have been discovered in Ethiopia by a goat herder.",
                         BaristaApp.state.language === 'ne' ? "ब्राजिल विश्वको सबैभन्दा ठूलो कफी उत्पादक देश हो।" : "Brazil is the world's largest coffee producer.",
@@ -2199,14 +2177,14 @@
                     ];
                     BaristaApp.elements.funFact.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
                 },
-                populateDays: (filter = "") => {
+                            populateDays: (filter = "") => {
                     if (!BaristaApp.elements.dayList) return;
                     BaristaApp.elements.dayList.innerHTML = "";
                     const lowerFilter = filter.toLowerCase();
                     const filteredDays = CONTENT.days.filter(dayData =>
                         dayData.theory.title.toLowerCase().includes(lowerFilter) ||
                         `day ${dayData.day}`.toLowerCase().includes(lowerFilter) ||
-                        (dayData.theory.content && dayData.theory.content.toLowerCase().includes(lowerFilter))
+                        (dayData.theory.content && typeof dayData.theory.content === 'string' && dayData.theory.content.toLowerCase().includes(lowerFilter))
                     );
 
                     if (filteredDays.length === 0) {
@@ -2243,7 +2221,7 @@
                         li.dataset.day = dayData.day;
                         li.addEventListener("click", () => {
                             BaristaApp.lessonManager.openPage(dayData.day);
-                            if (BaristaApp.elements.sidebar && BaristaApp.elements.sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) { // Changed 'open' to 'sidebar-open'
+                            if (BaristaApp.elements.sidebar && BaristaApp.elements.sidebar.classList.contains('sidebar-open') && window.innerWidth < 768) {
                                 BaristaApp.elements.sidebar.classList.remove('sidebar-open');
                                 if(BaristaApp.elements.hamburgerMenu) BaristaApp.elements.hamburgerMenu.querySelector('i').classList.replace('fa-times', 'fa-bars');
                             }
@@ -2251,216 +2229,155 @@
                         BaristaApp.elements.dayList.appendChild(li);
                     });
                 },
-                updateLeaderboardDisplay: () => {
-                     if (!BaristaApp.elements.leaderboardList) return;
-                     const userEmail = BaristaApp.state.user.email || 'anonymous_user@barista.io';
-                     BaristaApp.elements.leaderboardList.innerHTML = BaristaApp.state.leaderboard.map((entry, i) => `
-                        <li class="py-2.5 px-4 rounded-md flex justify-between items-center text-sm
-                                   ${entry.name === BaristaApp.state.user.name && entry.email === userEmail ?
-                                    'current-user-highlight' :
-                                    (BaristaApp.state.theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700/50') }">
-                            <span>${i + 1}. ${entry.name}</span>
-                            <span class="font-semibold">${entry.points} pts</span>
-                        </li>
-                    `).join("") || "<li class='py-2 px-3 text-gray-500'>No scores yet. Be the first!</li>";
-                },
-                populateGlossary: (filter = "") => {
-                    if (!BaristaApp.elements.glossaryList || !CONTENT.glossary) return;
-                    const lowerFilter = filter.toLowerCase();
-                    const filteredTerms = CONTENT.glossary.filter(item =>
-                        item.term.toLowerCase().includes(lowerFilter) ||
-                        item.definition.toLowerCase().includes(lowerFilter)
-                    );
-
-                    if (filteredTerms.length === 0) {
-                        BaristaApp.elements.glossaryList.innerHTML = `<li class="text-gray-400 p-3">No terms found matching "${filter}".</li>`;
-                        return;
+                updateLeaderboardDisplay: () => { if (!BaristaApp.elements.leaderboardList) return; const e = BaristaApp.state.user.email || `anon_${Date.now()}@barista.io`; BaristaApp.elements.leaderboardList.innerHTML = BaristaApp.state.leaderboard.map((entry, i) => `<li class="py-2.5 px-4 rounded-md flex justify-between items-center text-sm ${entry.name===BaristaApp.state.user.name&&entry.email===e ? 'current-user-highlight' : (BaristaApp.state.theme==='light'?'hover:bg-gray-200':'hover:bg-gray-700/50')}"><span>${i+1}. ${entry.name}</span><span class="font-semibold">${entry.points} pts</span></li>`).join("") || "<li class='p-3 text-gray-500'>No scores yet.</li>"; },
+                populateGlossary: (filter = "") => { if (!BaristaApp.elements.glossaryList || !CONTENT.glossary) return; const l = filter.toLowerCase(), f = CONTENT.glossary.filter(i=>i.term.toLowerCase().includes(l)||i.definition.toLowerCase().includes(l)); if(f.length===0){BaristaApp.elements.glossaryList.innerHTML=`<li class="p-3 text-gray-400">No terms matching "${filter}".</li>`;return;} BaristaApp.elements.glossaryList.innerHTML = f.map(i => `<li class="py-2.5 px-3 rounded-md ${BaristaApp.state.theme==='light'?'hover:bg-gray-200':'hover:bg-gray-700/50'} transition-colors"><strong class="text-amber-400">${i.term}</strong>: <span class="text-sm">${i.definition}</span></li>`).join(""); },
+                showCertificate: () => {
+                    if (!BaristaApp.elements.dashboard || !BaristaApp.elements.lessonPage || !BaristaApp.elements.certificate || !BaristaApp.elements.traineeName || !BaristaApp.elements.certDate || !BaristaApp.elements.certPoints) { console.error("Missing cert elements."); return; }
+                    BaristaApp.elements.dashboard.classList.add("hidden"); BaristaApp.elements.dashboard.classList.remove("active");
+                    BaristaApp.elements.lessonPage.classList.add("hidden"); BaristaApp.elements.lessonPage.classList.remove("active");
+                    BaristaApp.elements.certificate.classList.remove("hidden"); BaristaApp.elements.certificate.classList.add("active");
+                    BaristaApp.ui.ads.manageContentAdsVisibility(null); // Hide ads on certificate page
+                    BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
+                    BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(BaristaApp.state.language==='ne'?'ne-NP':'en-US',{year:'numeric',month:'long',day:'numeric'});
+                    BaristaApp.elements.certPoints.textContent = `${BaristaApp.state.user.points} Points`;
+                    if (BaristaApp.elements.lottieCertificate && typeof lottie !== 'undefined'){
+                        if(BaristaApp.elements.lottieCertificate.animInstance){ BaristaApp.elements.lottieCertificate.animInstance.destroy(); BaristaApp.elements.lottieCertificate.innerHTML=''; }
+                        try{ const p="lottie/certificate-animation.json";
+                            if(window.location.protocol==="file:"){ console.warn("Lottie cert anim might not load from file://"); if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-gray-500">(Anim disabled)</p>';}
+                            else{ fetch(p).then(r=>{if(!r.ok)throw new Error(`Failed Lottie fetch: ${r.status} from ${p}`);return r.json();}).then(d=>{BaristaApp.elements.lottieCertificate.animInstance=lottie.loadAnimation(BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieCertificate,p,false));}).catch(e=>{console.error("Lottie cert anim error:",e);if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-red-500">(Anim failed)</p>';});}
+                        }catch(e){console.error("Lottie cert setup error:",e);if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-red-500">(Anim setup error)</p>';}
                     }
-                    BaristaApp.elements.glossaryList.innerHTML = filteredTerms.map(item => `
-                        <li class="py-2.5 px-3 rounded-md ${BaristaApp.state.theme === 'light' ? 'hover:bg-gray-200' : 'hover:bg-gray-700/50'} transition-colors">
-                            <strong class="text-amber-400">${item.term}</strong>:
-                            <span class="text-sm">${item.definition}</span>
-                        </li>
-                    `).join("");
+                    gsap.fromTo(BaristaApp.elements.certificate.querySelector(".glass"),{opacity:0,y:30,scale:0.95},{opacity:1,y:0,scale:1,duration:0.7,ease:"elastic.out(1,0.65)"});
+                    BaristaApp.util.trackAnalytics("Viewed Certificate");
                 },
-             showCertificate: () => {
-                if (!BaristaApp.elements.dashboard || !BaristaApp.elements.lessonPage || !BaristaApp.elements.certificate ||
-                    !BaristaApp.elements.traineeName || !BaristaApp.elements.certDate || !BaristaApp.elements.certPoints) {
-                    console.error("Missing elements required for certificate display.");
-                    return;
-                }
+                ads: {
+                    _getAdConfig: (selector) => {
+                        const adContainer = document.querySelector(selector);
+                        if (!adContainer) return null;
+                        const adIns = adContainer.querySelector('ins.adsbygoogle');
+                        if (!adIns) return null;
+                        return { container: adContainer, ins: adIns, slot: adIns.dataset.adSlot };
+                    },
+                    requestAdForSection: (selector) => {
+                        if (!BaristaApp.state.adsInitialized || typeof adsbygoogle === 'undefined') {
+                            console.warn("AdSense library not ready. Skipping ad:", selector);
+                            const adConfig = BaristaApp.ui.ads._getAdConfig(selector);
+                            if(adConfig && adConfig.container) adConfig.container.classList.add("hidden");
+                            return;
+                        }
+                        const adConfig = BaristaApp.ui.ads._getAdConfig(selector);
+                        if (!adConfig || !adConfig.container || !adConfig.ins) { console.warn("Ad config not found or incomplete for selector:", selector); return; }
 
-                BaristaApp.elements.dashboard.classList.add("hidden");
-                BaristaApp.elements.dashboard.classList.remove("active");
-                BaristaApp.elements.lessonPage.classList.add("hidden");
-                BaristaApp.elements.lessonPage.classList.remove("active");
-                BaristaApp.elements.certificate.classList.remove("hidden");
-                BaristaApp.elements.certificate.classList.add("active");
+                        let parentContentSectionVisible = false;
+                        if (selector === '#dashboardAd' && BaristaApp.elements.dashboard?.classList.contains('active')) parentContentSectionVisible = true;
+                        else if (selector === '#lessonPageAd' && BaristaApp.elements.lessonPage?.classList.contains('active')) parentContentSectionVisible = true;
+                        else if (selector.includes('sidebar') && BaristaApp.elements.sidebar) {
+                             parentContentSectionVisible = (BaristaApp.elements.sidebar.classList.contains('sidebar-open') || window.innerWidth >= 768) ;
+                        }
 
-                BaristaApp.ui.ads.hideAllContentAds(); // Hide other content ads
+                        if (!parentContentSectionVisible || adConfig.container.offsetParent === null || adConfig.container.offsetWidth === 0 || adConfig.container.offsetHeight === 0) {
+                            console.warn(`AdSense: Container for ${selector} not ready/visible. Hiding.`);
+                            adConfig.container.classList.add("hidden"); return;
+                        }
+                        if (adConfig.ins.classList.contains('adsbygoogle-filled') || adConfig.ins.dataset.adStatus === 'filled' || adConfig.ins.innerHTML.trim() !== "") {
+                            adConfig.container.classList.remove("hidden"); return;
+                        }
+                        adConfig.container.classList.remove("hidden");
+                        adConfig.ins.classList.remove("hidden");
+                        console.log(`AdSense: Pushing ad for ${selector} (Slot: ${adConfig.slot}).`);
+                        try { (adsbygoogle = window.adsbygoogle || []).push({}); adConfig.ins.dataset.adStatus = 'filled'; }
+                        catch (e) { console.error(`AdSense error pushing ad for ${selector}:`, e); adConfig.container.classList.add("hidden"); }
+                    },
+                    initSidebarAd: () => {
+                        setTimeout(() => {
+                            const sidebarAdSelector = '#sidebar .ad-placeholder';
+                            const adConfig = BaristaApp.ui.ads._getAdConfig(sidebarAdSelector);
+                            if (adConfig && adConfig.container) {
+                                // --- ADSENSE POLICY CHANGE ---
+                                const dayListEl = BaristaApp.elements.dayList;
+                                // Check if dayList exists, has children, and doesn't contain "no lessons found"
+                                const hasSufficientContent = dayListEl && dayListEl.children.length > 0 && !(dayListEl.textContent || "").toLowerCase().includes("no lessons found");
 
-                // Populate certificate details
-                BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
-                BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(
-                    BaristaApp.state.language === 'ne' ? 'ne-NP' : 'en-US',
-                    { year: 'numeric', month: 'long', day: 'numeric' }
-                );
-                BaristaApp.elements.certPoints.textContent = `${BaristaApp.state.user.points} Points`;
-
-                // Load Lottie animation
-            if (BaristaApp.elements.lottieCertificate && typeof lottie !== 'undefined') {
-                if (BaristaApp.elements.lottieCertificate.animInstance) {
-                    BaristaApp.elements.lottieCertificate.animInstance.destroy();
-                    BaristaApp.elements.lottieCertificate.innerHTML = '';
-                }
-
-                try {
-                    const animationPath = "lottie/certificate-animation.json";
-                    // Check if running via file protocol - Lottie from local JSON path won't work
-                    if (window.location.protocol === "file:") {
-                         console.warn("Lottie animation for certificate might not load correctly when running from file:/// protocol. Please use a local web server.");
-                         // Optionally, provide a fallback or hide the Lottie element
-                         if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-gray-500">(Animation disabled on local file view)</p>';
-                    } else {
-                        fetch(animationPath)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(`Failed to fetch Lottie animation: ${response.status} ${response.statusText} from ${animationPath}.`);
+                                if (hasSufficientContent) {
+                                    BaristaApp.ui.ads.requestAdForSection(sidebarAdSelector);
+                                    console.log("AdSense: Sidebar ad requested, day list has content.");
+                                } else {
+                                    if (adConfig.container) adConfig.container.classList.add("hidden"); // Hide placeholder if no content
+                                    console.warn("AdSense: Sidebar ad NOT shown. Day list content insufficient or not ready.");
                                 }
-                                return response.json();
-                            })
-                            .then(data => {
-                                console.log("Lottie JSON loaded successfully for certificate.");
-                                BaristaApp.elements.lottieCertificate.animInstance = lottie.loadAnimation(
-                                     BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieCertificate, animationPath, false)
-                                );
-                            })
-                            .catch(error => {
-                                console.error("Error loading Lottie certificate animation:", error);
-                                if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-red-500">(Animation failed to load)</p>';
-                            });
+                                // --- END ADSENSE POLICY CHANGE ---
+                            } else {
+                                console.warn("Sidebar ad container not found for init.");
+                            }
+                        }, 1500);
+                    },
+                    manageContentAdsVisibility: (showSectionSelector) => {
+                        // --- ADSENSE POLICY CHANGE ---
+                        const dashboardAdConfig = BaristaApp.ui.ads._getAdConfig('#dashboardAd');
+                        const lessonAdConfig = BaristaApp.ui.ads._getAdConfig('#lessonPageAd');
+
+                        // Always start by attempting to hide both content ads
+                        if (dashboardAdConfig && dashboardAdConfig.container) {
+                            dashboardAdConfig.container.classList.add("hidden");
+                        }
+                        if (lessonAdConfig && lessonAdConfig.container) {
+                            lessonAdConfig.container.classList.add("hidden");
+                        }
+
+                        // If ads are globally hidden by a modal, do nothing more.
+                        if (BaristaApp.state.adsCurrentlyHiddenByModal) {
+                            console.log("AdSense: Content ads visibility managed - globally hidden by modal.");
+                            return;
+                        }
+
+                        // Determine which ad to potentially show
+                        if (showSectionSelector === '#dashboardAd' && dashboardAdConfig) {
+                            // Dashboard content check: Ensure onboarding is complete
+                            if (BaristaApp.elements.userName && BaristaApp.state.user.name !== "Trainee") {
+                                BaristaApp.ui.ads.requestAdForSection('#dashboardAd');
+                                console.log("AdSense: Dashboard ad requested by manageContentAdsVisibility.");
+                            } else {
+                                 console.warn("AdSense: Dashboard ad NOT shown by manageContentAdsVisibility, dashboard content/state not ready (e.g., onboarding pending).");
+                            }
+                        } else if (showSectionSelector === '#lessonPageAd' && lessonAdConfig) {
+                            // Lesson page content check
+                            const activeTabEl = BaristaApp.elements.lessonPage?.querySelector('#tabs .tab.active');
+                            const isTheoryOrPractical = activeTabEl && (activeTabEl.id === 'theoryTab' || activeTabEl.id === 'practicalTab');
+                            const mainContentText = BaristaApp.elements.lessonContent ? (BaristaApp.elements.lessonContent.textContent || "") : "";
+                            const isContentSubstantial = mainContentText.trim().length > 150; // Content length threshold
+
+                            if (isTheoryOrPractical && isContentSubstantial) {
+                                BaristaApp.ui.ads.requestAdForSection('#lessonPageAd');
+                                console.log("AdSense: Lesson page ad requested by manageContentAdsVisibility.");
+                            } else {
+                                console.warn(`AdSense: Lesson page ad NOT shown by manageContentAdsVisibility. Tab: ${activeTabEl?.id}, Substantial Content: ${isContentSubstantial}`);
+                            }
+                        } else if (showSectionSelector === null) {
+                            // This case means explicitly hide all content ads (dashboard & lesson)
+                            console.log("AdSense: All content ads explicitly hidden by manageContentAdsVisibility(null).");
+                        }
+                        // --- END ADSENSE POLICY CHANGE ---
+                    },
+                    hideAdsForModal: () => { BaristaApp.state.adsCurrentlyHiddenByModal = true; BaristaApp.ui.ads.manageContentAdsVisibility(null); console.log("AdSense: Content ads hidden for modal."); },
+                    restoreAdsAfterModal: () => {
+                        BaristaApp.state.adsCurrentlyHiddenByModal = false;
+                        if (BaristaApp.elements.dashboard?.classList.contains('active')) BaristaApp.ui.ads.manageContentAdsVisibility('#dashboardAd');
+                        else if (BaristaApp.elements.lessonPage?.classList.contains('active')) BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd');
+                        console.log("AdSense: Attempting to restore ads after modal.");
                     }
-                } catch (e) {
-                    console.error("Error setting up certificate Lottie animation:", e);
-                    if(BaristaApp.elements.lottieCertificate) BaristaApp.elements.lottieCertificate.innerHTML = '<p class="text-xs text-red-500">(Animation setup error)</p>';
-                }
-            }
-
-                // Add GSAP animation
-                gsap.fromTo(
-                    BaristaApp.elements.certificate.querySelector(".glass"),
-                    { opacity: 0, y: 30, scale: 0.95 },
-                    { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "elastic.out(1, 0.65)" }
-                );
-
-                BaristaApp.util.trackAnalytics("Viewed Certificate");
-            },
-        ads: {
-            initSidebarAd: () => {
-                if (typeof adsbygoogle === 'undefined') {
-                    console.warn("AdSense library not loaded. Skipping sidebar ad.");
-                    return;
-                }
-                const adContainer = BaristaApp.elements.sidebar?.querySelector('.ad-placeholder');
-                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="7414600322"]');
-
-                if (adContainer && adIns) {
-                    // adContainer.classList.remove("hidden"); // Only if it's hidden by default
-
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
-                                console.log("AdSense: Pushing sidebar ad (7414600322).");
-                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
-                                catch (e) { console.error("AdSense: Error pushing sidebar ad:", e); }
-                            } else {
-                                console.warn("AdSense: Sidebar ad container (7414600322) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
-                            }
-                        }, 200); // Slightly increased delay
-                    });
-                }
-            },
-
-            showDashboardAd: () => {
-                if (typeof adsbygoogle === 'undefined') {
-                    console.warn("AdSense library not loaded. Skipping dashboard ad.");
-                    return;
-                }
-                const adContainer = document.getElementById('dashboardAd');
-                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="3502133839"]');
-
-                if (adContainer && adIns && BaristaApp.elements.dashboard?.classList.contains('active')) {
-                    adContainer.classList.remove("hidden");
-
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
-                                console.log("AdSense: Pushing dashboard ad (3502133839).");
-                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
-                                catch (e) { console.error("AdSense: Error pushing dashboard ad:", e); }
-                            } else {
-                                console.warn("AdSense: Dashboard ad (3502133839) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
-                            }
-                        }, 200); // Slightly increased delay
-                    });
-                } else if (adContainer) {
-                    adContainer.classList.add("hidden");
-                }
-            },
-
-            showLessonAd: () => {
-                if (typeof adsbygoogle === 'undefined') {
-                    console.warn("AdSense library not loaded. Skipping lesson ad.");
-                    return;
-                }
-                const adContainer = document.getElementById('lessonPageAd');
-                const adIns = adContainer?.querySelector('ins.adsbygoogle[data-ad-slot="3717756254"]');
-
-                if (adContainer && adIns && BaristaApp.elements.lessonPage?.classList.contains('active')) {
-                    adContainer.classList.remove("hidden");
-
-                    requestAnimationFrame(() => {
-                        setTimeout(() => {
-                            if (adContainer.offsetParent !== null && adContainer.offsetWidth > 0 && adContainer.offsetHeight > 0) {
-                                console.log("AdSense: Pushing lesson page ad (3717756254).");
-                                try { (adsbygoogle = window.adsbygoogle || []).push({}); }
-                                catch (e) { console.error("AdSense: Error pushing lesson page ad:", e); }
-                            } else {
-                                console.warn("AdSense: Lesson page ad (3717756254) not ready/visible for push. Visible:", adContainer.offsetParent !== null, "Width:", adContainer.offsetWidth, "Height:", adContainer.offsetHeight);
-                            }
-                        }, 200); // Slightly increased delay
-                    });
-                } else if (adContainer) {
-                    adContainer.classList.add("hidden");
-                }
-            },
-
-            hideAllContentAds: () => {
-                const dashboardAd = document.getElementById('dashboardAd');
-                if (dashboardAd) dashboardAd.classList.add('hidden');
-
-                const lessonPageAd = document.getElementById('lessonPageAd');
-                if (lessonPageAd) lessonPageAd.classList.add('hidden');
-                console.log("AdSense: Hiding all content ads.");
-            }
-        },
-
-
+                },
                 downloadCertificate: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-                    const REQUIRED_CERTIFICATE_CODE =  "INCORRECT90"; // User: Change this or set to "" to disable code
-                    const HINT_FOR_CODE = REQUIRED_CERTIFICATE_CODE === ""
-
+                    const REQUIRED_CERTIFICATE_CODE =  "INCORRECT90"; // This should match your intended code
+                    // const HINT_FOR_CODE = REQUIRED_CERTIFICATE_CODE === "" ? "(No code needed for demo)" : "(Hint: Check Day 14 Quiz Explanation)";
+                    // For a real scenario, you wouldn't provide a direct hint like this.
+                    const HINT_FOR_CODE = "(Hint: Check Day 14 Quiz Explanation for a clue, or contact admin if stuck!)"
 
                     let userEnteredCode = "";
                     if (REQUIRED_CERTIFICATE_CODE !== "") {
                         userEnteredCode = prompt(`Please enter the secret code to download the certificate. ${HINT_FOR_CODE}`, "");
-                        if (userEnteredCode === null) {
-                            BaristaApp.util.showInfo("Certificate download cancelled.");
-                            return;
-                        }
+                        if (userEnteredCode === null) { BaristaApp.util.showInfo("Certificate download cancelled."); return; }
                     }
-
                     if (REQUIRED_CERTIFICATE_CODE === "" || userEnteredCode === REQUIRED_CERTIFICATE_CODE) {
                         BaristaApp.util.showInfo(t.certificateGeneration);
                         BaristaApp.ui._generatePdfCertificateInternal();
@@ -2471,504 +2388,210 @@
                 },
                 _generatePdfCertificateInternal: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-                    const certificateElement = document.querySelector('#certificate .glass');
-                    const downloadButton = certificateElement?.querySelector('#certificateActionButtons button[onclick="BaristaApp.ui.downloadCertificate()"]');
+                    const certEl = document.querySelector('#certificate .glass');
+                    const dlBtn = certEl?.querySelector('#certificateActionButtons button[onclick="BaristaApp.ui.downloadCertificate()"]');
                     const certLogo = document.getElementById('cert-logo');
-
-
-                    if (!certificateElement) {
-                        BaristaApp.util.showError(t.certificateErrorGeneric);
-                        console.error("Certificate element not found for PDF generation.");
-                        return;
-                    }
-
-                    if (typeof window.html2canvas === 'undefined' || typeof window.jspdf === 'undefined' || typeof window.jspdf.jsPDF === 'undefined') {
-                        BaristaApp.util.showError(t.certificateErrorSecurity + " (html2canvas or jsPDF missing)");
-                        console.error("html2canvas or jsPDF library missing. Ensure they are loaded.");
-                        return;
-                    }
-
-                    const { jsPDF } = window.jspdf;
-                    if (downloadButton) downloadButton.disabled = true;
-
-                    const originalTheme = BaristaApp.state.theme;
-                    const wasDarkTheme = originalTheme === 'dark';
-                    if (wasDarkTheme) {
-                        BaristaApp.state.theme = 'light';
-                        BaristaApp.ui.applyTheme();
-                         if (certLogo) certLogo.classList.add('light-mode-invert');
-                    }
-
-                    requestAnimationFrame(() => {
-                        html2canvas(certificateElement, {
-                            scale: 3,
-                            useCORS: true, // Important for external images, though yours are local
-                            allowTaint: true, // Might help with local images in some cases, but useCORS is better
-                            backgroundColor: null, // Use element's background
-                            logging: false, // Can be true for debugging
-                            removeContainer: false, // Keep original DOM intact
-                            windowWidth: certificateElement.scrollWidth,
-                            windowHeight: certificateElement.scrollHeight,
-                            onclone: (clonedDoc) => {
-                                const content = clonedDoc.querySelector('#certificate .glass');
-                                if (content) {
-                                    content.style.width = '297mm'; // A4 Landscape width
-                                    content.style.height = '210mm'; // A4 Landscape height
-                                    content.style.padding = '20mm'; // Add some padding
-                                    content.style.margin = '0 auto'; // Center it (though less relevant for direct canvas)
-                                    content.style.boxSizing = 'border-box';
-                                    content.style.backgroundColor = 'var(--bg-primary-light)'; // Explicit light background
-                                    content.style.border = '3mm solid var(--accent-primary)'; // Nice border
-                                    content.style.color = 'var(--text-primary-light)'; // Ensure text is dark
-
-                                    // Style adjustments for PDF - ensure fonts are loaded/available
-                                    clonedDoc.querySelectorAll('#certificate h2').forEach(h2 => {
-                                        h2.style.color = 'var(--accent-primary)';
-                                        h2.style.fontSize = '2.7rem'; // Adjust as needed
-                                    });
-                                    clonedDoc.querySelectorAll('#trainee-name').forEach(nameEl => {
-                                        nameEl.style.color = 'var(--text-primary-light)';
-                                        nameEl.style.fontSize = '2.1rem';
-                                    });
-                                    clonedDoc.querySelectorAll('#certificate p, #certificate div > div >p').forEach(p => {
-                                        p.style.color = 'var(--text-secondary-light)';
-                                        if (p.classList.contains('font-semibold')) {
-                                             p.style.color = 'var(--text-primary-light)';
-                                        }
-                                    });
-                                    const logoInClone = clonedDoc.getElementById('cert-logo');
-                                    if(logoInClone) {
-                                        if (certLogo && certLogo.classList.contains('light-mode-invert')) { // If original logo had the invert class
-                                            logoInClone.style.filter = 'invert(1) contrast(0.8) brightness(1.1)';
-                                        } else { // Otherwise, ensure no filter from dark mode is carried over to light mode PDF
-                                            logoInClone.style.filter = 'none';
-                                        }
-                                    }
-
-
-                                    const buttonsContainer = content.querySelector('#certificateActionButtons');
-                                    if (buttonsContainer) buttonsContainer.style.display = 'none';
-                                }
-                            }
-                        }).then(canvas => {
-                            try {
-                                const imgData = canvas.toDataURL("image/png", 1.0);
-                                const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-                                pdf.addImage(imgData, "PNG", 0, 0, 297, 210, undefined, 'FAST');
-                                pdf.save(`Certificate_${BaristaApp.state.user.name.replace(/\s+/g, "_")}_${new Date().toISOString().split('T')[0]}.pdf`);
-                                BaristaApp.util.showSuccess(t.certificateSuccess);
-                                BaristaApp.util.trackAnalytics("Certificate Downloaded Successfully");
-                            } catch (error) {
-                                console.error("PDF generation error:", error);
-                                BaristaApp.util.showError(t.certificateErrorGeneric + " (PDF creation failed - " + error.message + ")");
-                            }
-                        }).catch(error => {
-                            console.error("html2canvas error:", error);
-                            BaristaApp.util.showError(t.certificateErrorCapture + " (" + error.message + ")");
-                        }).finally(() => {
-                            if (downloadButton) downloadButton.disabled = false;
-                            if (wasDarkTheme) {
-                                BaristaApp.state.theme = originalTheme;
-                                BaristaApp.ui.applyTheme();
-                                if (certLogo) certLogo.classList.remove('light-mode-invert');
-                            }
-                        });
-                    });
+                    if (!certEl) { BaristaApp.util.showError(t.certificateErrorGeneric); return; }
+                    if (typeof html2canvas==='undefined'||typeof jspdf==='undefined'||typeof jspdf.jsPDF==='undefined'){BaristaApp.util.showError(t.certificateErrorSecurity+" (libs missing)");return;}
+                    const {jsPDF}=window.jspdf; if(dlBtn)dlBtn.disabled=true; const origTheme=BaristaApp.state.theme, wasDark=origTheme==='dark'; if(wasDark){BaristaApp.state.theme='light';BaristaApp.ui.applyTheme();if(certLogo)certLogo.classList.add('light-mode-invert');}
+                    requestAnimationFrame(()=>{html2canvas(certEl,{scale:3,useCORS:true,allowTaint:true,backgroundColor:null,logging:false,removeContainer:false,windowWidth:certEl.scrollWidth,windowHeight:certEl.scrollHeight,
+                    onclone:(doc)=>{const c=doc.querySelector('#certificate .glass');if(c){c.style.width='297mm';c.style.height='210mm';c.style.padding='20mm';c.style.margin='0 auto';c.style.boxSizing='border-box';c.style.backgroundColor='var(--bg-primary-light)';c.style.border='3mm solid var(--accent-primary)';c.style.color='var(--text-primary-light)';doc.querySelectorAll('#certificate h2').forEach(h=>{h.style.color='var(--accent-primary)';h.style.fontSize='2.7rem'});doc.querySelectorAll('#trainee-name').forEach(n=>{n.style.color='var(--text-primary-light)';n.style.fontSize='2.1rem'});doc.querySelectorAll('#certificate p, #certificate div>div>p').forEach(p=>{p.style.color='var(--text-secondary-light)';if(p.classList.contains('font-semibold'))p.style.color='var(--text-primary-light)'});const l=doc.getElementById('cert-logo');if(l){if(certLogo&&certLogo.classList.contains('light-mode-invert'))l.style.filter='invert(1) contrast(0.8) brightness(1.1)';else l.style.filter='none';}const b=c.querySelector('#certificateActionButtons');if(b)b.style.display='none';}}}).then(cvs=>{try{const i=cvs.toDataURL("image/png",1.0),p=new jsPDF({orientation:"landscape",unit:"mm",format:"a4"});p.addImage(i,"PNG",0,0,297,210,void 0,'FAST');p.save(`Certificate_${BaristaApp.state.user.name.replace(/\s+/g,"_")}_${new Date().toISOString().split('T')[0]}.pdf`);BaristaApp.util.showSuccess(t.certificateSuccess);BaristaApp.util.trackAnalytics("Cert Downloaded");}catch(e){console.error("PDF gen error:",e);BaristaApp.util.showError(t.certificateErrorGeneric+" (PDF fail - "+e.message+")");}}).catch(e=>{console.error("html2canvas error:",e);BaristaApp.util.showError(t.certificateErrorCapture+" ("+e.message+")");}).finally(()=>{if(dlBtn)dlBtn.disabled=false;if(wasDark){BaristaApp.state.theme=origTheme;BaristaApp.ui.applyTheme();if(certLogo)certLogo.classList.remove('light-mode-invert');}});});
                 },
                 animateDashboardElements: () => {
                     if (!BaristaApp.elements.dashboard || !BaristaApp.elements.dashboard.querySelector(".glass")) return;
                     gsap.fromTo(BaristaApp.elements.dashboard.querySelector(".glass"),
                         {opacity:0, y:25, scale: 0.97},
-                        {opacity:1, y:0, scale: 1, duration:0.6, delay: 0.1, ease: "power2.out"}
+                        {opacity:1, y:0, scale: 1, duration:0.6, delay: 0.1, ease: "power2.out",
+                            onComplete: () => {
+                                // --- ADSENSE POLICY CHANGE ---
+                                // Ad visibility for dashboard is now handled by manageContentAdsVisibility,
+                                // which includes the onboarding check.
+                                if (!BaristaApp.state.adsCurrentlyHiddenByModal && !BaristaApp.state.isFirstVisit) {
+                                    BaristaApp.ui.ads.manageContentAdsVisibility('#dashboardAd');
+                                }
+                                // --- END ADSENSE POLICY CHANGE ---
+                            }
+                        }
                     );
                     const overviewCards = BaristaApp.elements.dashboard.querySelectorAll('.grid > .glass');
-                    if(overviewCards.length > 0){
-                        gsap.from(overviewCards, { opacity: 0, y: 25, stagger: 0.12, duration: 0.5, delay:0.3, ease: "power2.out" });
-                    }
+                    if(overviewCards.length > 0) gsap.from(overviewCards, { opacity: 0, y: 25, stagger: 0.12, duration: 0.5, delay:0.3, ease: "power2.out" });
                 },
                 animateLessonContentLoaded: (container) => {
                     if (container && container.children.length > 0) {
-                        gsap.utils.toArray('.gsap-fade-in', container).forEach(el => {
-                            gsap.fromTo(el, {opacity:0, y:10}, {opacity:1, y:0, duration:0.5, ease:'power1.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none'}});
-                        });
-                        gsap.utils.toArray('.gsap-slide-in-left', container).forEach(el => {
-                            gsap.fromTo(el, {opacity:0, x:-20}, {opacity:1, x:0, duration:0.6, ease:'power2.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none'}});
-                        });
-                         gsap.utils.toArray('.gsap-slide-in-up', container).forEach(el => {
-                            gsap.fromTo(el, {opacity:0, y:20}, {opacity:1, y:0, duration:0.6, ease:'power2.out', scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none'}});
-                        });
-                    }
-                },
-                lottieOptions: (container, path, loop = true) => ({
-                    container: container, path: path, renderer: "svg",
-                    loop: loop, autoplay: true, name: container.id
-                }),
-                loadLottieAnimations: () => {
-                    if (typeof lottie === 'undefined') {
-                        console.warn("Lottie library not loaded. Animations will not play."); return;
-                    }
-                    // IMPORTANT: For Lottie animations to load correctly from local files (e.g., "lottie/progress-animation.json"),
-                    // you MUST run this HTML file through a local web server.
-                    // Opening the index.html directly via file:/// will cause CORS errors.
+                        const theoryElements = gsap.utils.toArray('.gsap-fade-in, .gsap-slide-in-left, .gsap-slide-in-up', container);
+                        if (theoryElements.length > 0) {
+                            ScrollTrigger.batch(theoryElements, {
+                                onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, x:0, stagger: 0.1, duration:0.5, ease:'power1.out'}),
+                                start: 'top 90%',
+                            });
+                        }
+                     // --- ADSENSE POLICY CHANGE ---
+                    setTimeout(() => {
+                        const activeTabEl = BaristaApp.elements.lessonPage?.querySelector('#tabs .tab.active');
+                        const isTheoryOrPractical = activeTabEl && (activeTabEl.id === 'theoryTab' || activeTabEl.id === 'practicalTab');
+                        const mainContentText = container ? (container.textContent || "") : "";
+                        const isContentSubstantial = mainContentText.trim().length > 150; // More than 150 characters
 
-                    if (BaristaApp.elements.lottieProgress) {
-                        if (BaristaApp.elements.lottieProgress.animInstance) BaristaApp.elements.lottieProgress.animInstance.destroy();
-                        BaristaApp.elements.lottieProgress.innerHTML = ''; // Clear previous animation
-                        try {
-                           // Assuming "lottie/progress-animation.json" is in a 'lottie' folder next to index.html
-                           BaristaApp.elements.lottieProgress.animInstance = lottie.loadAnimation(
-                               BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieProgress, "lottie/progress-animation.json")
-                           );
-                           // Optional: Add a check if animation actually loaded if issues persist
-                           // setTimeout(() => { if (BaristaApp.elements.lottieProgress && !BaristaApp.elements.lottieProgress.querySelector('svg') && BaristaApp.elements.lottieProgress.animInstance) console.error("Lottie progress animation failed to load. Check path and ensure you're using a local server."); }, 1000);
-                        } catch (e) { console.error("Error setting up progress Lottie:", e); }
+                        if (!BaristaApp.state.adsCurrentlyHiddenByModal && isTheoryOrPractical && isContentSubstantial) {
+                            BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd'); // This will check tab and content
+                            console.log(`AdSense: Requesting lesson page ad. Tab: ${activeTabEl?.id}, Content substantial: ${isContentSubstantial}`);
+                        } else {
+                            // If not theory/practical or content not substantial, ensure ad remains hidden or is hidden
+                            // manageContentAdsVisibility called with null will hide #lessonPageAd and #dashboardAd
+                            BaristaApp.ui.ads.manageContentAdsVisibility(null);
+                            console.warn(`AdSense: Lesson page ad for tab '${activeTabEl?.id}' hidden by animateLessonContentLoaded. Conditions: ModalHidden=${!BaristaApp.state.adsCurrentlyHiddenByModal}, isTheoryOrPractical=${isTheoryOrPractical}, isContentSubstantial=${isContentSubstantial}`);
+                        }
+                    }, 400); // Keep the delay to allow content to render
+                    // --- END ADSENSE POLICY CHANGE ---
+                    } else {
+                         // If container has no children, still check if we should show an ad (though unlikely for lesson content)
+                         // This usually means manageContentAdsVisibility should hide it.
+                         BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd');
                     }
+                     if(ScrollTrigger.getAll().length > 0) ScrollTrigger.refresh();
                 },
+                lottieOptions: (container, path, loop = true) => ({ container: container, path: path, renderer: "svg", loop: loop, autoplay: true, name: container.id }),
+                loadLottieAnimations: () => { if (typeof lottie === 'undefined') { console.warn("Lottie lib not loaded."); return; } if (BaristaApp.elements.lottieProgress) { if (BaristaApp.elements.lottieProgress.animInstance) BaristaApp.elements.lottieProgress.animInstance.destroy(); BaristaApp.elements.lottieProgress.innerHTML = ''; try { BaristaApp.elements.lottieProgress.animInstance = lottie.loadAnimation( BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieProgress, "lottie/progress-animation.json")); } catch (e) { console.error("Lottie progress error:", e); } } },
                 updateTranslations: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-
                     if(BaristaApp.elements.search) BaristaApp.elements.search.placeholder = t.search;
-
-                    const welcomeTextEl = BaristaApp.elements.dashboard ? BaristaApp.elements.dashboard.querySelector("h2") : null;
-                    if (welcomeTextEl && welcomeTextEl.querySelector("#userName")) {
-                         welcomeTextEl.innerHTML = `${t.welcome}, <span id="userName" class="text-amber-400">${BaristaApp.state.user.name}</span>!`; BaristaApp.elements.userName = document.getElementById("userName"); // re-cache userName after innerHTML change
-                    }
-
-                    const onboardingTitle = BaristaApp.elements.onboardingModal ? BaristaApp.elements.onboardingModal.querySelector("h3") : null;
-                    if(onboardingTitle) onboardingTitle.textContent = t.onboarding;
-
-                    const profileModalTitle = BaristaApp.elements.profileModal ? BaristaApp.elements.profileModal.querySelector("h3") : null;
-                    if (profileModalTitle) profileModalTitle.textContent = t.profile;
-
-                    const leaderboardModalTitle = BaristaApp.elements.leaderboardModal ? BaristaApp.elements.leaderboardModal.querySelector("h3") : null;
-                    if (leaderboardModalTitle) leaderboardModalTitle.textContent = t.leaderboard;
-
-                    const glossaryModalTitleEl = BaristaApp.elements.glossaryModal ? BaristaApp.elements.glossaryModal.querySelector("h3") : null;
-                    if (glossaryModalTitleEl) glossaryModalTitleEl.textContent = t.glossary;
-                    if (BaristaApp.elements.glossarySearch) BaristaApp.elements.glossarySearch.placeholder = t.glossarySearch;
-                    if (BaristaApp.elements.glossaryButtonSidebar) {
-                        const textNode = Array.from(BaristaApp.elements.glossaryButtonSidebar.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
-                        if(textNode) textNode.textContent = ` ${t.glossary}`;
-                    }
-
-
-                    if (t.theoryTabName && BaristaApp.elements.theoryTab) BaristaApp.elements.theoryTab.textContent = t.theoryTabName;
-                    if (t.practicalTabName && BaristaApp.elements.practicalTab) BaristaApp.elements.practicalTab.textContent = t.practicalTabName;
-                    if (t.quizTabName && BaristaApp.elements.quizTab) BaristaApp.elements.quizTab.textContent = t.quizTabName;
-                    if (t.notesTabName && BaristaApp.elements.notesTab) BaristaApp.elements.notesTab.textContent = t.notesTabName;
-
+                    const welcomeEl = BaristaApp.elements.dashboard?.querySelector("h2");
+                    if (welcomeEl && welcomeEl.querySelector("#userName")) { welcomeEl.innerHTML = `${t.welcome}, <span id="userName" class="text-amber-400">${BaristaApp.state.user.name}</span>!`; BaristaApp.elements.userName = document.getElementById("userName");}
+                    const obTitle = BaristaApp.elements.onboardingModal?.querySelector("h3"); if(obTitle) obTitle.textContent = t.onboarding;
+                    const pTitle = BaristaApp.elements.profileModal?.querySelector("h3"); if(pTitle) pTitle.textContent = t.profile;
+                    const lTitle = BaristaApp.elements.leaderboardModal?.querySelector("h3"); if(lTitle) lTitle.textContent = t.leaderboard;
+                    const gTitle = BaristaApp.elements.glossaryModal?.querySelector("h3"); if(gTitle) gTitle.textContent = t.glossary;
+                    if(BaristaApp.elements.glossarySearch) BaristaApp.elements.glossarySearch.placeholder = t.glossarySearch;
+                    if(BaristaApp.elements.glossaryButtonSidebar) {const n=Array.from(BaristaApp.elements.glossaryButtonSidebar.childNodes).find(node=>node.nodeType===Node.TEXT_NODE);if(n)n.textContent=` ${t.glossary}`; }
+                    if(BaristaApp.elements.theoryTab) BaristaApp.elements.theoryTab.textContent = t.theoryTabName;
+                    if(BaristaApp.elements.practicalTab) BaristaApp.elements.practicalTab.textContent = t.practicalTabName;
+                    if(BaristaApp.elements.quizTab) BaristaApp.elements.quizTab.textContent = t.quizTabName;
+                    if(BaristaApp.elements.notesTab) BaristaApp.elements.notesTab.textContent = t.notesTabName;
                     if(BaristaApp.elements.profileButton) BaristaApp.elements.profileButton.dataset.tooltip = t.profile;
-
-                    if (BaristaApp.elements.certificate && !BaristaApp.elements.certificate.classList.contains('hidden')) {
-                         if(BaristaApp.elements.certDate) BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(BaristaApp.state.language === 'ne' ? 'ne-NP' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                    }
-                    const continueLearningBtn = document.querySelector('button[onclick="BaristaApp.lessonManager.continueToNextLesson()"]');
-                    if(continueLearningBtn) continueLearningBtn.textContent = t.continueLearning;
-
-                    const exploreGlossaryBtn = BaristaApp.elements.dashboard ? BaristaApp.elements.dashboard.querySelector('button[onclick="BaristaApp.modalManager.showGlossary()"]') : null;
-                    if(exploreGlossaryBtn) {
-                         const icon = exploreGlossaryBtn.querySelector('i');
-                         exploreGlossaryBtn.textContent = ` ${t.exploreGlossary}`;
-                         if(icon) exploreGlossaryBtn.prepend(icon);
-                    }
-
-
+                    if(BaristaApp.elements.certificate && !BaristaApp.elements.certificate.classList.contains('hidden') && BaristaApp.elements.certDate) BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(BaristaApp.state.language==='ne'?'ne-NP':'en-US',{year:'numeric',month:'long',day:'numeric'});
+                    const clBtn = document.querySelector('button[onclick="BaristaApp.lessonManager.continueToNextLesson()"]'); if(clBtn) clBtn.textContent = t.continueLearning;
+                    const egBtn = BaristaApp.elements.dashboard?.querySelector('button[onclick="BaristaApp.modalManager.showGlossary()"]'); if(egBtn){const i=egBtn.querySelector('i');egBtn.textContent=` ${t.exploreGlossary}`;if(i)egBtn.prepend(i);}
                     if(BaristaApp.elements.submitQuizButton) BaristaApp.elements.submitQuizButton.textContent = t.submitAnswer;
                     if(BaristaApp.elements.markDayCompleteButton) BaristaApp.elements.markDayCompleteButton.textContent = t.markDayComplete;
-
-                    // New: Update Donation Modal title and Sidebar button text
-                    const donationModalTitleEl = BaristaApp.elements.donationModal ? BaristaApp.elements.donationModal.querySelector("h3") : null;
-                    if (donationModalTitleEl) donationModalTitleEl.textContent = t.donationModalTitle;
-                    if (BaristaApp.elements.donationButtonSidebar) {
-                        const textNode = Array.from(BaristaApp.elements.donationButtonSidebar.childNodes).find(node => node.nodeType === Node.TEXT_NODE);
-                        if(textNode) textNode.textContent = ` ${t.supportUs}`;
-                    }
-
-                    BaristaApp.ui.updateProgressDisplay();
-                    BaristaApp.ui.populateDays(BaristaApp.elements.search ? BaristaApp.elements.search.value : "");
-
-                    if (BaristaApp.state.currentDay > 0 && BaristaApp.elements.lessonPage && !BaristaApp.elements.lessonPage.classList.contains('hidden')) {
-                        const activeTabElement = BaristaApp.elements.lessonPage.querySelector('#tabs .tab.active');
-                        if (activeTabElement) {
-                            const activeTabId = activeTabElement.id.replace('Tab', '').toLowerCase();
-                            BaristaApp.lessonManager.setActiveTab(activeTabId);
-                        }
-                    }
-                     BaristaApp.ui.applyTheme();
+                    const donTitle = BaristaApp.elements.donationModal?.querySelector("h3"); if(donTitle) donTitle.textContent = t.donationModalTitle;
+                    if(BaristaApp.elements.donationButtonSidebar) {const n=Array.from(BaristaApp.elements.donationButtonSidebar.childNodes).find(node=>node.nodeType===Node.TEXT_NODE);if(n)n.textContent=` ${t.supportUs}`; }
+                    BaristaApp.ui.updateProgressDisplay(); BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
+                    if (BaristaApp.state.currentDay > 0 && BaristaApp.elements.lessonPage && !BaristaApp.elements.lessonPage.classList.contains('hidden')) { const activeTab = BaristaApp.elements.lessonPage.querySelector('#tabs .tab.active'); if (activeTab) BaristaApp.lessonManager.setActiveTab(activeTab.id.replace('Tab','').toLowerCase()); }
+                    BaristaApp.ui.applyTheme();
                 }
-            },
+            }, // End of ui object
             modalManager: {
                 _openModal: (modalElement, focusElement = null) => {
                     if (!modalElement || !modalElement.querySelector(".modal-content-area")) return;
-
-                    // Check if it's a "full screen" or significant modal that would obscure content ads
-                    const isSignificantModal = modalElement.id === 'onboardingModal' ||
-                                             modalElement.id === 'profileModal' ||
-                                             modalElement.id === 'quizModal' ||
-                                             modalElement.id === 'donationModal' ||
-                                             modalElement.id === 'leaderboardModal' ||
-                                             modalElement.id === 'glossaryModal';
-
-                    if (isSignificantModal) {
-                        BaristaApp.ui.ads.hideAllContentAds();
-                    }
-
-                    modalElement.classList.remove("hidden");
-                    modalElement.classList.add("flex");
+                    const isSignificantModal = ['onboardingModal', 'profileModal', 'quizModal', 'donationModal', 'leaderboardModal', 'glossaryModal'].includes(modalElement.id);
+                    if (isSignificantModal) BaristaApp.ui.ads.hideAdsForModal();
+                    modalElement.classList.remove("hidden"); modalElement.classList.add("flex");
                     gsap.to(modalElement.querySelector(".modal-content-area"), { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
-                    if (focusElement) {
-                        setTimeout(() => focusElement.focus(), 100);
-                    }
+                    if (focusElement) setTimeout(() => focusElement.focus(), 100);
                 },
                 _closeModal: (modalElement) => {
                     if (!modalElement || !modalElement.querySelector(".modal-content-area")) return;
                     gsap.to(modalElement.querySelector(".modal-content-area"), {
                         opacity: 0, y: 10, scale: 0.95, duration: 0.3, ease: "back.in(1.7)",
                         onComplete: () => {
-                            modalElement.classList.add("hidden");
-                            modalElement.classList.remove("flex");
-
-                            // After modal closes, decide which ad to show based on active content
-                            const isSignificantModal = modalElement.id === 'onboardingModal' ||
-                                                     modalElement.id === 'profileModal' ||
-                                                     modalElement.id === 'quizModal' ||
-                                                     modalElement.id === 'donationModal' ||
-                                                     modalElement.id === 'leaderboardModal' ||
-                                                     modalElement.id === 'glossaryModal';
-
-                            if (isSignificantModal) { // Only restore if it was a modal that hid ads
-                                if (BaristaApp.elements.dashboard?.classList.contains('active')) {
-                                    BaristaApp.ui.ads.showDashboardAd();
-                                } else if (BaristaApp.elements.lessonPage?.classList.contains('active')) {
-                                    BaristaApp.ui.ads.showLessonAd();
-                                }
-                                // If certificate page is active, its own logic keeps ads hidden.
-                            }
+                            modalElement.classList.add("hidden"); modalElement.classList.remove("flex");
+                            const isSignificantModal = ['onboardingModal', 'profileModal', 'quizModal', 'donationModal', 'leaderboardModal', 'glossaryModal'].includes(modalElement.id);
+                            if (isSignificantModal) BaristaApp.ui.ads.restoreAdsAfterModal();
                         }
                     });
                 },
-                showOnboarding: () => {
-                    BaristaApp.modalManager._openModal(BaristaApp.elements.onboardingModal, BaristaApp.elements.onboardingName);
-                },
-                showProfile: () => {
-                    if (!BaristaApp.elements.profileName || !BaristaApp.elements.profileEmail) return;
-                    BaristaApp.elements.profileName.value = BaristaApp.state.user.name;
-                    BaristaApp.elements.profileEmail.value = BaristaApp.state.user.email;
-                    BaristaApp.modalManager._openModal(BaristaApp.elements.profileModal, BaristaApp.elements.profileName);
-                },
+                showOnboarding: () => BaristaApp.modalManager._openModal(BaristaApp.elements.onboardingModal, BaristaApp.elements.onboardingName),
+                showProfile: () => { if (!BaristaApp.elements.profileName || !BaristaApp.elements.profileEmail) return; BaristaApp.elements.profileName.value = BaristaApp.state.user.name; BaristaApp.elements.profileEmail.value = BaristaApp.state.user.email; BaristaApp.modalManager._openModal(BaristaApp.elements.profileModal, BaristaApp.elements.profileName); },
                 closeProfile: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.profileModal),
-                showLeaderboard: () => {
-                    BaristaApp.ui.updateLeaderboardDisplay();
-                    BaristaApp.modalManager._openModal(BaristaApp.elements.leaderboardModal);
-                },
+                showLeaderboard: () => { BaristaApp.ui.updateLeaderboardDisplay(); BaristaApp.modalManager._openModal(BaristaApp.elements.leaderboardModal); },
                 closeLeaderboard: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.leaderboardModal),
-                showGlossary: () => {
-                    BaristaApp.ui.populateGlossary();
-                    BaristaApp.modalManager._openModal(BaristaApp.elements.glossaryModal, BaristaApp.elements.glossarySearch);
-                },
+                showGlossary: () => { BaristaApp.ui.populateGlossary(); BaristaApp.modalManager._openModal(BaristaApp.elements.glossaryModal, BaristaApp.elements.glossarySearch); },
                 closeGlossary: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.glossaryModal),
-                // New Donation Modal functions
-              showDonationModal: () => {
-                BaristaApp.modalManager._openModal(BaristaApp.elements.donationModal);
-                BaristaApp.util.trackAnalytics("Viewed Donation Modal");
-            },
-            closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.donationModal)
+                showDonationModal: () => { BaristaApp.modalManager._openModal(BaristaApp.elements.donationModal); BaristaApp.util.trackAnalytics("Viewed Donation Modal"); },
+                closeDonationModal: () => BaristaApp.modalManager._closeModal(BaristaApp.elements.donationModal)
             },
             lessonManager: {
-                openPage: (day) => {
-                    BaristaApp.state.currentDay = day;
-                    const dayData = CONTENT.days[day - 1];
-                    if (!dayData) {
-                        BaristaApp.util.showError("Lesson data not found for day " + day + ".");
-                        return;
-                    }
-                    if (!BaristaApp.elements.lessonPage || !BaristaApp.elements.dashboard || !BaristaApp.elements.certificate || !BaristaApp.elements.lessonTitle) {
-                        BaristaApp.util.showError("Core page elements are missing. Cannot open lesson.");
-                        return;
-                    }
+                 openPage: (day) => {
+                    BaristaApp.state.currentDay = day; const dayData = CONTENT.days[day - 1];
+                    if (!dayData || !BaristaApp.elements.lessonPage || !BaristaApp.elements.dashboard || !BaristaApp.elements.certificate || !BaristaApp.elements.lessonTitle) { BaristaApp.util.showError("Core page elements missing or lesson data not found."); return; }
                     BaristaApp.elements.lessonTitle.textContent = `Day ${day}: ${dayData.theory.title}`;
+                    BaristaApp.ui.ads.manageContentAdsVisibility(null); // --- ADSENSE POLICY CHANGE --- Defer ad decision
+                    BaristaApp.elements.dashboard.classList.add("hidden"); BaristaApp.elements.dashboard.classList.remove("active");
+                    BaristaApp.elements.certificate.classList.add("hidden"); BaristaApp.elements.certificate.classList.remove("active");
+                    BaristaApp.elements.lessonPage.classList.remove("hidden"); BaristaApp.elements.lessonPage.classList.add("active");
+                    gsap.fromTo(BaristaApp.elements.lessonPage.querySelector(".glass"), {opacity:0, y:30, scale: 0.98}, {opacity:1, y:0, scale: 1, duration:0.5, ease: "power3.out"});
                     BaristaApp.lessonManager.setActiveTab("theory");
-
-                    BaristaApp.elements.dashboard.classList.add("hidden");
-                    BaristaApp.elements.dashboard.classList.remove("active");
-
-                    BaristaApp.elements.certificate.classList.add("hidden");
-                    BaristaApp.elements.certificate.classList.remove("active");
-
-                    BaristaApp.elements.lessonPage.classList.remove("hidden");
-                    BaristaApp.elements.lessonPage.classList.add("active");
-
-                    BaristaApp.ui.ads.hideAllContentAds(); // Hide other content ads
-                    BaristaApp.ui.ads.showLessonAd();     // Show lesson ad for this page
-
-                    gsap.fromTo(BaristaApp.elements.lessonPage.querySelector(".glass"),
-                        {opacity:0, y:30, scale: 0.98},
-                        {opacity:1, y:0, scale: 1, duration:0.5, ease: "power3.out"}
-                    );
-                    BaristaApp.util.trackAnalytics(`Opened Day ${day}: ${dayData.theory.title}`);
-                    BaristaApp.ui.populateDays(BaristaApp.elements.search && BaristaApp.elements.search.value ? BaristaApp.elements.search.value : "");
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    BaristaApp.util.trackAnalytics(`Opened Day ${day}: ${dayData.theory.title}`); BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || ""); window.scrollTo({ top: 0, behavior: 'smooth' });
                 },
                 setActiveTab: (tab) => {
                     const tabs = [BaristaApp.elements.theoryTab, BaristaApp.elements.practicalTab, BaristaApp.elements.quizTab, BaristaApp.elements.notesTab];
-                    tabs.forEach(el => {
-                        if (el) el.classList.remove("active");
-                    });
-
-                    if (!BaristaApp.elements.lessonContent) {
-                        console.error("Lesson content element not found.");
-                        return;
-                    }
-                    BaristaApp.elements.lessonContent.innerHTML = "";
-
-                    let contentGenerated = false;
-                    let contentHTML = "";
+                    tabs.forEach(el => { if (el) el.classList.remove("active"); });
+                    if (!BaristaApp.elements.lessonContent) { console.error("Lesson content element not found."); return; }
+                    BaristaApp.elements.lessonContent.innerHTML = ""; let contentGenerated = false; let contentHTML = "";
                     try {
-                        if (tab === "theory" && BaristaApp.elements.theoryTab) {
-                            BaristaApp.elements.theoryTab.classList.add("active");
-                            contentHTML = BaristaApp.lessonManager.generateTheoryContent(BaristaApp.state.currentDay);
-                            contentGenerated = true;
-                        } else if (tab === "practical" && BaristaApp.elements.practicalTab) {
-                            BaristaApp.elements.practicalTab.classList.add("active");
-                            contentHTML = BaristaApp.lessonManager.generatePracticalContent(BaristaApp.state.currentDay);
-                            contentGenerated = true;
-                        } else if (tab === "quiz" && BaristaApp.elements.quizTab) {
-                            BaristaApp.elements.quizTab.classList.add("active");
-                            BaristaApp.quizManager.openModal(BaristaApp.state.currentDay);
-                            contentHTML = `<p class="text-center text-gray-400 p-8">The quiz for this lesson will open in a pop-up window. If it doesn't appear, please ensure pop-ups are not blocked for this site, or try clicking the Quiz tab again.</p>`;
-                            contentGenerated = true;
-                        } else if (tab === "notes" && BaristaApp.elements.notesTab) {
-                            BaristaApp.elements.notesTab.classList.add("active");
-                            contentHTML = BaristaApp.lessonManager.generateNotesContent(BaristaApp.state.currentDay);
-                            contentGenerated = true;
-                        }
-                    } catch (error) {
-                        console.error(`Error generating content for tab '${tab}', day ${BaristaApp.state.currentDay}:`, error);
-                        BaristaApp.util.showError("Could not load content for this tab.");
-                        contentHTML = "<p class='text-red-400 p-4'>An error occurred while loading this content. Please try refreshing the page or contact support.</p>";
-                        contentGenerated = true;
-                    }
+                        if (tab === "theory" && BaristaApp.elements.theoryTab) { BaristaApp.elements.theoryTab.classList.add("active"); contentHTML = BaristaApp.lessonManager.generateTheoryContent(BaristaApp.state.currentDay); contentGenerated = true; }
+                        else if (tab === "practical" && BaristaApp.elements.practicalTab) { BaristaApp.elements.practicalTab.classList.add("active"); contentHTML = BaristaApp.lessonManager.generatePracticalContent(BaristaApp.state.currentDay); contentGenerated = true; }
+                        else if (tab === "quiz" && BaristaApp.elements.quizTab) { BaristaApp.elements.quizTab.classList.add("active"); BaristaApp.quizManager.openModal(BaristaApp.state.currentDay); contentHTML = `<p class="text-center text-gray-400 p-8">Quiz opening...</p>`; contentGenerated = true; }
+                        else if (tab === "notes" && BaristaApp.elements.notesTab) { BaristaApp.elements.notesTab.classList.add("active"); contentHTML = BaristaApp.lessonManager.generateNotesContent(BaristaApp.state.currentDay); contentGenerated = true; }
+                    } catch (error) { console.error(`Error for tab '${tab}', day ${BaristaApp.state.currentDay}:`, error); BaristaApp.util.showError("Could not load tab content."); contentHTML = "<p>Error loading content.</p>"; contentGenerated = true; }
 
+                    // --- ADSENSE POLICY CHANGE ---
                     if (contentGenerated) {
                         BaristaApp.elements.lessonContent.innerHTML = contentHTML;
                         BaristaApp.lessonManager.setupInteractiveContent(BaristaApp.state.currentDay, tab);
-                        BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
-                        if(ScrollTrigger.getAll().length > 0) ScrollTrigger.refresh();
-                    }
-                },
-                generateTheoryContent: (day) => {
-                    const dayData = CONTENT.days[day-1];
-                    if (!dayData || !dayData.theory) return "<p class='text-gray-400 p-4'>Theory content is not available for this day.</p>";
 
-                    let theoryHTML = dayData.theory.content;
-
-                    let additionalContent = "";
-                    if (dayData.theory.objectives && dayData.theory.objectives.length > 0) {
-                        additionalContent += `<div class="prose-enhanced mt-8 pt-6 border-t border-gray-700/70"><h4 class="!mt-0">Learning Objectives:</h4><ul>${dayData.theory.objectives.map(obj => `<li class="gsap-fade-in">${obj}</li>`).join("")}</ul></div>`;
-                    }
-                    if (dayData.theory.resources && dayData.theory.resources.length > 0) {
-                         additionalContent += `<div class="prose-enhanced mt-6"><h4 class="!mt-0">Additional Resources:</h4><ul>${dayData.theory.resources.map(res => {
-                            let linkText = res.name;
-                            if (res.isAffiliate) { // Check for an affiliate flag
-                                linkText += ' <span class="text-xs text-gray-500">(Affiliate Link)</span>';
-                            }
-                            return `<li class="gsap-fade-in"><a href="${res.url}" target="_blank" rel="noopener noreferrer">${linkText}</a></li>`;
-                        }).join("")}</ul></div>`;
-                    }
-
-                    theoryHTML += additionalContent;
-
-                    theoryHTML += `
-                        <div class="mt-10 pt-6 border-t border-gray-700/70">
-                            <h4 class="text-lg font-semibold text-gray-200" id="feedback-heading">Lesson Feedback</h4>
-                            <p class="text-sm text-gray-400 mb-3">How would you rate this theory lesson?</p>
-                            <div class="flex space-x-2 items-center" role="radiogroup" aria-labelledby="feedback-heading">
-                                ${[1,2,3,4,5].map(i => `<button onclick="BaristaApp.dataManager.submitFeedback(${day}, ${i})" class="text-3xl ${BaristaApp.state.feedback[day]?.rating >= i ? 'text-yellow-400' : 'text-gray-500'} hover:text-yellow-300 transition-colors duration-150" aria-label="Rate ${i} out of 5 stars" role="radio" aria-checked="${BaristaApp.state.feedback[day]?.rating === i}">${BaristaApp.state.feedback[day]?.rating >= i ? '★' : '☆'}</button>`).join("")}
-                                ${BaristaApp.state.feedback[day]?.rating ? `<span class="text-sm text-yellow-300 ml-3" aria-live="polite">You rated ${BaristaApp.state.feedback[day].rating} star(s).</span>` : '<span class="text-sm text-gray-400 ml-3" aria-live="polite">No rating yet.</span>'}
-                            </div>
-                        </div>
-                    `;
-                    return theoryHTML;
-                },
-                generatePracticalContent: (day) => {
-                    const dayData = CONTENT.days[day - 1];
-                     if (!dayData || !dayData.practical) return "<p class='text-gray-400 p-4'>Practical exercises are not available for this day.</p>";
-                    const data = dayData.practical;
-                    let practicalHTML = `
-                        <article class="prose-enhanced">
-                            <h3>${data.title}</h3>
-                            <p class="gsap-fade-in">${data.content}</p>
-                            <h4 class="mt-6 mb-2">Tasks to Complete:</h4>
-                            <ol>
-                                ${data.tasks.map((task, idx) => `<li class="gsap-slide-in-left" style="animation-delay: ${idx * 0.1}s;">${task}</li>`).join("")}
-                            </ol>
-                        </article>
-                        <div id="practicalInteractiveContent" class="mt-8 space-y-8">
-                        </div>
-                    `;
-                    return practicalHTML;
-                },
-                generateNotesContent: (day) => {
-                    const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-                    const dayNotes = BaristaApp.state.notes[day] || "";
-                    return `
-                        <div class="prose-enhanced">
-                            <h3>Your Notes for Day ${day}</h3>
-                            <p class="text-sm text-gray-400 mb-3">${t.notes}</p>
-                            <textarea id="notesInput" class="w-full h-60 p-3 bg-gray-700 text-gray-200 rounded-md focus:ring-2 focus:ring-amber-500 border border-gray-600 placeholder-gray-500">${dayNotes}</textarea>
-                            <button onclick="BaristaApp.dataManager.saveNotes(${day}, this)" class="interactive-button mt-4">
-                                <span class="button-text">Save Notes</span>
-                                <i class="fas fa-spinner fa-spin ml-2 hidden spinner"></i>
-                            </button>
-                        </div>
-                    `;
-                },
-                setupInteractiveContent: (day, tab) => {
-                    const practicalContainer = document.getElementById('practicalInteractiveContent');
-                    if (tab === 'practical' && practicalContainer) {
-                        practicalContainer.innerHTML = '';
-                        try {
-                            const setupFunctionName = `setupDay${day}`;
-                            if (BaristaApp.practicalInteractions[setupFunctionName] && typeof BaristaApp.practicalInteractions[setupFunctionName] === 'function') {
-                                BaristaApp.practicalInteractions[setupFunctionName]();
-                            } else {
-                                console.warn(`Practical interaction setup function ${setupFunctionName} not found for Day ${day}.`);
-                                practicalContainer.innerHTML = `<p class="text-amber-400 p-4">Interactive exercises for Day ${day} are currently unavailable or being developed.</p>`;
-                            }
-
-                            if (practicalContainer.children.length > 0) {
-                                gsap.from(Array.from(practicalContainer.children), { opacity: 0, y: 20, stagger: 0.1, duration: 0.45, ease: "power2.out" });
-                            }
-                        } catch (err) {
-                            console.error(`Error setting up practical content for Day ${day}:`, err);
-                            practicalContainer.innerHTML = `<p class="text-red-400 p-4">Could not load interactive exercises for Day ${day}. Please try refreshing the page. If the problem persists, contact support.</p>`;
+                        if (tab === "theory" || tab === "practical") {
+                            // For Theory/Practical, let animateLessonContentLoaded decide based on actual content
+                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
+                        } else if (tab === "notes") {
+                            // For Notes tab, explicitly HIDE the lesson page ad.
+                            BaristaApp.ui.ads.manageContentAdsVisibility(null); // Hide lessonPageAd
+                            console.log("AdSense: Lesson page ad hidden for Notes tab.");
+                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
+                        } else if (tab === "quiz") {
+                            // For Quiz tab, modal logic handles ad visibility.
+                            // If placeholder content is shown before modal, ensure ad is hidden.
+                            BaristaApp.ui.ads.manageContentAdsVisibility(null);
+                            console.log("AdSense: Lesson page ad hidden for Quiz tab (modal will manage).");
+                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
                         }
                     }
+                    // --- END ADSENSE POLICY CHANGE ---
                 },
-                continueToNextLesson: () => {
-                    const firstUncompletedDayIndex = BaristaApp.state.progress.findIndex(p => !p);
-                    if (firstUncompletedDayIndex !== -1) {
-                        const nextDayData = CONTENT.days[firstUncompletedDayIndex];
-                        if(nextDayData) BaristaApp.lessonManager.openPage(nextDayData.day);
-                    } else {
-                        if (BaristaApp.elements.dashboard && BaristaApp.elements.dashboard.classList.contains('hidden')) {
-                             BaristaApp.elements.lessonPage.classList.add("hidden");
-                             BaristaApp.elements.lessonPage.classList.remove("active");
-                             BaristaApp.elements.certificate.classList.add("hidden");
-                             BaristaApp.elements.certificate.classList.remove("active");
-                             BaristaApp.elements.dashboard.classList.remove("hidden");
-                             BaristaApp.elements.dashboard.classList.add("active");
-                             BaristaApp.ui.animateDashboardElements();
-                        }
-
-                        BaristaApp.util.showSuccess(CONTENT.translations[BaristaApp.state.language].allLessonsCompleted);
-                        if (BaristaApp.elements.certificate && BaristaApp.elements.certificate.classList.contains('hidden')) {
-                            BaristaApp.ui.showCertificate();
-                        }
-                    }
-                }
+                generateTheoryContent: (day) => { const d=CONTENT.days[day-1];if(!d||!d.theory)return"<p>Theory N/A</p>";let h=d.theory.content;if(d.theory.objectives?.length)h+=`<div class="prose-enhanced mt-8 pt-6 border-t border-gray-700/70"><h4 class="!mt-0">Learning Objectives:</h4><ul>${d.theory.objectives.map(o=>`<li class="gsap-fade-in">${o}</li>`).join("")}</ul></div>`;if(d.theory.resources?.length)h+=`<div class="prose-enhanced mt-6"><h4 class="!mt-0">Additional Resources:</h4><ul>${d.theory.resources.map(r=>{let t=r.name;if(r.isAffiliate)t+=' <span class="text-xs text-gray-500">(Affiliate Link)</span>';return`<li class="gsap-fade-in"><a href="${r.url}" target="_blank" rel="noopener noreferrer">${t}</a></li>`}).join("")}</ul></div>`;h+=`<div class="mt-10 pt-6 border-t border-gray-700/70"><h4 id="feedback-heading">Lesson Feedback</h4><p class="text-sm text-gray-400 mb-3">Rate this theory lesson?</p><div class="flex space-x-2 items-center" role="radiogroup" aria-labelledby="feedback-heading">${[1,2,3,4,5].map(i=>`<button onclick="BaristaApp.dataManager.submitFeedback(${d.day},${i})" class="text-3xl ${BaristaApp.state.feedback[d.day]?.rating>=i?'text-yellow-400':'text-gray-500'} hover:text-yellow-300" aria-label="Rate ${i}/5" role="radio" aria-checked="${BaristaApp.state.feedback[d.day]?.rating===i}">${BaristaApp.state.feedback[d.day]?.rating>=i?'★':'☆'}</button>`).join("")}${BaristaApp.state.feedback[d.day]?.rating?`<span class="text-sm text-yellow-300 ml-3">${BaristaApp.state.feedback[d.day].rating} star(s).</span>`:'<span class="text-sm text-gray-400 ml-3">No rating.</span>'}</div></div>`;return h;},
+                generatePracticalContent: (day) => { const d=CONTENT.days[day-1];if(!d||!d.practical)return"<p>Practical N/A</p>";const p=d.practical;return`<article class="prose-enhanced"><h3>${p.title}</h3><p class="gsap-fade-in">${p.content}</p><h4 class="mt-6 mb-2">Tasks:</h4><ol>${p.tasks.map((t,idx)=>`<li class="gsap-slide-in-left" style="animation-delay:${idx*0.1}s;">${t}</li>`).join("")}</ol></article><div id="practicalInteractiveContent" class="mt-8 space-y-8"></div>`;},
+                generateNotesContent: (day) => { const t=CONTENT.translations[BaristaApp.state.language]||CONTENT.translations.en,n=BaristaApp.state.notes[day]||"";return`<div class="prose-enhanced"><h3>Notes for Day ${day}</h3><p class="text-sm text-gray-400 mb-3">${t.notes}</p><textarea id="notesInput" class="w-full h-60 p-3 bg-gray-700 text-gray-200 rounded-md focus:ring-2 focus:ring-amber-500 border border-gray-600" placeholder="${t.notesPlaceholder}">${n}</textarea><button onclick="BaristaApp.dataManager.saveNotes(${day},this)" class="interactive-button mt-4"><span class="button-text">Save Notes</span><i class="fas fa-spinner fa-spin ml-2 hidden spinner"></i></button></div>`;},
+                setupInteractiveContent: (day, tab) => { const c = document.getElementById('practicalInteractiveContent'); if (tab === 'practical' && c) { c.innerHTML = ''; try { const f = `setupDay${day}`; if (BaristaApp.practicalInteractions[f] && typeof BaristaApp.practicalInteractions[f] === 'function') BaristaApp.practicalInteractions[f](); else { console.warn(`Practical func ${f} not found.`); c.innerHTML = `<p>Interactive exercises for Day ${day} unavailable.</p>`;} if (c.children.length > 0) gsap.from(Array.from(c.children), { opacity: 0, y: 20, stagger: 0.1, duration: 0.45, ease: "power2.out" }); } catch (err) { console.error(`Practical content error Day ${day}:`, err); c.innerHTML = `<p>Error loading exercises.</p>`; } } },
+                continueToNextLesson: () => { const i = BaristaApp.state.progress.findIndex(p => !p); if (i !== -1) { const d = CONTENT.days[i]; if(d) BaristaApp.lessonManager.openPage(d.day); } else { if (BaristaApp.elements.dashboard?.classList.contains('hidden')) { BaristaApp.elements.lessonPage?.classList.add("hidden"); BaristaApp.elements.lessonPage?.classList.remove("active"); BaristaApp.elements.certificate?.classList.add("hidden"); BaristaApp.elements.certificate?.classList.remove("active"); BaristaApp.elements.dashboard?.classList.remove("hidden"); BaristaApp.elements.dashboard?.classList.add("active"); BaristaApp.ui.animateDashboardElements(); } BaristaApp.util.showSuccess(CONTENT.translations[BaristaApp.state.language].allLessonsCompleted); if (BaristaApp.elements.certificate?.classList.contains('hidden')) BaristaApp.ui.showCertificate(); } }
             },
-
+           
+            dataManager: {
+                addPoints: (a) => { BaristaApp.state.user.points+=a; if(BaristaApp.elements.points)BaristaApp.elements.points.textContent=`Points: ${BaristaApp.state.user.points}`; localStorage.setItem("baristaIO_user",JSON.stringify(BaristaApp.state.user)); BaristaApp.dataManager.updateLeaderboardStorage(); },
+                updateLeaderboardStorage: () => { const e=BaristaApp.state.user.email||`anon_${Date.now()}@barista.io`,i=BaristaApp.state.leaderboard.findIndex(entry=>entry.name===BaristaApp.state.user.name&&entry.email===e); if(i>-1)BaristaApp.state.leaderboard[i].points=BaristaApp.state.user.points; else BaristaApp.state.leaderboard.push({name:BaristaApp.state.user.name,email:e,points:BaristaApp.state.user.points}); BaristaApp.state.leaderboard.sort((a,b)=>b.points-a.points); BaristaApp.state.leaderboard=BaristaApp.state.leaderboard.slice(0,10); localStorage.setItem("baristaIO_leaderboard",JSON.stringify(BaristaApp.state.leaderboard)); if(BaristaApp.elements.leaderboardModal&&!BaristaApp.elements.leaderboardModal.classList.contains("hidden"))BaristaApp.ui.updateLeaderboardDisplay(); },
+                completeOnboarding: () => {
+                    if(!BaristaApp.elements.onboardingName || !BaristaApp.elements.onboardingEmail || !BaristaApp.elements.onboardingModal || !BaristaApp.elements.onboardingModal.querySelector(".modal-content-area")) {
+                        BaristaApp.util.showError("Onboarding elements not found. Cannot complete onboarding.");
+                        return;
+                    }
+                    const n=BaristaApp.elements.onboardingName.value.trim(),e=BaristaApp.elements.onboardingEmail.value.trim(); if(!n){BaristaApp.util.showError("Name empty.");BaristaApp.elements.onboardingName.focus();return;} if(!e||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){BaristaApp.util.showError("Valid email please.");BaristaApp.elements.onboardingEmail.focus();return;}
+                    BaristaApp.state.user.name=n;BaristaApp.state.user.email=e;localStorage.setItem("baristaIO_user",JSON.stringify(BaristaApp.state.user));localStorage.setItem("baristaIO_visited","true");BaristaApp.state.isFirstVisit=false;
+                    if(BaristaApp.elements.userName)BaristaApp.elements.userName.textContent=n;
+                    if(BaristaApp.elements.traineeName)BaristaApp.elements.traineeName.textContent=n;
+                    gsap.to(BaristaApp.elements.onboardingModal.querySelector(".modal-content-area"),{opacity:0,y:10,scale:0.95,duration:0.3,ease:"back.in(1.7)",
+                        onComplete:()=>{
+                            BaristaApp.elements.onboardingModal.classList.add("hidden");BaristaApp.elements.onboardingModal.classList.remove("flex");
+                            BaristaApp.ui.ads.restoreAdsAfterModal(); // This will call manageContentAdsVisibility
+                            BaristaApp.ui.animateDashboardElements(); // animateDashboardElements calls manageContentAdsVisibility if needed
+                        }
+                    });
+                    BaristaApp.util.trackAnalytics("Completed Onboarding");BaristaApp.dataManager.updateLeaderboardStorage();
+                 },
+                saveProfile: () => { if(!BaristaApp.elements.profileName||!BaristaApp.elements.profileEmail)return;const oN=BaristaApp.state.user.name,oE=BaristaApp.state.user.email,n=BaristaApp.elements.profileName.value.trim(),e=BaristaApp.elements.profileEmail.value.trim();if(!n){BaristaApp.util.showError("Name empty.");return;}if(!e||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){BaristaApp.util.showError("Valid email.");return;}BaristaApp.state.user.name=n;BaristaApp.state.user.email=e;localStorage.setItem("baristaIO_user",JSON.stringify(BaristaApp.state.user));if(BaristaApp.elements.userName)BaristaApp.elements.userName.textContent=n;if(BaristaApp.elements.traineeName)BaristaApp.elements.traineeName.textContent=n;BaristaApp.modalManager.closeProfile();BaristaApp.util.trackAnalytics("Updated Profile");BaristaApp.util.showSuccess("Profile saved.");if(oN!==n||oE!==e)BaristaApp.state.leaderboard=BaristaApp.state.leaderboard.filter(entry=>!(entry.name===oN&&entry.email===oE));BaristaApp.dataManager.updateLeaderboardStorage(); },
+                resetProgress: () => { if(confirm("Reset all progress?")){BaristaApp.state.progress=Array(BaristaApp.state.totalDays).fill(false);BaristaApp.state.user.points=0;BaristaApp.state.notes={};BaristaApp.state.feedback={};localStorage.removeItem("baristaIO_progress");localStorage.removeItem("baristaIO_notes");localStorage.removeItem("baristaIO_feedback");localStorage.setItem("baristaIO_user",JSON.stringify(BaristaApp.state.user));BaristaApp.ui.updateProgressDisplay();BaristaApp.ui.populateDays(BaristaApp.elements.search?.value||"");if(BaristaApp.elements.points)BaristaApp.elements.points.textContent=`Points: ${BaristaApp.state.user.points}`;if(BaristaApp.elements.dashboard?.classList.contains('hidden')){BaristaApp.elements.certificate?.classList.add("hidden");BaristaApp.elements.certificate?.classList.remove("active");BaristaApp.elements.lessonPage?.classList.add("hidden");BaristaApp.elements.lessonPage?.classList.remove("active");BaristaApp.elements.dashboard?.classList.remove("hidden");BaristaApp.elements.dashboard?.classList.add("active");BaristaApp.ui.animateDashboardElements();}BaristaApp.dataManager.updateLeaderboardStorage();BaristaApp.util.showSuccess("Progress reset.");BaristaApp.util.trackAnalytics("Reset Progress");} },
+                exportProgress: () => { const d={user:BaristaApp.state.user,progress:BaristaApp.state.progress,notes:BaristaApp.state.notes,feedback:BaristaApp.state.feedback,timestamp:new Date().toISOString()},s=JSON.stringify(d,null,2),b=new Blob([s],{type:"application/json"}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=`BaristaIO_Progress_${BaristaApp.state.user.name.replace(/\s/g,'_')||'Trainee'}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);BaristaApp.util.showSuccess("Progress exported!");BaristaApp.util.trackAnalytics("Exported Progress"); },
+                saveNotes: (day, btn) => { if(btn){btn.disabled=true;const t=btn.querySelector('.button-text'),s=btn.querySelector('.spinner');if(t)t.textContent='Saving...';if(s)s.classList.remove('hidden');} setTimeout(()=>{const i=document.getElementById("notesInput");if(i){BaristaApp.state.notes[day]=i.value;localStorage.setItem("baristaIO_notes",JSON.stringify(BaristaApp.state.notes));BaristaApp.util.showSuccess("Notes saved!");BaristaApp.util.trackAnalytics(`Saved Notes Day ${day}`);}else BaristaApp.util.showError("Notes field not found.");if(btn){btn.disabled=false;const t=btn.querySelector('.button-text'),s=btn.querySelector('.spinner');if(t)t.textContent='Save Notes';if(s)s.classList.add('hidden');}},500); },
+                submitFeedback: (day, rating) => { BaristaApp.state.feedback[day]={rating,timestamp:new Date().toISOString()};localStorage.setItem("baristaIO_feedback",JSON.stringify(BaristaApp.state.feedback));if(BaristaApp.elements.lessonPage&&!BaristaApp.elements.lessonPage.classList.contains('hidden')&&BaristaApp.elements.theoryTab?.classList.contains('active')&&BaristaApp.state.currentDay===day){BaristaApp.elements.lessonContent.innerHTML=BaristaApp.lessonManager.generateTheoryContent(BaristaApp.state.currentDay);BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);}BaristaApp.dataManager.addPoints(5);BaristaApp.util.trackAnalytics(`Feedback Day ${day}: ${rating} stars`);BaristaApp.util.showSuccess("Feedback saved! +5 points."); }
+            },
             quizManager: {
                 quizTimerValue: 30,
                 startTimer: (day) => {
@@ -3043,16 +2666,6 @@
                         opt.setAttribute('aria-checked', 'false');
                         opt.onclick = function() {
                             if (BaristaApp.state.quizAnswered) return;
-                            BaristaApp.elements.quizModalContent.querySelectorAll('.quiz-option').forEach(o => {
-                                o.classList.remove('selected');
-                                o.setAttribute('aria-checked', 'false');
-                            });
-                            this.classList.add('selected');
-                            this.setAttribute('aria-checked', 'true');
-                            BaristaApp.state.currentQuizAnswer = parseInt(this.dataset.index);
-                        };
-                        opt.onkeydown = function(e) {
-                             if (BaristaApp.state.quizAnswered) return;
                              if (e.key === 'Enter' || e.key === ' ') {
                                  e.preventDefault();
                                  this.click();
@@ -3336,6 +2949,32 @@
                     BaristaApp.util.showSuccess("Thank you for your feedback! +5 points.");
                 }
             },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             practicalInteractions: {
                 setupDay1: function() {
     const container = document.getElementById('practicalInteractiveContent');
@@ -6005,308 +5644,107 @@ setupDay14: function() {
 
             }, // End of practicalInteractions
 
-                       // --- Initialization ---
-        init: () => {
-        BaristaApp.elements = {
-            appBody: document.getElementById("appBody"), dayList: document.getElementById("dayList"), dashboard: document.getElementById("dashboard"),
-            lessonPage: document.getElementById("lessonPage"), certificate: document.getElementById("certificate"), quizModal: document.getElementById("quizModal"),
-            profileModal: document.getElementById("profileModal"), onboardingModal: document.getElementById("onboardingModal"), leaderboardModal: document.getElementById("leaderboardModal"),
-            glossaryModal: document.getElementById("glossaryModal"),
-            donationModal: document.getElementById("donationModal"), // ADDED
-            lessonTitle: document.getElementById("lessonTitle"), lessonContent: document.getElementById("lessonContent"),
-            backButton: document.getElementById("backButton"), theoryTab: document.getElementById("theoryTab"), practicalTab: document.getElementById("practicalTab"),
-            quizTab: document.getElementById("quizTab"), notesTab: document.getElementById("notesTab"), userName: document.getElementById("userName"),
-            traineeName: document.getElementById("trainee-name"), certDate: document.getElementById("cert-date"), certPoints: document.getElementById("cert-points"),
-            progress: document.getElementById("progress"), progressBarFill: document.getElementById("progressBarFill"), points: document.getElementById("points"), search: document.getElementById("search"),
-            languageToggle: document.getElementById("languageToggle"), themeToggle: document.getElementById("themeToggle"), profileButton: document.getElementById("profileButton"),
-            quizTimer: document.getElementById("quizTimer"), quizDayIndicator: document.getElementById("quizDayIndicator"), quizModalTitle: document.getElementById("quizModalTitle"),
-            quizModalContent: document.getElementById("quizModalContent"), quizModalFeedback: document.getElementById("quizModalFeedback"), submitQuizButton: document.getElementById("submitQuizButton"),
-            markDayCompleteButton: document.getElementById("markDayCompleteButton"), quizCloseButton: document.getElementById("quizCloseButton"),
-            onboardingName: document.getElementById("onboardingName"), onboardingEmail: document.getElementById("onboardingEmail"),
-            profileName: document.getElementById("profileName"), profileEmail: document.getElementById("profileEmail"), lottieProgress: document.getElementById("lottieProgress"),
-            lottieCertificate: document.getElementById("lottieCertificate"), leaderboardList: document.getElementById("leaderboardList"), glossaryButtonSidebar: document.getElementById("glossaryButtonSidebar"),
-            donationButtonSidebar: document.getElementById("donationButtonSidebar"), // ADDED
-            glossaryList: document.getElementById("glossaryList"), glossarySearch: document.getElementById("glossarySearch"), hamburgerMenu: document.getElementById("hamburgerMenu"),
-            sidebar: document.querySelector("aside"), nextLessonInfo: document.getElementById("nextLessonInfo"), funFact: document.getElementById("funFact"),
-            closeSidebarButton: document.getElementById("closeSidebar")
+               init: () => {
+                BaristaApp.elements = {
+                    appBody: document.getElementById("appBody"), sidebar: document.getElementById("sidebar"), dayList: document.getElementById("dayList"), dashboard: document.getElementById("dashboard"),
+                    lessonPage: document.getElementById("lessonPage"), certificate: document.getElementById("certificate"), quizModal: document.getElementById("quizModal"),
+                    profileModal: document.getElementById("profileModal"), onboardingModal: document.getElementById("onboardingModal"), leaderboardModal: document.getElementById("leaderboardModal"),
+                    glossaryModal: document.getElementById("glossaryModal"), donationModal: document.getElementById("donationModal"),
+                    lessonTitle: document.getElementById("lessonTitle"), lessonContent: document.getElementById("lessonContent"),
+                    backButton: document.getElementById("backButton"), theoryTab: document.getElementById("theoryTab"), practicalTab: document.getElementById("practicalTab"),
+                    quizTab: document.getElementById("quizTab"), notesTab: document.getElementById("notesTab"), userName: document.getElementById("userName"),
+                    traineeName: document.getElementById("trainee-name"), certDate: document.getElementById("cert-date"), certPoints: document.getElementById("cert-points"),
+                    progress: document.getElementById("progress"), progressBarFill: document.getElementById("progressBarFill"), points: document.getElementById("points"), search: document.getElementById("search"),
+                    languageToggle: document.getElementById("languageToggle"), themeToggle: document.getElementById("themeToggle"), profileButton: document.getElementById("profileButton"),
+                    quizTimer: document.getElementById("quizTimer"), quizDayIndicator: document.getElementById("quizDayIndicator"), quizModalTitle: document.getElementById("quizModalTitle"),
+                    quizModalContent: document.getElementById("quizModalContent"), quizModalFeedback: document.getElementById("quizModalFeedback"), submitQuizButton: document.getElementById("submitQuizButton"),
+                    markDayCompleteButton: document.getElementById("markDayCompleteButton"), quizCloseButton: document.getElementById("quizCloseButton"),
+                    onboardingName: document.getElementById("onboardingName"), onboardingEmail: document.getElementById("onboardingEmail"),
+                    profileName: document.getElementById("profileName"), profileEmail: document.getElementById("profileEmail"), lottieProgress: document.getElementById("lottieProgress"),
+                    lottieCertificate: document.getElementById("lottieCertificate"), leaderboardList: document.getElementById("leaderboardList"), glossaryButtonSidebar: document.getElementById("glossaryButtonSidebar"),
+                    donationButtonSidebar: document.getElementById("donationButtonSidebar"), glossaryList: document.getElementById("glossaryList"), glossarySearch: document.getElementById("glossarySearch"),
+                    hamburgerMenu: document.getElementById("hamburgerMenu"), nextLessonInfo: document.getElementById("nextLessonInfo"), funFact: document.getElementById("funFact"),
+                    closeSidebarButton: document.getElementById("closeSidebar")
+                };
+                BaristaApp.state.totalDays = CONTENT.days.length;
+                BaristaApp.state.progress = JSON.parse(localStorage.getItem("baristaIO_progress")) || Array(BaristaApp.state.totalDays).fill(false);
+                BaristaApp.state.user = JSON.parse(localStorage.getItem("baristaIO_user")) || { name: "Trainee", email: "", points: 0 };
+                BaristaApp.state.language = localStorage.getItem("baristaIO_language") || "en";
+                BaristaApp.state.theme = localStorage.getItem("baristaIO_theme") || "dark";
+                BaristaApp.state.analytics = JSON.parse(localStorage.getItem("baristaIO_analytics")) || [];
+                BaristaApp.state.notes = JSON.parse(localStorage.getItem("baristaIO_notes")) || {};
+                BaristaApp.state.feedback = JSON.parse(localStorage.getItem("baristaIO_feedback")) || {};
+                BaristaApp.state.isFirstVisit = !localStorage.getItem("baristaIO_visited");
+                BaristaApp.state.leaderboard = JSON.parse(localStorage.getItem("baristaIO_leaderboard")) || [];
+
+                if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = BaristaApp.state.user.name;
+                if (BaristaApp.elements.traineeName) BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
+                if (BaristaApp.elements.points) BaristaApp.elements.points.textContent = `Points: ${BaristaApp.state.user.points}`;
+                if (BaristaApp.elements.languageToggle) BaristaApp.elements.languageToggle.value = BaristaApp.state.language;
+                BaristaApp.ui.applyTheme();
+                if (BaristaApp.elements.themeToggle) BaristaApp.elements.themeToggle.textContent = BaristaApp.state.theme === "dark" ? "🌙" : "☀️";
+                BaristaApp.ui.updateTranslations(); BaristaApp.ui.updateProgressDisplay(); BaristaApp.ui.populateDays();
+                BaristaApp.setupEventListeners(); BaristaApp.ui.loadLottieAnimations(); BaristaApp.ui.updateLeaderboardDisplay();
+
+                if (typeof adsbygoogle !== 'undefined') { BaristaApp.state.adsInitialized = true; console.log("AdSense library detected."); BaristaApp.ui.ads.initSidebarAd(); }
+                else { console.warn("AdSense library not loaded. Ads will not display."); }
+
+                if (BaristaApp.state.isFirstVisit && BaristaApp.elements.onboardingModal) { BaristaApp.ui.ads.hideAdsForModal(); BaristaApp.modalManager.showOnboarding(); }
+                else { BaristaApp.ui.animateDashboardElements(); }
+
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { gsap.registerPlugin(ScrollTrigger); } else { console.error("GSAP or ScrollTrigger not loaded."); }
+            },
+            setupEventListeners: () => {
+                if (BaristaApp.elements.backButton) {
+                    BaristaApp.elements.backButton.addEventListener("click", () => {
+                        BaristaApp.elements.lessonPage?.classList.add("hidden"); BaristaApp.elements.lessonPage?.classList.remove("active");
+                        BaristaApp.elements.certificate?.classList.add("hidden"); BaristaApp.elements.certificate?.classList.remove("active");
+                        BaristaApp.elements.dashboard?.classList.remove("hidden"); BaristaApp.elements.dashboard?.classList.add("active");
+                        BaristaApp.ui.ads.manageContentAdsVisibility(null);
+                        BaristaApp.state.currentDay = 0;
+                        BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
+                        BaristaApp.ui.animateDashboardElements();
+                        BaristaApp.util.trackAnalytics("Navigated Back to Dashboard");
+                    });
+                }
+                const tabs = [ { element: BaristaApp.elements.theoryTab, tab: "theory" }, { element: BaristaApp.elements.practicalTab, tab: "practical" }, { element: BaristaApp.elements.quizTab, tab: "quiz" }, { element: BaristaApp.elements.notesTab, tab: "notes" }];
+                tabs.forEach(({ element, tab }) => { if (element) element.addEventListener("click", () => BaristaApp.lessonManager.setActiveTab(tab)); });
+                if (BaristaApp.elements.submitQuizButton) BaristaApp.elements.submitQuizButton.addEventListener("click", () => BaristaApp.quizManager.submit(false));
+                if (BaristaApp.elements.markDayCompleteButton) BaristaApp.elements.markDayCompleteButton.addEventListener("click", BaristaApp.quizManager.markDayComplete);
+                if (BaristaApp.elements.quizCloseButton) BaristaApp.elements.quizCloseButton.addEventListener("click", BaristaApp.quizManager.closeModal);
+                if (BaristaApp.elements.profileButton) BaristaApp.elements.profileButton.addEventListener("click", BaristaApp.modalManager.showProfile);
+                if (BaristaApp.elements.glossaryButtonSidebar) BaristaApp.elements.glossaryButtonSidebar.addEventListener("click", BaristaApp.modalManager.showGlossary);
+                if (BaristaApp.elements.donationButtonSidebar) BaristaApp.elements.donationButtonSidebar.addEventListener("click", BaristaApp.modalManager.showDonationModal);
+                if (BaristaApp.elements.glossarySearch) { let t; BaristaApp.elements.glossarySearch.addEventListener("input", e => { clearTimeout(t); t = setTimeout(() => { BaristaApp.ui.populateGlossary(e.target.value); BaristaApp.util.trackAnalytics(`Glossary Search: ${e.target.value}`); }, 300); }); }
+                if (BaristaApp.elements.themeToggle) { BaristaApp.elements.themeToggle.addEventListener("click", () => { BaristaApp.state.theme = BaristaApp.state.theme === "dark" ? "light" : "dark"; BaristaApp.ui.applyTheme(); gsap.to(BaristaApp.elements.themeToggle, { rotation: "+=360", duration: 0.5, ease: "power2.out" }); BaristaApp.elements.themeToggle.textContent = BaristaApp.state.theme === "dark" ? "🌙" : "☀️"; localStorage.setItem("baristaIO_theme", BaristaApp.state.theme); BaristaApp.util.trackAnalytics(`Changed Theme to ${BaristaApp.state.theme}`); BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || ""); }); }
+                if (BaristaApp.elements.languageToggle) { BaristaApp.elements.languageToggle.addEventListener("change", e => { BaristaApp.state.language = e.target.value; localStorage.setItem("baristaIO_language", BaristaApp.state.language); BaristaApp.ui.updateTranslations(); BaristaApp.util.trackAnalytics(`Changed Language to ${BaristaApp.state.language}`); }); }
+                if (BaristaApp.elements.search) { let t; BaristaApp.elements.search.addEventListener("input", e => { clearTimeout(t); t = setTimeout(() => { BaristaApp.ui.populateDays(e.target.value); BaristaApp.util.trackAnalytics(`Searched: ${e.target.value}`); }, 300); }); }
+                if (BaristaApp.elements.hamburgerMenu && BaristaApp.elements.sidebar) { BaristaApp.elements.hamburgerMenu.addEventListener("click", e => { e.stopPropagation(); const o = BaristaApp.elements.sidebar.classList.toggle("sidebar-open"), t = BaristaApp.elements.hamburgerMenu.querySelector("i"); t && (t.classList.toggle("fa-bars", !o), t.classList.toggle("fa-times", o)); BaristaApp.util.trackAnalytics(`Toggled Sidebar to ${o?"Open":"Closed"}`); }); }
+                if (BaristaApp.elements.closeSidebarButton && BaristaApp.elements.sidebar) { BaristaApp.elements.closeSidebarButton.addEventListener("click", e => { e.stopPropagation(); BaristaApp.elements.sidebar.classList.remove("sidebar-open"); const o = BaristaApp.elements.hamburgerMenu?.querySelector("i"); o && o.classList.replace("fa-times", "fa-bars"); BaristaApp.util.trackAnalytics("Closed Sidebar via Close Button"); }); }
+                document.addEventListener("click", e => { if (BaristaApp.elements.sidebar?.classList.contains("sidebar-open") && !BaristaApp.elements.sidebar.contains(e.target) && BaristaApp.elements.hamburgerMenu && !BaristaApp.elements.hamburgerMenu.contains(e.target)) { BaristaApp.elements.sidebar.classList.remove("sidebar-open"); const o = BaristaApp.elements.hamburgerMenu.querySelector("i"); o && o.classList.replace("fa-times", "fa-bars"); BaristaApp.util.trackAnalytics("Closed Sidebar via Click Outside"); } });
+                document.addEventListener("keydown", e => {
+                    if (e.key === "Escape") {
+                        const modals = [BaristaApp.elements.profileModal, BaristaApp.elements.quizModal, BaristaApp.elements.leaderboardModal, BaristaApp.elements.glossaryModal, BaristaApp.elements.donationModal];
+                        if (BaristaApp.elements.onboardingModal && !BaristaApp.elements.onboardingModal.classList.contains("hidden")) { /* No action for onboarding */ }
+                        else { for (const modal of modals) { if (modal && !modal.classList.contains("hidden")) { BaristaApp.modalManager._closeModal(modal); return; } } }
+                        const imageModal = document.getElementById("imageModal"); if (imageModal?.style.display === "flex") { imageModal.style.display = "none"; return; }
+                        if (BaristaApp.elements.sidebar?.classList.contains("sidebar-open")) { BaristaApp.elements.sidebar.classList.remove("sidebar-open"); const icon = BaristaApp.elements.hamburgerMenu?.querySelector("i"); if (icon) icon.classList.replace("fa-times", "fa-bars"); BaristaApp.util.trackAnalytics("Closed Sidebar via Escape Key"); }
+                    }
+                });
+            }
+        }; // End of BaristaApp Object
+
+        window.onerror = (message, source, lineno, colno, error) => {
+            const errorDetails = error ? error.stack || error.toString() : 'No error object.';
+            const sourceFile = source ? source.split('/').pop() : 'unknown';
+            console.error(`Unhandled Error: ${message}\nSource: ${sourceFile}\nLine: ${lineno}:${colno}\nDetails: ${errorDetails}`);
+            if (BaristaApp?.util?.showError) { BaristaApp.util.showError(`Unexpected error. Check console.`); BaristaApp.util.trackAnalytics(`JS Error: ${message} at ${sourceFile}:${lineno}`); }
+            return true;
         };
 
-    BaristaApp.state.progress = JSON.parse(localStorage.getItem("baristaIO_progress")) || Array(CONTENT.days.length).fill(false);
-    BaristaApp.state.user = JSON.parse(localStorage.getItem("baristaIO_user")) || { name: "Trainee", email: "", points: 0 };
-    BaristaApp.state.language = localStorage.getItem("baristaIO_language") || "en";
-    BaristaApp.state.theme = localStorage.getItem("baristaIO_theme") || "dark";
-    BaristaApp.state.analytics = JSON.parse(localStorage.getItem("baristaIO_analytics")) || [];
-    BaristaApp.state.notes = JSON.parse(localStorage.getItem("baristaIO_notes")) || {};
-    BaristaApp.state.feedback = JSON.parse(localStorage.getItem("baristaIO_feedback")) || {};
-    BaristaApp.state.isFirstVisit = !localStorage.getItem("baristaIO_visited");
-    BaristaApp.state.leaderboard = JSON.parse(localStorage.getItem("baristaIO_leaderboard")) || [];
-
-    if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = BaristaApp.state.user.name;
-    if (BaristaApp.elements.traineeName) BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
-    if (BaristaApp.elements.points) BaristaApp.elements.points.textContent = `Points: ${BaristaApp.state.user.points}`;
-
-    if (BaristaApp.elements.languageToggle) BaristaApp.elements.languageToggle.value = BaristaApp.state.language;
-
-    BaristaApp.ui.applyTheme();
-    if (BaristaApp.elements.themeToggle) BaristaApp.elements.themeToggle.textContent = BaristaApp.state.theme === "dark" ? "🌙" : "☀️";
-
-    BaristaApp.ui.updateTranslations();
-    BaristaApp.ui.updateProgressDisplay();
-    BaristaApp.ui.populateDays();
-    BaristaApp.setupEventListeners();
-    BaristaApp.ui.animateDashboardElements();
-    BaristaApp.ui.loadLottieAnimations();
-
-    if (BaristaApp.state.isFirstVisit && BaristaApp.elements.onboardingModal) {
-        BaristaApp.modalManager.showOnboarding();
-    }
-
-    BaristaApp.ui.updateLeaderboardDisplay();
-
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-    } else {
-        console.error("GSAP or ScrollTrigger not loaded. Advanced animations might not work.");
-    }
-},
-
-      setupEventListeners: () => {
-    // Back button navigation
-    if (BaristaApp.elements.backButton) {
-        BaristaApp.elements.backButton.addEventListener("click", () => {
-            if (BaristaApp.elements.lessonPage) {
-                BaristaApp.elements.lessonPage.classList.add("hidden");
-                BaristaApp.elements.lessonPage.classList.remove("active");
-            }
-            if (BaristaApp.elements.certificate) {
-                BaristaApp.elements.certificate.classList.add("hidden");
-                BaristaApp.elements.certificate.classList.remove("active");
-            }
-            if (BaristaApp.elements.dashboard) {
-                BaristaApp.elements.dashboard.classList.remove("hidden");
-                BaristaApp.elements.dashboard.classList.add("active");
-            }
-
-            BaristaApp.ui.ads.hideAllContentAds(); // Hide lesson/certificate ads
-            BaristaApp.ui.ads.showDashboardAd();   // Show dashboard ad
-
-            BaristaApp.state.currentDay = 0;
-            BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
-            BaristaApp.ui.animateDashboardElements();
-            BaristaApp.util.trackAnalytics("Navigated Back to Dashboard");
+        document.addEventListener("DOMContentLoaded", () => {
+            BaristaApp.init();
         });
-    }
-
-    // Tab navigation
-    const tabs = [
-        { element: BaristaApp.elements.theoryTab, tab: "theory" },
-        { element: BaristaApp.elements.practicalTab, tab: "practical" },
-        { element: BaristaApp.elements.quizTab, tab: "quiz" },
-        { element: BaristaApp.elements.notesTab, tab: "notes" }
-    ];
-    tabs.forEach(({ element, tab }) => {
-        if (element) {
-            element.addEventListener("click", () => BaristaApp.lessonManager.setActiveTab(tab));
-        }
-    });
-
-    // Quiz-related buttons
-    if (BaristaApp.elements.submitQuizButton) {
-        BaristaApp.elements.submitQuizButton.addEventListener("click", () => BaristaApp.quizManager.submit(false));
-    }
-    if (BaristaApp.elements.markDayCompleteButton) {
-        BaristaApp.elements.markDayCompleteButton.addEventListener("click", BaristaApp.quizManager.markDayComplete);
-    }
-    if (BaristaApp.elements.quizCloseButton) {
-        BaristaApp.elements.quizCloseButton.addEventListener("click", BaristaApp.quizManager.closeModal);
-    } else {
-        console.warn("Quiz close button (quizCloseButton) not found in BaristaApp.elements.");
-    }
-
-    // Modal buttons
-    if (BaristaApp.elements.profileButton) {
-        BaristaApp.elements.profileButton.addEventListener("click", BaristaApp.modalManager.showProfile);
-    }
-    if (BaristaApp.elements.glossaryButtonSidebar) {
-        BaristaApp.elements.glossaryButtonSidebar.addEventListener("click", BaristaApp.modalManager.showGlossary);
-    }
-    if (BaristaApp.elements.donationButtonSidebar) {
-        BaristaApp.elements.donationButtonSidebar.addEventListener("click", BaristaApp.modalManager.showDonationModal);
-    }
-
-    // Glossary search with debouncing
-    if (BaristaApp.elements.glossarySearch) {
-        let glossarySearchTimeout;
-        BaristaApp.elements.glossarySearch.addEventListener("input", e => {
-            clearTimeout(glossarySearchTimeout);
-            glossarySearchTimeout = setTimeout(() => {
-                BaristaApp.ui.populateGlossary(e.target.value);
-                BaristaApp.util.trackAnalytics(`Glossary Search: ${e.target.value}`);
-            }, 300);
-        });
-    }
-
-    // Theme toggle
-    if (BaristaApp.elements.themeToggle) {
-        BaristaApp.elements.themeToggle.addEventListener("click", () => {
-            BaristaApp.state.theme = BaristaApp.state.theme === "dark" ? "light" : "dark";
-            BaristaApp.ui.applyTheme();
-            gsap.to(BaristaApp.elements.themeToggle, { rotation: "+=360", duration: 0.5, ease: "power2.out" });
-            BaristaApp.elements.themeToggle.textContent = BaristaApp.state.theme === "dark" ? "🌙" : "☀️";
-            localStorage.setItem("baristaIO_theme", BaristaApp.state.theme);
-            BaristaApp.util.trackAnalytics(`Changed Theme to ${BaristaApp.state.theme}`);
-            BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
-        });
-    }
-
-    // Language toggle
-    if (BaristaApp.elements.languageToggle) {
-        BaristaApp.elements.languageToggle.addEventListener("change", e => {
-            BaristaApp.state.language = e.target.value;
-            localStorage.setItem("baristaIO_language", BaristaApp.state.language);
-            BaristaApp.ui.updateTranslations();
-            BaristaApp.util.trackAnalytics(`Changed Language to ${BaristaApp.state.language}`);
-        });
-    }
-
-    // Search with debouncing
-    if (BaristaApp.elements.search) {
-        let searchTimeout;
-        BaristaApp.elements.search.addEventListener("input", e => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                BaristaApp.ui.populateDays(e.target.value);
-                BaristaApp.util.trackAnalytics(`Searched: ${e.target.value}`);
-            }, 300);
-        });
-    }
-
-    // Sidebar toggle (hamburger menu)
-    if (BaristaApp.elements.hamburgerMenu && BaristaApp.elements.sidebar) {
-        BaristaApp.elements.hamburgerMenu.addEventListener("click", event => {
-            event.stopPropagation();
-            const isOpen = BaristaApp.elements.sidebar.classList.toggle("sidebar-open");
-            const icon = BaristaApp.elements.hamburgerMenu.querySelector("i");
-            if (icon) {
-                icon.classList.toggle("fa-bars", !isOpen);
-                icon.classList.toggle("fa-times", isOpen);
-            }
-            BaristaApp.util.trackAnalytics(`Toggled Sidebar to ${isOpen ? "Open" : "Closed"}`);
-        });
-    }
-
-    // Close sidebar button
-    if (BaristaApp.elements.closeSidebarButton && BaristaApp.elements.sidebar) {
-        BaristaApp.elements.closeSidebarButton.addEventListener("click", event => {
-            event.stopPropagation();
-            BaristaApp.elements.sidebar.classList.remove("sidebar-open");
-            const icon = BaristaApp.elements.hamburgerMenu?.querySelector("i");
-            if (icon) {
-                icon.classList.replace("fa-times", "fa-bars");
-            }
-            BaristaApp.util.trackAnalytics("Closed Sidebar via Close Button");
-        });
-    }
-
-    // Close sidebar on outside click
-    document.addEventListener("click", event => {
-        if (
-            BaristaApp.elements.sidebar?.classList.contains("sidebar-open") &&
-            !BaristaApp.elements.sidebar.contains(event.target) &&
-            BaristaApp.elements.hamburgerMenu &&
-            !BaristaApp.elements.hamburgerMenu.contains(event.target)
-        ) {
-            BaristaApp.elements.sidebar.classList.remove("sidebar-open");
-            const icon = BaristaApp.elements.hamburgerMenu.querySelector("i");
-            if (icon) {
-                icon.classList.replace("fa-times", "fa-bars");
-            }
-            BaristaApp.util.trackAnalytics("Closed Sidebar via Click Outside");
-        }
-    });
-
-    // Escape key handling
-    document.addEventListener("keydown", e => {
-        if (e.key === "Escape") {
-            if (BaristaApp.elements.onboardingModal && !BaristaApp.elements.onboardingModal.classList.contains("hidden")) {
-                // No action for onboarding modal
-            } else if (BaristaApp.elements.profileModal && !BaristaApp.elements.profileModal.classList.contains("hidden")) {
-                BaristaApp.modalManager.closeProfile();
-            } else if (BaristaApp.elements.quizModal && !BaristaApp.elements.quizModal.classList.contains("hidden")) {
-                BaristaApp.quizManager.closeModal();
-            } else if (BaristaApp.elements.leaderboardModal && !BaristaApp.elements.leaderboardModal.classList.contains("hidden")) {
-                BaristaApp.modalManager.closeLeaderboard();
-            } else if (BaristaApp.elements.glossaryModal && !BaristaApp.elements.glossaryModal.classList.contains("hidden")) {
-                BaristaApp.modalManager.closeGlossary();
-            } else if (BaristaApp.elements.donationModal && !BaristaApp.elements.donationModal.classList.contains("hidden")) {
-                BaristaApp.modalManager.closeDonationModal();
-            } else if (document.getElementById("imageModal")?.style.display === "flex") {
-                document.getElementById("imageModal").style.display = "none";
-            } else if (BaristaApp.elements.sidebar?.classList.contains("sidebar-open")) {
-                BaristaApp.elements.sidebar.classList.remove("sidebar-open");
-                const icon = BaristaApp.elements.hamburgerMenu?.querySelector("i");
-                if (icon) {
-                    icon.classList.replace("fa-times", "fa-bars");
-                }
-                BaristaApp.util.trackAnalytics("Closed Sidebar via Escape Key");
-            }
-        }
-    });
-        document.addEventListener('click', function(event) {
-            if (BaristaApp.elements.sidebar && BaristaApp.elements.sidebar.classList.contains('open') &&
-                !BaristaApp.elements.sidebar.contains(event.target) &&
-                BaristaApp.elements.hamburgerMenu && !BaristaApp.elements.hamburgerMenu.contains(event.target)) {
-                BaristaApp.elements.sidebar.classList.remove('open');
-                BaristaApp.elements.hamburgerMenu.querySelector('i').classList.replace('fa-times', 'fa-bars');
-                BaristaApp.util.trackAnalytics("Closed Sidebar via Click Outside");
-            }
-        });
-    }
-};
-
-window.onerror = (message, source, lineno, colno, error) => {
-    const errorDetails = error ? error.stack || error.toString() : 'No error object available.';
-    const sourceFile = source ? source.split('/').pop() : 'unknown_source';
-    const fullErrorMessage = `Unhandled Error: ${message}\nSource: ${sourceFile}\nLine: ${lineno}:${colno}\nDetails: ${errorDetails}`;
-    console.error(fullErrorMessage);
-
-    if (BaristaApp && BaristaApp.util && BaristaApp.util.showError) {
-        BaristaApp.util.showError(`An unexpected error occurred. Please check the console.`);
-        BaristaApp.util.trackAnalytics(`JavaScript Error: ${message} at ${sourceFile}:${lineno}`);
-    }
-    return true;
-};
-
-document.addEventListener("DOMContentLoaded", () => {
-    BaristaApp.init(); // Your existing init runs
-
-    const initAdsSafe = () => {
-        if (BaristaApp && BaristaApp.ui && BaristaApp.ui.ads && BaristaApp.ui.ads.initSidebarAd) {
-            BaristaApp.ui.ads.initSidebarAd(); // Initialize sidebar ad
-
-            // Dashboard or Lesson ad will be shown based on initial view determined in BaristaApp.init
-            if (!BaristaApp.state.isFirstVisit && BaristaApp.elements.dashboard?.classList.contains('active')) {
-                 BaristaApp.ui.ads.showDashboardAd();
-            } else if (BaristaApp.elements.lessonPage?.classList.contains('active') && !BaristaApp.state.isFirstVisit) {
-                 // This case is unlikely on true initial load unless deep-linked and onboarding is skipped.
-                 BaristaApp.ui.ads.showLessonAd();
-            }
-            // If isFirstVisit, onboarding modal will be shown, and ads will be handled after it closes.
-
-        } else {
-            console.warn("BaristaApp.ui.ads.initSidebarAd not available at time of execution.");
-        }
-    };
-
-    // Wait for the full page load and a slight delay to ensure layout is stable
-    if (document.readyState === "complete") {
-        setTimeout(initAdsSafe, 300); // Increased delay
-    } else {
-        window.addEventListener("load", () => {
-            setTimeout(initAdsSafe, 300); // Increased delay
-        });
-    }
-});
-            </script>
+    </script>
 </body>
 </html>
