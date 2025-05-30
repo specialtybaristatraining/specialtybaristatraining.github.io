@@ -2289,34 +2289,32 @@
                         catch (e) { console.error(`AdSense error pushing ad for ${selector}:`, e); adConfig.container.classList.add("hidden"); }
                     },
                     initSidebarAd: () => {
+                        // --- ADSENSE POLICY CHANGE ---
                         setTimeout(() => {
                             const sidebarAdSelector = '#sidebar .ad-placeholder';
                             const adConfig = BaristaApp.ui.ads._getAdConfig(sidebarAdSelector);
                             if (adConfig && adConfig.container) {
-                                // --- ADSENSE POLICY CHANGE ---
                                 const dayListEl = BaristaApp.elements.dayList;
-                                // Check if dayList exists, has children, and doesn't contain "no lessons found"
                                 const hasSufficientContent = dayListEl && dayListEl.children.length > 0 && !(dayListEl.textContent || "").toLowerCase().includes("no lessons found");
 
                                 if (hasSufficientContent) {
                                     BaristaApp.ui.ads.requestAdForSection(sidebarAdSelector);
                                     console.log("AdSense: Sidebar ad requested, day list has content.");
                                 } else {
-                                    if (adConfig.container) adConfig.container.classList.add("hidden"); // Hide placeholder if no content
+                                    if (adConfig.container) adConfig.container.classList.add("hidden");
                                     console.warn("AdSense: Sidebar ad NOT shown. Day list content insufficient or not ready.");
                                 }
-                                // --- END ADSENSE POLICY CHANGE ---
                             } else {
                                 console.warn("Sidebar ad container not found for init.");
                             }
                         }, 1500);
+                        // --- END ADSENSE POLICY CHANGE ---
                     },
                     manageContentAdsVisibility: (showSectionSelector) => {
                         // --- ADSENSE POLICY CHANGE ---
                         const dashboardAdConfig = BaristaApp.ui.ads._getAdConfig('#dashboardAd');
                         const lessonAdConfig = BaristaApp.ui.ads._getAdConfig('#lessonPageAd');
 
-                        // Always start by attempting to hide both content ads
                         if (dashboardAdConfig && dashboardAdConfig.container) {
                             dashboardAdConfig.container.classList.add("hidden");
                         }
@@ -2324,27 +2322,23 @@
                             lessonAdConfig.container.classList.add("hidden");
                         }
 
-                        // If ads are globally hidden by a modal, do nothing more.
                         if (BaristaApp.state.adsCurrentlyHiddenByModal) {
                             console.log("AdSense: Content ads visibility managed - globally hidden by modal.");
                             return;
                         }
 
-                        // Determine which ad to potentially show
                         if (showSectionSelector === '#dashboardAd' && dashboardAdConfig) {
-                            // Dashboard content check: Ensure onboarding is complete
-                            if (BaristaApp.elements.userName && BaristaApp.state.user.name !== "Trainee") {
+                            if (BaristaApp.elements.userName && BaristaApp.state.user.name !== "Trainee") { // Check if onboarding done
                                 BaristaApp.ui.ads.requestAdForSection('#dashboardAd');
                                 console.log("AdSense: Dashboard ad requested by manageContentAdsVisibility.");
                             } else {
                                  console.warn("AdSense: Dashboard ad NOT shown by manageContentAdsVisibility, dashboard content/state not ready (e.g., onboarding pending).");
                             }
                         } else if (showSectionSelector === '#lessonPageAd' && lessonAdConfig) {
-                            // Lesson page content check
                             const activeTabEl = BaristaApp.elements.lessonPage?.querySelector('#tabs .tab.active');
                             const isTheoryOrPractical = activeTabEl && (activeTabEl.id === 'theoryTab' || activeTabEl.id === 'practicalTab');
                             const mainContentText = BaristaApp.elements.lessonContent ? (BaristaApp.elements.lessonContent.textContent || "") : "";
-                            const isContentSubstantial = mainContentText.trim().length > 150; // Content length threshold
+                            const isContentSubstantial = mainContentText.trim().length > 150;
 
                             if (isTheoryOrPractical && isContentSubstantial) {
                                 BaristaApp.ui.ads.requestAdForSection('#lessonPageAd');
@@ -2353,7 +2347,6 @@
                                 console.warn(`AdSense: Lesson page ad NOT shown by manageContentAdsVisibility. Tab: ${activeTabEl?.id}, Substantial Content: ${isContentSubstantial}`);
                             }
                         } else if (showSectionSelector === null) {
-                            // This case means explicitly hide all content ads (dashboard & lesson)
                             console.log("AdSense: All content ads explicitly hidden by manageContentAdsVisibility(null).");
                         }
                         // --- END ADSENSE POLICY CHANGE ---
@@ -2369,8 +2362,6 @@
                 downloadCertificate: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
                     const REQUIRED_CERTIFICATE_CODE =  "INCORRECT90"; // This should match your intended code
-                    // const HINT_FOR_CODE = REQUIRED_CERTIFICATE_CODE === "" ? "(No code needed for demo)" : "(Hint: Check Day 14 Quiz Explanation)";
-                    // For a real scenario, you wouldn't provide a direct hint like this.
                     const HINT_FOR_CODE = "(Hint: Check Day 14 Quiz Explanation for a clue, or contact admin if stuck!)"
 
                     let userEnteredCode = "";
@@ -2404,8 +2395,6 @@
                         {opacity:1, y:0, scale: 1, duration:0.6, delay: 0.1, ease: "power2.out",
                             onComplete: () => {
                                 // --- ADSENSE POLICY CHANGE ---
-                                // Ad visibility for dashboard is now handled by manageContentAdsVisibility,
-                                // which includes the onboarding check.
                                 if (!BaristaApp.state.adsCurrentlyHiddenByModal && !BaristaApp.state.isFirstVisit) {
                                     BaristaApp.ui.ads.manageContentAdsVisibility('#dashboardAd');
                                 }
@@ -2426,27 +2415,12 @@
                             });
                         }
                      // --- ADSENSE POLICY CHANGE ---
-                    setTimeout(() => {
-                        const activeTabEl = BaristaApp.elements.lessonPage?.querySelector('#tabs .tab.active');
-                        const isTheoryOrPractical = activeTabEl && (activeTabEl.id === 'theoryTab' || activeTabEl.id === 'practicalTab');
-                        const mainContentText = container ? (container.textContent || "") : "";
-                        const isContentSubstantial = mainContentText.trim().length > 150; // More than 150 characters
-
-                        if (!BaristaApp.state.adsCurrentlyHiddenByModal && isTheoryOrPractical && isContentSubstantial) {
-                            BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd'); // This will check tab and content
-                            console.log(`AdSense: Requesting lesson page ad. Tab: ${activeTabEl?.id}, Content substantial: ${isContentSubstantial}`);
-                        } else {
-                            // If not theory/practical or content not substantial, ensure ad remains hidden or is hidden
-                            // manageContentAdsVisibility called with null will hide #lessonPageAd and #dashboardAd
-                            BaristaApp.ui.ads.manageContentAdsVisibility(null);
-                            console.warn(`AdSense: Lesson page ad for tab '${activeTabEl?.id}' hidden by animateLessonContentLoaded. Conditions: ModalHidden=${!BaristaApp.state.adsCurrentlyHiddenByModal}, isTheoryOrPractical=${isTheoryOrPractical}, isContentSubstantial=${isContentSubstantial}`);
-                        }
-                    }, 400); // Keep the delay to allow content to render
+                    setTimeout(() => { // Keep delay to allow content to fully render and be measurable
+                        BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd');
+                    }, 400);
                     // --- END ADSENSE POLICY CHANGE ---
                     } else {
-                         // If container has no children, still check if we should show an ad (though unlikely for lesson content)
-                         // This usually means manageContentAdsVisibility should hide it.
-                         BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd');
+                         BaristaApp.ui.ads.manageContentAdsVisibility(null); // Ensure ad is hidden if no content
                     }
                      if(ScrollTrigger.getAll().length > 0) ScrollTrigger.refresh();
                 },
@@ -2515,7 +2489,9 @@
                     BaristaApp.state.currentDay = day; const dayData = CONTENT.days[day - 1];
                     if (!dayData || !BaristaApp.elements.lessonPage || !BaristaApp.elements.dashboard || !BaristaApp.elements.certificate || !BaristaApp.elements.lessonTitle) { BaristaApp.util.showError("Core page elements missing or lesson data not found."); return; }
                     BaristaApp.elements.lessonTitle.textContent = `Day ${day}: ${dayData.theory.title}`;
-                    BaristaApp.ui.ads.manageContentAdsVisibility(null); // --- ADSENSE POLICY CHANGE --- Defer ad decision
+                    // --- ADSENSE POLICY CHANGE ---
+                    BaristaApp.ui.ads.manageContentAdsVisibility(null); // Hide any existing content ads. Decision to show lesson ad will be in setActiveTab.
+                    // --- END ADSENSE POLICY CHANGE ---
                     BaristaApp.elements.dashboard.classList.add("hidden"); BaristaApp.elements.dashboard.classList.remove("active");
                     BaristaApp.elements.certificate.classList.add("hidden"); BaristaApp.elements.certificate.classList.remove("active");
                     BaristaApp.elements.lessonPage.classList.remove("hidden"); BaristaApp.elements.lessonPage.classList.add("active");
@@ -2535,28 +2511,20 @@
                         else if (tab === "notes" && BaristaApp.elements.notesTab) { BaristaApp.elements.notesTab.classList.add("active"); contentHTML = BaristaApp.lessonManager.generateNotesContent(BaristaApp.state.currentDay); contentGenerated = true; }
                     } catch (error) { console.error(`Error for tab '${tab}', day ${BaristaApp.state.currentDay}:`, error); BaristaApp.util.showError("Could not load tab content."); contentHTML = "<p>Error loading content.</p>"; contentGenerated = true; }
 
-                    // --- ADSENSE POLICY CHANGE ---
                     if (contentGenerated) {
                         BaristaApp.elements.lessonContent.innerHTML = contentHTML;
                         BaristaApp.lessonManager.setupInteractiveContent(BaristaApp.state.currentDay, tab);
 
+                        // --- ADSENSE POLICY CHANGE ---
                         if (tab === "theory" || tab === "practical") {
-                            // For Theory/Practical, let animateLessonContentLoaded decide based on actual content
-                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
-                        } else if (tab === "notes") {
-                            // For Notes tab, explicitly HIDE the lesson page ad.
-                            BaristaApp.ui.ads.manageContentAdsVisibility(null); // Hide lessonPageAd
-                            console.log("AdSense: Lesson page ad hidden for Notes tab.");
-                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
-                        } else if (tab === "quiz") {
-                            // For Quiz tab, modal logic handles ad visibility.
-                            // If placeholder content is shown before modal, ensure ad is hidden.
-                            BaristaApp.ui.ads.manageContentAdsVisibility(null);
-                            console.log("AdSense: Lesson page ad hidden for Quiz tab (modal will manage).");
-                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
+                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent); // This will call manageContentAdsVisibility
+                        } else if (tab === "notes" || tab === "quiz") {
+                            BaristaApp.ui.ads.manageContentAdsVisibility(null); // Explicitly hide ads for Notes/Quiz tabs
+                            console.log(`AdSense: Lesson page ad hidden for ${tab} tab.`);
+                            BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent); // Still animate content if any
                         }
+                        // --- END ADSENSE POLICY CHANGE ---
                     }
-                    // --- END ADSENSE POLICY CHANGE ---
                 },
                 generateTheoryContent: (day) => { const d=CONTENT.days[day-1];if(!d||!d.theory)return"<p>Theory N/A</p>";let h=d.theory.content;if(d.theory.objectives?.length)h+=`<div class="prose-enhanced mt-8 pt-6 border-t border-gray-700/70"><h4 class="!mt-0">Learning Objectives:</h4><ul>${d.theory.objectives.map(o=>`<li class="gsap-fade-in">${o}</li>`).join("")}</ul></div>`;if(d.theory.resources?.length)h+=`<div class="prose-enhanced mt-6"><h4 class="!mt-0">Additional Resources:</h4><ul>${d.theory.resources.map(r=>{let t=r.name;if(r.isAffiliate)t+=' <span class="text-xs text-gray-500">(Affiliate Link)</span>';return`<li class="gsap-fade-in"><a href="${r.url}" target="_blank" rel="noopener noreferrer">${t}</a></li>`}).join("")}</ul></div>`;h+=`<div class="mt-10 pt-6 border-t border-gray-700/70"><h4 id="feedback-heading">Lesson Feedback</h4><p class="text-sm text-gray-400 mb-3">Rate this theory lesson?</p><div class="flex space-x-2 items-center" role="radiogroup" aria-labelledby="feedback-heading">${[1,2,3,4,5].map(i=>`<button onclick="BaristaApp.dataManager.submitFeedback(${d.day},${i})" class="text-3xl ${BaristaApp.state.feedback[d.day]?.rating>=i?'text-yellow-400':'text-gray-500'} hover:text-yellow-300" aria-label="Rate ${i}/5" role="radio" aria-checked="${BaristaApp.state.feedback[d.day]?.rating===i}">${BaristaApp.state.feedback[d.day]?.rating>=i?'★':'☆'}</button>`).join("")}${BaristaApp.state.feedback[d.day]?.rating?`<span class="text-sm text-yellow-300 ml-3">${BaristaApp.state.feedback[d.day].rating} star(s).</span>`:'<span class="text-sm text-gray-400 ml-3">No rating.</span>'}</div></div>`;return h;},
                 generatePracticalContent: (day) => { const d=CONTENT.days[day-1];if(!d||!d.practical)return"<p>Practical N/A</p>";const p=d.practical;return`<article class="prose-enhanced"><h3>${p.title}</h3><p class="gsap-fade-in">${p.content}</p><h4 class="mt-6 mb-2">Tasks:</h4><ol>${p.tasks.map((t,idx)=>`<li class="gsap-slide-in-left" style="animation-delay:${idx*0.1}s;">${t}</li>`).join("")}</ol></article><div id="practicalInteractiveContent" class="mt-8 space-y-8"></div>`;},
@@ -2580,8 +2548,8 @@
                     gsap.to(BaristaApp.elements.onboardingModal.querySelector(".modal-content-area"),{opacity:0,y:10,scale:0.95,duration:0.3,ease:"back.in(1.7)",
                         onComplete:()=>{
                             BaristaApp.elements.onboardingModal.classList.add("hidden");BaristaApp.elements.onboardingModal.classList.remove("flex");
-                            BaristaApp.ui.ads.restoreAdsAfterModal(); // This will call manageContentAdsVisibility
-                            BaristaApp.ui.animateDashboardElements(); // animateDashboardElements calls manageContentAdsVisibility if needed
+                            BaristaApp.ui.ads.restoreAdsAfterModal(); // This will call manageContentAdsVisibility which checks content
+                            BaristaApp.ui.animateDashboardElements(); // This also calls manageContentAdsVisibility on complete
                         }
                     });
                     BaristaApp.util.trackAnalytics("Completed Onboarding");BaristaApp.dataManager.updateLeaderboardStorage();
@@ -2623,8 +2591,8 @@
                         if (BaristaApp.quizManager.quizTimerValue <= 0) {
                             clearInterval(BaristaApp.state.quizTimerInterval);
                             if(BaristaApp.elements.quizModalFeedback) BaristaApp.elements.quizModalFeedback.innerHTML = `<strong class="text-red-400">Time's up!</strong> Marking as incorrect.`;
-                            BaristaApp.quizManager.submit(true);
-                        }
+                            BaristaApp.quizManager.submit(true);                   
+                             }
                     }, 1000);
                 },
                 openModal: (day) => {
@@ -2666,6 +2634,11 @@
                         opt.setAttribute('aria-checked', 'false');
                         opt.onclick = function() {
                             if (BaristaApp.state.quizAnswered) return;
+                            BaristaApp.elements.quizModalContent.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                            this.classList.add('selected');
+                            BaristaApp.state.currentQuizAnswer = parseInt(this.dataset.index);
+                        };
+                        opt.onkeydown = function(e) { // Added keydown for accessibility
                              if (e.key === 'Enter' || e.key === ' ') {
                                  e.preventDefault();
                                  this.click();
@@ -2759,221 +2732,6 @@
                     BaristaApp.quizManager.closeModal();
                 }
             },
-
-            dataManager: {
-                addPoints: (amount) => {
-                    BaristaApp.state.user.points += amount;
-                    if(BaristaApp.elements.points) BaristaApp.elements.points.textContent = `Points: ${BaristaApp.state.user.points}`;
-                    localStorage.setItem("baristaIO_user", JSON.stringify(BaristaApp.state.user));
-                    BaristaApp.dataManager.updateLeaderboardStorage();
-                },
-                updateLeaderboardStorage: () => {
-                    const userEmail = BaristaApp.state.user.email || `anonymous_${Date.now()}@barista.io`;
-                    const userIndex = BaristaApp.state.leaderboard.findIndex(entry => entry.name === BaristaApp.state.user.name && entry.email === userEmail);
-
-                    if (userIndex > -1) {
-                        BaristaApp.state.leaderboard[userIndex].points = BaristaApp.state.user.points;
-                    } else {
-                        BaristaApp.state.leaderboard.push({ name: BaristaApp.state.user.name, email: userEmail, points: BaristaApp.state.user.points });
-                    }
-
-                    BaristaApp.state.leaderboard.sort((a, b) => b.points - a.points);
-                    BaristaApp.state.leaderboard = BaristaApp.state.leaderboard.slice(0, 10);
-                    localStorage.setItem("baristaIO_leaderboard", JSON.stringify(BaristaApp.state.leaderboard));
-
-                    if (BaristaApp.elements.leaderboardModal && !BaristaApp.elements.leaderboardModal.classList.contains("hidden")) {
-                        BaristaApp.ui.updateLeaderboardDisplay();
-                    }
-                },
-                completeOnboarding: () => {
-                    if(!BaristaApp.elements.onboardingName || !BaristaApp.elements.onboardingEmail || !BaristaApp.elements.onboardingModal || !BaristaApp.elements.onboardingModal.querySelector(".modal-content-area")) {
-                        BaristaApp.util.showError("Onboarding elements not found. Cannot complete onboarding.");
-                        return;
-                    }
-                    const name = BaristaApp.elements.onboardingName.value.trim();
-                    const email = BaristaApp.elements.onboardingEmail.value.trim();
-                    if (!name) {
-                        BaristaApp.util.showError("Name cannot be empty.");
-                        BaristaApp.elements.onboardingName.focus();
-                        return;
-                    }
-                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                        BaristaApp.util.showError("Please enter a valid email address.");
-                        BaristaApp.elements.onboardingEmail.focus();
-                        return;
-                    }
-                    BaristaApp.state.user.name = name;
-                    BaristaApp.state.user.email = email;
-                    localStorage.setItem("baristaIO_user", JSON.stringify(BaristaApp.state.user));
-                    localStorage.setItem("baristaIO_visited", "true");
-                    BaristaApp.state.isFirstVisit = false;
-                    if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = name;
-                    if (BaristaApp.elements.traineeName) BaristaApp.elements.traineeName.textContent = name;
-
-                    gsap.to(BaristaApp.elements.onboardingModal.querySelector(".modal-content-area"), {
-                        opacity: 0, y: 10, scale: 0.95, duration: 0.3, ease: "back.in(1.7)",
-                        onComplete: () => {
-                            BaristaApp.elements.onboardingModal.classList.add("hidden");
-                            BaristaApp.elements.onboardingModal.classList.remove("flex");
-                            BaristaApp.ui.animateDashboardElements();
-                            BaristaApp.ui.ads.showDashboardAd(); // MODIFIED
-                        }
-                    });
-                    BaristaApp.util.trackAnalytics("Completed Onboarding");
-                    BaristaApp.dataManager.updateLeaderboardStorage();
-                },
-                saveProfile: () => {
-                    if(!BaristaApp.elements.profileName || !BaristaApp.elements.profileEmail) return;
-                    const oldName = BaristaApp.state.user.name;
-                    const oldEmail = BaristaApp.state.user.email;
-                    const name = BaristaApp.elements.profileName.value.trim();
-                    const email = BaristaApp.elements.profileEmail.value.trim();
-
-                    if (!name) {
-                        BaristaApp.util.showError("Name cannot be empty.");
-                        BaristaApp.elements.profileName.focus();
-                        return;
-                    }
-                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                        BaristaApp.util.showError("Please enter a valid email address.");
-                        BaristaApp.elements.profileEmail.focus();
-                        return;
-                    }
-                    BaristaApp.state.user.name = name;
-                    BaristaApp.state.user.email = email;
-                    localStorage.setItem("baristaIO_user", JSON.stringify(BaristaApp.state.user));
-                    if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = name;
-                    if (BaristaApp.elements.traineeName) BaristaApp.elements.traineeName.textContent = name;
-
-                    BaristaApp.modalManager.closeProfile();
-                    BaristaApp.util.trackAnalytics("Updated Profile");
-                    BaristaApp.util.showSuccess("Profile updated successfully.");
-
-                    if (oldName !== name || oldEmail !== email) {
-                        BaristaApp.state.leaderboard = BaristaApp.state.leaderboard.filter(entry => !(entry.name === oldName && entry.email === oldEmail));
-                    }
-                    BaristaApp.dataManager.updateLeaderboardStorage();
-                },
-                resetProgress: () => {
-                    if (confirm("Are you sure you want to reset all your progress? This action cannot be undone.")) {
-                        BaristaApp.state.progress = Array(CONTENT.days.length).fill(false);
-                        BaristaApp.state.user.points = 0;
-                        BaristaApp.state.notes = {};
-                        BaristaApp.state.feedback = {};
-                        localStorage.removeItem("baristaIO_progress");
-                        localStorage.removeItem("baristaIO_notes");
-                        localStorage.removeItem("baristaIO_feedback");
-
-                        localStorage.setItem("baristaIO_user", JSON.stringify(BaristaApp.state.user));
-
-                        BaristaApp.ui.updateProgressDisplay();
-                        BaristaApp.ui.populateDays(BaristaApp.elements.search ? BaristaApp.elements.search.value : "");
-                        if(BaristaApp.elements.points) BaristaApp.elements.points.textContent = `Points: ${BaristaApp.state.user.points}`;
-                        if(BaristaApp.elements.dashboard && BaristaApp.elements.dashboard.classList.contains('hidden')) {
-                             BaristaApp.elements.certificate.classList.add("hidden");
-                             BaristaApp.elements.certificate.classList.remove("active");
-                             BaristaApp.elements.lessonPage.classList.add("hidden");
-                             BaristaApp.elements.lessonPage.classList.remove("active");
-                             BaristaApp.elements.dashboard.classList.remove("hidden");
-                             BaristaApp.elements.dashboard.classList.add("active");
-                             BaristaApp.ui.animateDashboardElements();
-                        }
-                        BaristaApp.dataManager.updateLeaderboardStorage();
-                        BaristaApp.util.showSuccess("Progress has been reset.");
-                        BaristaApp.util.trackAnalytics("Reset All Progress");
-                    }
-                },
-                exportProgress: () => {
-                    const exportData = {
-                        user: BaristaApp.state.user,
-                        progress: BaristaApp.state.progress,
-                        notes: BaristaApp.state.notes,
-                        feedback: BaristaApp.state.feedback,
-                        timestamp: new Date().toISOString()
-                    };
-                    const dataStr = JSON.stringify(exportData, null, 2);
-                    const blob = new Blob([dataStr], {type: "application/json"});
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `BaristaIO_Progress_${BaristaApp.state.user.name.replace(/\s/g, '_') || 'Trainee'}.json`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                    BaristaApp.util.showSuccess("Progress exported successfully!");
-                    BaristaApp.util.trackAnalytics("Exported Progress");
-                },
-                        saveNotes: (day, buttonElement) => {
-                const notesInput = document.getElementById("notesInput");
-                if (buttonElement) {
-                    buttonElement.disabled = true;
-                    const buttonText = buttonElement.querySelector('.button-text');
-                    const spinner = buttonElement.querySelector('.spinner');
-                    if(buttonText) buttonText.textContent = 'Saving...';
-                    if(spinner) spinner.classList.remove('hidden');
-                }
-
-                // Simulate a slight delay for saving
-                setTimeout(() => {
-                    if (notesInput) {
-                        BaristaApp.state.notes[day] = notesInput.value;
-                        localStorage.setItem("baristaIO_notes", JSON.stringify(BaristaApp.state.notes));
-                        BaristaApp.util.showSuccess("Notes saved!");
-                        BaristaApp.util.trackAnalytics(`Saved Notes for Day ${day}`);
-                    } else {
-                        BaristaApp.util.showError("Could not find notes input field.");
-                    }
-
-                    if (buttonElement) {
-                        buttonElement.disabled = false;
-                        const buttonText = buttonElement.querySelector('.button-text');
-                        const spinner = buttonElement.querySelector('.spinner');
-                        if(buttonText) buttonText.textContent = 'Save Notes';
-                        if(spinner) spinner.classList.add('hidden');
-                    }
-                }, 500); // 0.5 second delay
-            },
-                submitFeedback: (day, rating) => {
-                    BaristaApp.state.feedback[day] = { rating, timestamp: new Date().toISOString() };
-                    localStorage.setItem("baristaIO_feedback", JSON.stringify(BaristaApp.state.feedback));
-
-                    if (BaristaApp.elements.lessonPage && !BaristaApp.elements.lessonPage.classList.contains('hidden') &&
-                        BaristaApp.elements.theoryTab && BaristaApp.elements.theoryTab.classList.contains('active') &&
-                        BaristaApp.state.currentDay === day) {
-                         BaristaApp.elements.lessonContent.innerHTML = BaristaApp.lessonManager.generateTheoryContent(BaristaApp.state.currentDay);
-                         BaristaApp.ui.animateLessonContentLoaded(BaristaApp.elements.lessonContent);
-                    }
-                    BaristaApp.dataManager.addPoints(5);
-                    BaristaApp.util.trackAnalytics(`Submitted Feedback for Day ${day}: ${rating} stars`);
-                    BaristaApp.util.showSuccess("Thank you for your feedback! +5 points.");
-                }
-            },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             practicalInteractions: {
                 setupDay1: function() {
@@ -5677,7 +5435,7 @@ setupDay14: function() {
                 BaristaApp.state.isFirstVisit = !localStorage.getItem("baristaIO_visited");
                 BaristaApp.state.leaderboard = JSON.parse(localStorage.getItem("baristaIO_leaderboard")) || [];
 
-                if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = BaristaApp.state.user.name;
+                          if (BaristaApp.elements.userName) BaristaApp.elements.userName.textContent = BaristaApp.state.user.name;
                 if (BaristaApp.elements.traineeName) BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
                 if (BaristaApp.elements.points) BaristaApp.elements.points.textContent = `Points: ${BaristaApp.state.user.points}`;
                 if (BaristaApp.elements.languageToggle) BaristaApp.elements.languageToggle.value = BaristaApp.state.language;
@@ -5690,7 +5448,7 @@ setupDay14: function() {
                 else { console.warn("AdSense library not loaded. Ads will not display."); }
 
                 if (BaristaApp.state.isFirstVisit && BaristaApp.elements.onboardingModal) { BaristaApp.ui.ads.hideAdsForModal(); BaristaApp.modalManager.showOnboarding(); }
-                else { BaristaApp.ui.animateDashboardElements(); }
+                else { BaristaApp.ui.animateDashboardElements(); } // This will call manageContentAdsVisibility
 
                 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { gsap.registerPlugin(ScrollTrigger); } else { console.error("GSAP or ScrollTrigger not loaded."); }
             },
@@ -5700,7 +5458,9 @@ setupDay14: function() {
                         BaristaApp.elements.lessonPage?.classList.add("hidden"); BaristaApp.elements.lessonPage?.classList.remove("active");
                         BaristaApp.elements.certificate?.classList.add("hidden"); BaristaApp.elements.certificate?.classList.remove("active");
                         BaristaApp.elements.dashboard?.classList.remove("hidden"); BaristaApp.elements.dashboard?.classList.add("active");
-                        BaristaApp.ui.ads.manageContentAdsVisibility(null);
+                         // --- ADSENSE POLICY CHANGE ---
+                        BaristaApp.ui.ads.manageContentAdsVisibility('#dashboardAd'); // Show dashboard ad if conditions met
+                        // --- END ADSENSE POLICY CHANGE ---
                         BaristaApp.state.currentDay = 0;
                         BaristaApp.ui.populateDays(BaristaApp.elements.search?.value || "");
                         BaristaApp.ui.animateDashboardElements();
