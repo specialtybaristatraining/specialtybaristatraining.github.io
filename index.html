@@ -19,6 +19,13 @@
      crossorigin="anonymous"></script>
 
     <style>
+        /* AdSense: Hide all ad placeholders by default, show only via JS if content is present */
+        .ad-placeholder, #dashboardAd, #lessonPageAd {
+            display: none !important;
+        }
+        .ad-placeholder.visible, #dashboardAd.visible, #lessonPageAd.visible {
+            display: flex !important;
+        }
         :root {
             --bg-primary-dark: #111827; /* bg-gray-900 */
             --bg-secondary-dark: #1F2937; /* bg-gray-800 */
@@ -56,12 +63,26 @@
 
         .glass {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .high-contrast .glass {
+        /* Move inline ad styles to CSS */
+        ins.adsbygoogle {
+            display: block !important;
+            width: 100% !important;
+        }
+        /* Progress bar fill (dashboard) */
+        #progressBarFill {
+            width: 0%;
+        }
+        /* Quiz timer bar */
+        #quizTimerBar {
+            width: 100%;
+            transition: width 1s linear;
+        }
             background: rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.08);
         }
@@ -418,8 +439,8 @@
             <h1 class="text-2xl font-bold text-amber-500 flex items-center">
                 <img src="images/logo.png" alt="Logo" class="h-8 w-auto mr-2" id="sidebar-logo"> Specialty Barista Training
             </h1>
-            <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-white text-2xl">
-                <i class="fas fa-times"></i>
+            <button id="closeSidebar" class="md:hidden text-gray-400 hover:text-white text-2xl" aria-label="Close sidebar menu" title="Close sidebar menu">
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
         <div class="relative">
@@ -445,17 +466,16 @@
                     <i class="fas fa-heart sidebar-btn-icon text-red-300"></i> Support Us
                 </button>
                 <div class="flex items-center justify-between">
-                    <select id="languageToggle" class="bg-gray-700 text-xs p-2 rounded-md border border-gray-600 focus:ring-amber-500 focus:border-amber-500">
+                    <select id="languageToggle" class="bg-gray-700 text-xs p-2 rounded-md border border-gray-600 focus:ring-amber-500 focus:border-amber-500" aria-label="Select language" title="Select language">
                         <option value="en">English</option>
                         <option value="ne">नेपाली</option>
                     </select>
-                    <button id="themeToggle" data-tooltip="Toggle Theme" class="p-2 rounded-md hover:bg-gray-700 text-lg">🌙</button>
+                    <button id="themeToggle" data-tooltip="Toggle Theme" class="p-2 rounded-md hover:bg-gray-700 text-lg" aria-label="Toggle theme" title="Toggle theme">🌙</button>
                 </div>
             </div>
             <div class="pt-4">
                 <div class="ad-placeholder hidden"> <!-- Initially hidden, JS will manage -->
                     <ins class="adsbygoogle"
-                         style="display:block"
                          data-ad-client="ca-pub-1343070560951957"
                          data-ad-slot="7414600322"
                          data-ad-format="auto"
@@ -471,23 +491,21 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto relative">
-        <button id="hamburgerMenu" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-700 text-white rounded-md shadow-lg">
-            <i class="fas fa-bars text-xl"></i>
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto relative" aria-label="Main content">
+        <button id="hamburgerMenu" class="md:hidden fixed top-4 left-4 z-50 p-2 bg-gray-700 text-white rounded-md shadow-lg" aria-label="Open sidebar menu">
+            <i class="fas fa-bars text-xl" aria-hidden="true"></i>
         </button>
 
-        <section id="dashboardAd" class="hidden ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md"> <!-- Initially hidden -->
+        <section id="dashboardAd" class="ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md" aria-label="Advertisement">
             <ins class="adsbygoogle"
-                 style="display:block"
                  data-ad-client="ca-pub-1343070560951957"
                  data-ad-slot="3502133839"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
         </section>
 
-        <section id="lessonPageAd" class="hidden ad-placeholder mx-auto my-4 max-w-screen-md"> <!-- Initially hidden -->
+        <section id="lessonPageAd" class="ad-placeholder mx-auto my-4 max-w-screen-md" aria-label="Advertisement">
             <ins class="adsbygoogle"
-                 style="display:block"
                  data-ad-client="ca-pub-1343070560951957"
                  data-ad-slot="3717756254"
                  data-ad-format="autorelaxed"
@@ -504,7 +522,7 @@
                     </div>
                 </div>
                 <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden mb-6 shadow-inner">
-                    <div id="progressBarFill" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500 ease-out" style="width:0%;"></div>
+                    <div id="progressBarFill" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500 ease-out"></div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
                     <div class="glass p-5 rounded-lg hover-lift transition-all">
@@ -698,7 +716,7 @@
                     </div>
                 </div>
                 <div class="w-full h-1 bg-gray-600 rounded-full my-3">
-                    <div id="quizTimerBar" class="h-full bg-red-500 rounded-full" style="width: 100%; transition: width 1s linear;"></div>
+                    <div id="quizTimerBar" class="h-full bg-red-500 rounded-full"></div>
                 </div>
                 <div id="quizModalContent" class="my-6 text-gray-200"></div>
                 <div id="quizModalFeedback" class="mt-6 text-amber-400 font-medium"></div>
@@ -712,6 +730,78 @@
 
 
       <script>
+        // AdSense Compliance: Only show ads if there is real, valuable content
+        function hasValuableContent() {
+          // Check for main content sections with real text or interactive elements
+          const dashboard = document.getElementById('dashboard');
+          const lessonPage = document.getElementById('lessonPage');
+          const cert = document.getElementById('certificate');
+          // Check if any main section is visible and has meaningful content
+          function isSectionValuable(section) {
+            if (!section || section.classList.contains('hidden')) return false;
+            // Look for text, images, or interactive elements
+            const text = section.innerText.trim();
+            const hasText = text.length > 100; // Arbitrary threshold for real content
+            const hasImg = section.querySelector('img, video, canvas');
+            const hasInteractive = section.querySelector('button, input, select, textarea');
+            return hasText || hasImg || hasInteractive;
+          }
+          return (
+            isSectionValuable(dashboard) ||
+            isSectionValuable(lessonPage) ||
+            isSectionValuable(cert)
+          );
+        }
+
+        function updateAdVisibility() {
+          const adSections = [
+            document.getElementById('dashboardAd'),
+            document.getElementById('lessonPageAd'),
+            ...document.querySelectorAll('.ad-placeholder')
+          ];
+          if (hasValuableContent()) {
+            adSections.forEach(ad => ad && ad.classList.add('visible'));
+            // (Re)load AdSense if needed
+            if (window.adsbygoogle && window.adsbygoogle.loaded !== true) {
+              document.querySelectorAll('ins.adsbygoogle').forEach(ins => {
+                try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+              });
+              window.adsbygoogle.loaded = true;
+            }
+            // Hide empty message if present
+            const emptyMsg = document.getElementById('emptyContentMsg');
+            if (emptyMsg) emptyMsg.style.display = 'none';
+          } else {
+            adSections.forEach(ad => ad && ad.classList.remove('visible'));
+            // Show a clear message if no content
+            let emptyMsg = document.getElementById('emptyContentMsg');
+            if (!emptyMsg) {
+              emptyMsg = document.createElement('div');
+              emptyMsg.id = 'emptyContentMsg';
+              emptyMsg.className = 'text-center text-lg text-red-400 font-semibold my-12';
+              emptyMsg.innerText = 'No valuable content available. Ads are hidden to comply with AdSense policies.';
+              document.querySelector('main').prepend(emptyMsg);
+            } else {
+              emptyMsg.style.display = 'block';
+            }
+          }
+        }
+
+        // Run on load and after navigation/content changes
+        document.addEventListener('DOMContentLoaded', updateAdVisibility);
+        // If your app uses navigation or dynamic content, call updateAdVisibility() after changes
+        // Example: window.addEventListener('hashchange', updateAdVisibility);
+        // If you have a SPA, call updateAdVisibility() after page/section changes
+
+        // Accessibility: Add missing alt/aria-labels for images and buttons
+        document.addEventListener('DOMContentLoaded', function() {
+          document.querySelectorAll('img:not([alt])').forEach(img => {
+            img.alt = 'Barista Training Image';
+          });
+          document.querySelectorAll('button:not([aria-label])').forEach(btn => {
+            if (!btn.innerText.trim()) btn.setAttribute('aria-label', 'Button');
+          });
+        });
         'use strict';
         // IMPORTANT DEVELOPMENT NOTE:
         // For Lottie animations and potentially other features to load correctly from local files
@@ -2188,7 +2278,10 @@
                     );
 
                     if (filteredDays.length === 0) {
-                        BaristaApp.elements.dayList.innerHTML = `<li class="text-gray-500 p-3">No lessons found matching "${filter}".</li>`;
+                        BaristaApp.elements.dayList.innerHTML = `<li class="text-red-400 font-semibold text-center p-3">No lessons found. Please check back soon!</li>`;
+                        // Hide dashboard ad if no lessons
+                        const dashboardAd = document.getElementById('dashboardAd');
+                        if (dashboardAd) dashboardAd.classList.add('hidden');
                         return;
                     }
 
