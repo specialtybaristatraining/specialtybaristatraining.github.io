@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +19,8 @@
 
     <style>
         /* AdSense: Hide all ad placeholders by default, show only via JS if content is present */
-        .ad-placeholder, #dashboardAd, #lessonPageAd {
-            display: none !important;
-        }
-        .ad-placeholder.visible, #dashboardAd.visible, #lessonPageAd.visible {
-            display: flex !important;
+        .ad-placeholder {
+            display: none;
         }
         :root {
             --bg-primary-dark: #111827; /* bg-gray-900 */
@@ -108,7 +104,7 @@
             }
         }
 
-        .ad-placeholder {
+        .ad-placeholder:not(.hidden) {
             min-height: 90px;
             background-color: var(--bg-tertiary-dark);
             border: 1px dashed var(--accent-secondary);
@@ -496,7 +492,7 @@
             <i class="fas fa-bars text-xl" aria-hidden="true"></i>
         </button>
 
-        <section id="dashboardAd" class="ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md" aria-label="Advertisement">
+        <section id="dashboardAd" class="ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md hidden" aria-label="Advertisement">
             <ins class="adsbygoogle"
                  data-ad-client="ca-pub-1343070560951957"
                  data-ad-slot="3502133839"
@@ -504,7 +500,7 @@
                  data-full-width-responsive="true"></ins>
         </section>
 
-        <section id="lessonPageAd" class="ad-placeholder mx-auto my-4 max-w-screen-md" aria-label="Advertisement">
+        <section id="lessonPageAd" class="ad-placeholder mx-auto my-4 max-w-screen-md hidden" aria-label="Advertisement">
             <ins class="adsbygoogle"
                  data-ad-client="ca-pub-1343070560951957"
                  data-ad-slot="3717756254"
@@ -730,69 +726,6 @@
 
 
       <script>
-        // AdSense Compliance: Only show ads if there is real, valuable content
-        function hasValuableContent() {
-          // Check for main content sections with real text or interactive elements
-          const dashboard = document.getElementById('dashboard');
-          const lessonPage = document.getElementById('lessonPage');
-          const cert = document.getElementById('certificate');
-          // Check if any main section is visible and has meaningful content
-          function isSectionValuable(section) {
-            if (!section || section.classList.contains('hidden')) return false;
-            // Look for text, images, or interactive elements
-            const text = section.innerText.trim();
-            const hasText = text.length > 100; // Arbitrary threshold for real content
-            const hasImg = section.querySelector('img, video, canvas');
-            const hasInteractive = section.querySelector('button, input, select, textarea');
-            return hasText || hasImg || hasInteractive;
-          }
-          return (
-            isSectionValuable(dashboard) ||
-            isSectionValuable(lessonPage) ||
-            isSectionValuable(cert)
-          );
-        }
-
-        function updateAdVisibility() {
-          const adSections = [
-            document.getElementById('dashboardAd'),
-            document.getElementById('lessonPageAd'),
-            ...document.querySelectorAll('.ad-placeholder')
-          ];
-          if (hasValuableContent()) {
-            adSections.forEach(ad => ad && ad.classList.add('visible'));
-            // (Re)load AdSense if needed
-            if (window.adsbygoogle && window.adsbygoogle.loaded !== true) {
-              document.querySelectorAll('ins.adsbygoogle').forEach(ins => {
-                try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-              });
-              window.adsbygoogle.loaded = true;
-            }
-            // Hide empty message if present
-            const emptyMsg = document.getElementById('emptyContentMsg');
-            if (emptyMsg) emptyMsg.style.display = 'none';
-          } else {
-            adSections.forEach(ad => ad && ad.classList.remove('visible'));
-            // Show a clear message if no content
-            let emptyMsg = document.getElementById('emptyContentMsg');
-            if (!emptyMsg) {
-              emptyMsg = document.createElement('div');
-              emptyMsg.id = 'emptyContentMsg';
-              emptyMsg.className = 'text-center text-lg text-red-400 font-semibold my-12';
-              emptyMsg.innerText = 'No valuable content available. Ads are hidden to comply with AdSense policies.';
-              document.querySelector('main').prepend(emptyMsg);
-            } else {
-              emptyMsg.style.display = 'block';
-            }
-          }
-        }
-
-        // Run on load and after navigation/content changes
-        document.addEventListener('DOMContentLoaded', updateAdVisibility);
-        // If your app uses navigation or dynamic content, call updateAdVisibility() after changes
-        // Example: window.addEventListener('hashchange', updateAdVisibility);
-        // If you have a SPA, call updateAdVisibility() after page/section changes
-
         // Accessibility: Add missing alt/aria-labels for images and buttons
         document.addEventListener('DOMContentLoaded', function() {
           document.querySelectorAll('img:not([alt])').forEach(img => {
