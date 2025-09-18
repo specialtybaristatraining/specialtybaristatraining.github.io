@@ -1,45 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- ...existing code... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specialty Barista Training IO</title>
-        <meta name="description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
-        <meta name="keywords" content="barista, coffee, espresso, training, specialty, latte art, cafe, course, certificate">
-        <meta property="og:title" content="Specialty Barista Training IO">
-        <meta property="og:description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
-        <meta property="og:image" content="images/social-share.jpg">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://specialtybaristatraining.github.io/">
-        <link rel="icon" type="image/png" href="images/favicon.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
-        <link rel="manifest" href="manifest.json">
-        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957"
-         crossorigin="anonymous"></script>
-            <header class="bg-gray-900 text-white py-6 shadow">
-                <div class="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
-                   
-                  
-                    
-                     
-                    </nav>
-                </div>
-            </header>
-            <main class="container mx-auto px-4 py-10 max-w-3xl">
-                <!-- ...dashboard content remains, welcome/about content is now only in the modal... -->
-            </main>
-            
+    <meta name="description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
+    <meta name="keywords" content="barista, coffee, espresso, training, specialty, latte art, cafe, course, certificate">
+    <meta property="og:title" content="Specialty Barista Training IO">
+    <meta property="og:description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
+    <meta property="og:image" content="images/social-share.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://specialtybaristatraining.github.io/">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -49,9 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957"
-     crossorigin="anonymous"></script>
-
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957" crossorigin="anonymous"></script>
     <style>
         /* AdSense: Hide all ad placeholders by default, show only via JS if content is present */
         .ad-placeholder {
@@ -100,20 +73,6 @@
         }
 
         .high-contrast .glass {
-        /* Move inline ad styles to CSS */
-        ins.adsbygoogle {
-            display: block !important;
-            width: 100% !important;
-        }
-        /* Progress bar fill (dashboard) */
-        #progressBarFill {
-            width: 0%;
-        }
-        /* Quiz timer bar */
-        #quizTimerBar {
-            width: 100%;
-            transition: width 1s linear;
-        }
             background: rgba(0, 0, 0, 0.03);
             border: 1px solid rgba(0, 0, 0, 0.08);
         }
@@ -136,6 +95,8 @@
         @media (max-width: 768px) {
             aside {
                 transform: translateX(-100%);
+                width: 80% !important;
+                max-width: 300px;
             }
         }
 
@@ -461,40 +422,210 @@
             --bg-tertiary-dark_rgb: 55, 65, 81;
             --bg-tertiary-light_rgb: 229, 231, 235;
         }
+
+        /* Mobile-specific improvements */
+        @media (max-width: 640px) {
+            /* Header adjustments */
+            header {
+                padding: 0.5rem 0.75rem !important;
+                height: auto;
+                min-height: 56px;
+            }
+            
+            header .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            header nav {
+                display: none; /* Hide nav on mobile */
+            }
+            
+            /* Main content spacing */
+            main {
+                padding: 0.5rem !important;
+                margin-top: 56px !important; /* Account for fixed header */
+            }
+            
+            /* Dashboard card */
+            #dashboard .glass {
+                padding: 1rem !important;
+                margin-top: 0.5rem !important;
+            }
+            
+            /* Sidebar adjustments */
+            aside {
+                width: 80% !important;
+                max-width: 300px;
+                transform: translateX(-100%);
+                z-index: 60;
+            }
+            
+            .sidebar-open {
+                transform: translateX(0) !important;
+            }
+            
+            /* Show hamburger menu on mobile */
+            #hamburgerMenu {
+                display: block !important;
+                position: fixed;
+                top: 12px;
+                left: 12px;
+                z-index: 70;
+                background: rgba(0, 0, 0, 0.7);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Modal adjustments */
+            .modal-content-area {
+                padding: 0.5rem !important;
+            }
+            
+            /* Certificate page */
+            #certificate .glass {
+                padding: 1.5rem !important;
+            }
+            
+            /* Improve touch targets */
+            .interactive-button, .tab, .sidebar-btn {
+                min-height: 44px; /* Apple's recommended minimum touch target size */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Improve text readability */
+            body {
+                font-size: 16px; /* Prevent zoom on iOS */
+                -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+            }
+            
+            /* Prevent horizontal scrolling */
+            html, body {
+                overflow-x: hidden;
+                width: 100%;
+            }
+            
+            /* Improve form elements */
+            input, select, textarea {
+                font-size: 16px !important; /* Prevent zoom on iOS */
+            }
+            
+            /* Adjust text sizes for mobile */
+            h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            /* Dashboard elements */
+            #dashboard .text-3xl {
+                font-size: 1.75rem !important;
+            }
+            
+            #dashboard .text-4xl {
+                font-size: 2rem !important;
+            }
+            
+            /* Lesson content */
+            #lessonContent {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+            
+            /* Tabs */
+            #tabs {
+                flex-wrap: wrap;
+            }
+            
+            #tabs .tab {
+                flex: 1;
+                min-width: 25%;
+                text-align: center;
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Tablet adjustments */
+        @media (min-width: 641px) and (max-width: 1024px) {
+            aside {
+                width: 240px !important;
+            }
+            
+            main {
+                margin-left: 240px !important;
+            }
+            
+            #hamburgerMenu {
+                display: none !important;
+            }
+        }
+
+        /* Desktop adjustments */
+        @media (min-width: 1025px) {
+            aside {
+                transform: translateX(0) !important;
+            }
+            
+            main {
+                margin-left: 256px !important;
+            }
+            
+            #hamburgerMenu {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 <body id="appBody" class="bg-gray-900 text-gray-100 min-h-screen flex relative">
     <!-- Topbar -->
-    <header class="fixed top-0 left-0 w-full bg-gray-900 z-50 shadow flex items-center justify-between px-6 py-3 border-b border-gray-800">
-        <div class="flex items-center gap-3">
-            <img src="images/logo.png" alt="Logo" class="h-9 w-auto" id="sidebar-logo">
-            <span class="text-2xl font-bold text-amber-500 tracking-tight">Specialty Barista Training</span>
+    <header class="fixed top-0 left-0 w-full bg-gray-900 z-50 shadow flex items-center justify-between px-4 py-3 border-b border-gray-800">
+        <!-- Hamburger Menu (Mobile Only) -->
+        <button id="hamburgerMenu" class="md:hidden text-white focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+            <span class="sr-only">Open sidebar menu</span>
+        </button>
+        </button>
+        
+        <div class="flex items-center gap-3 ml-2 md:ml-0">
+            <img src="images/logo.png" alt="Logo" class="h-8 w-auto" id="sidebar-logo">
+            <span class="text-xl md:text-2xl font-bold text-amber-500 tracking-tight">Specialty Barista</span>
         </div>
-        <nav class="flex gap-6 text-base font-medium">
+        
+        <nav class="hidden md:flex gap-4 md:gap-6 text-sm md:text-base font-medium">
             <a href="index.html" class="hover:text-amber-400">Home</a>
             <a href="about.html" class="hover:text-amber-400">About</a>
             <a href="contact.html" class="hover:text-amber-400">Contact</a>
             <a href="privacy.html" class="hover:text-amber-400">Privacy</a>
             <a href="disclosure.html" class="hover:text-amber-400">Disclosure</a>
         </nav>
-        <div class="flex items-center gap-4">
-            <select id="languageToggle" class="bg-gray-700 text-xs p-2 rounded-md border border-gray-600 focus:ring-amber-500 focus:border-amber-500" aria-label="Select language" title="Select language">
+        
+        <div class="flex items-center gap-2 md:gap-4">
+            <select id="languageToggle" class="bg-gray-700 text-xs p-1 md:p-2 rounded-md border border-gray-600 focus:ring-amber-500 focus:border-amber-500" aria-label="Select language" title="Select language">
                 <option value="en">English</option>
                 <option value="ne">नेपाली</option>
             </select>
-            <button id="themeToggle" data-tooltip="Toggle Theme" class="p-2 rounded-md hover:bg-gray-700 text-lg" aria-label="Toggle theme" title="Toggle theme">🌙</button>
-            <span class="hidden md:inline text-xs text-gray-400 ml-4">
-                This site is free and supported by users like you, affiliate links, and advertisements.
-                <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More (Disclosure)</a> |
-                <a href="privacy.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Privacy Policy</a>
+            <button id="themeToggle" data-tooltip="Toggle Theme" class="p-1 md:p-2 rounded-md hover:bg-gray-700 text-lg" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+            <span class="hidden lg:inline text-xs text-gray-400 ml-2">
+                Free resource supported by ads.
+                <a href="disclosure.html" target="_blank" rel="noopener noreferrer" class="underline hover:text-amber-400">Learn More</a>
             </span>
         </div>
     </header>
 
-    <!-- Sidebar (always on the left) -->
-    <aside id="sidebar" class="fixed top-[64px] left-0 inset-y-0 bg-gray-800 text-gray-200 w-64 p-4 space-y-6 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-4">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-gray-800 text-gray-200 w-64 p-4 space-y-6 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-16">
         <div class="relative mb-4">
-            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full !p-2.5 text-sm">
+            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full p-2.5 text-sm">
             <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
         </div>
         <nav class="flex-grow overflow-y-auto custom-scrollbar">
@@ -503,8 +634,11 @@
         <button id="profileButton" data-tooltip="Edit Profile" class="w-full flex items-center p-2.5 text-sm rounded-md hover:bg-gray-700 transition-colors mt-4">
             <i class="fas fa-user-edit sidebar-btn-icon text-sky-400"></i> Edit Profile
         </button>
+        <button id="donationButtonSidebar" data-tooltip="Support Us" class="w-full flex items-center p-2.5 text-sm rounded-md hover:bg-amber-600 bg-amber-500 text-gray-900 font-semibold shadow mt-2 transition-colors">
+            <i class="fas fa-heart sidebar-btn-icon text-red-500 mr-2"></i> <span>Support Us</span>
+        </button>
         <div class="pt-4 mt-auto">
-            <div class="ad-placeholder hidden"> <!-- Initially hidden, JS will manage -->
+            <div class="ad-placeholder hidden">
                 <ins class="adsbygoogle"
                      data-ad-client="ca-pub-1343070560951957"
                      data-ad-slot="7414600322"
@@ -515,8 +649,8 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto relative" aria-label="Main content">
-        <!-- Lesson Fullscreen Modal (truly fullscreen, no sidebar visible) -->
+    <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto relative mt-14" aria-label="Main content">
+        <!-- Lesson Fullscreen Modal -->
         <div id="lessonModal" class="fixed inset-0 w-screen h-screen bg-black bg-opacity-90 flex items-center justify-center z-[9999] p-0 m-0 hidden">
             <div class="modal-content-area glass w-full h-full min-h-0 min-w-0 p-2 sm:p-6 md:p-10 rounded-none shadow-none border-none relative overflow-y-auto flex flex-col max-w-full">
                 <button id="closeLessonModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl z-10" aria-label="Close">×</button>
@@ -524,52 +658,51 @@
             </div>
         </div>
 
-        <!-- Hamburger menu removed: sidebar is always visible on the left -->
-
-        <!-- Dashboard Summary Card (no welcome/about content) -->
+        <!-- Dashboard Summary Card -->
         <section id="dashboard" class="active">
-            <div class="glass p-8 rounded-2xl shadow-2xl max-w-3xl mx-auto mt-6 mb-10">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
+            <div class="glass p-6 md:p-8 rounded-2xl shadow-2xl max-w-3xl mx-auto mt-4 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 mb-6">
                     <div>
-                        <h2 class="text-3xl sm:text-4xl font-bold text-gray-100 mb-2">Welcome, <span id="userName" class="text-amber-400">Trainee</span>!</h2>
-                        <div class="flex flex-wrap gap-4 items-center mt-2">
-                            <div class="bg-gray-800 rounded-lg px-4 py-2 flex items-center gap-2">
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-100 mb-2">Welcome, <span id="userName" class="text-amber-400">Trainee</span>!</h2>
+                        <div class="flex flex-wrap gap-3 items-center mt-2">
+                            <div class="bg-gray-800 rounded-lg px-3 py-2 flex items-center gap-2">
                                 <span id="progress" class="text-sm text-gray-300">Progress: 0/0</span>
                             </div>
-                            <div class="bg-gray-800 rounded-lg px-4 py-2 flex items-center gap-2">
-                                <span id="points" class="text-lg font-semibold text-green-400">Points: 0</span>
+                            <div class="bg-gray-800 rounded-lg px-3 py-2 flex items-center gap-2">
+                                <span id="points" class="text-base md:text-lg font-semibold text-green-400">Points: 0</span>
                             </div>
                         </div>
                     </div>
                     <div class="flex flex-col items-end gap-2">
-                        <button onclick="BaristaApp.lessonManager.continueToNextLesson()" class="interactive-button text-base px-6 py-2 font-semibold shadow-lg">
-                            <i class="fas fa-play mr-2"></i>Start / Continue Learning
+                        <button onclick="BaristaApp.lessonManager.continueToNextLesson()" class="interactive-button text-sm md:text-base px-4 md:px-6 py-2 font-semibold shadow-lg">
+                            <i class="fas fa-play mr-2"></i>Continue Learning
                         </button>
-                        <div class="text-xs text-gray-400 mt-1">Your progress is saved automatically</div>
+                        <div class="text-xs text-gray-400 mt-1">Progress saved automatically</div>
                     </div>
                 </div>
                 <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden mb-6 shadow-inner">
                     <div id="progressBarFill" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500 ease-out"></div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="glass p-5 rounded-lg hover-lift transition-all">
-                        <h3 class="text-lg font-semibold text-sky-300 mb-2">Next Lesson</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6">
+                    <div class="glass p-4 md:p-5 rounded-lg hover-lift transition-all">
+                        <h3 class="text-base md:text-lg font-semibold text-sky-300 mb-2">Next Lesson</h3>
                         <p id="nextLessonInfo" class="text-sm text-gray-200 line-clamp-2">Calculating next lesson...</p>
                     </div>
-                    <div class="glass p-5 rounded-lg hover-lift transition-all">
-                        <h3 class="text-lg font-semibold text-lime-300 mb-2">Fun Fact</h3>
+                    <div class="glass p-4 md:p-5 rounded-lg hover-lift transition-all">
+                        <h3 class="text-base md:text-lg font-semibold text-lime-300 mb-2">Fun Fact</h3>
                         <p id="funFact" class="text-sm text-gray-200 line-clamp-2">Coffee is the second most traded commodity!</p>
                     </div>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-3 mt-8">
-                    <button onclick="BaristaApp.dataManager.exportProgress()" class="interactive-button bg-indigo-600 hover:bg-indigo-700 flex-1">
+                <div class="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8">
+                    <button onclick="BaristaApp.dataManager.exportProgress()" class="interactive-button bg-indigo-600 hover:bg-indigo-700 flex-1 py-2">
                         <i class="fas fa-download mr-2"></i>Export Progress
                     </button>
-                    <button onclick="BaristaApp.dataManager.resetProgress()" class="interactive-button bg-red-600 hover:bg-red-700 flex-1">
+                    <button onclick="BaristaApp.dataManager.resetProgress()" class="interactive-button bg-red-600 hover:bg-red-700 flex-1 py-2">
                         <i class="fas fa-undo mr-2"></i>Reset Progress
                     </button>
                 </div>
             </div>
+       
         </section>
 
         <!-- Welcome/About Modal -->
