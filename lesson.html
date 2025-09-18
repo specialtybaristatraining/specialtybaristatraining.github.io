@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #111827; color: #f3f4f6; }
+  .glass { background: rgba(30, 41, 59, 0.85); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  </style>
+</head>
+<body>
+  <main class="flex flex-col items-center justify-center min-h-screen">
+    <div class="glass p-8 rounded-xl shadow-2xl max-w-2xl w-full mt-8">
+      <h1 id="lessonTitle" class="text-2xl font-bold text-amber-400 mb-4">Loading...</h1>
+      <div id="lessonContent" class="prose prose-invert"></div>
+      <button onclick="window.close()" class="mt-8 px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-gray-100">Close</button>
+    </div>
+  </main>
+  <script>
+    // Parse lesson day from URL
+    const params = new URLSearchParams(window.location.search);
+    const day = parseInt(params.get('day'), 10);
+    const fallback = {
+      title: 'Lesson Not Found',
+      content: '<p>Sorry, this lesson could not be loaded. Please check your internet connection or contact support.</p>'
+    };
+    function showLesson(lesson) {
+      document.getElementById('lessonTitle').textContent = lesson.title;
+      document.getElementById('lessonContent').innerHTML = lesson.content;
+    }
+    // Try to get lesson data from opener, but catch cross-origin errors
+    let loaded = false;
+    try {
+      if (
+        window.opener &&
+        window.opener.BaristaApp &&
+        window.opener.BaristaApp.state &&
+        window.opener.CONTENT
+      ) {
+        const d = window.opener.CONTENT.days[day-1];
+        if (d && d.theory && d.theory.title && d.theory.content) {
+          showLesson({
+            title: `Day ${d.day}: ${d.theory.title}`,
+            content: d.theory.content
+          });
+          loaded = true;
+        } else if (d && d.title && d.content) {
+          // fallback if opener uses lessons.json structure
+          showLesson({
+            title: d.title,
+            content: d.content
+          });
+          loaded = true;
+        }
+      }
+    } catch (e) {
+      // SecurityError: ignore and fallback
+      console.warn('Could not access opener lesson data:', e);
+    }
+    if (!loaded) {
+      // Fallback: fetch from lessons.json
+      fetch('lessons.json')
+        .then(r => {
+          if (!r.ok) throw new Error('lessons.json fetch failed: ' + r.status);
+          return r.json();
+        })
+        .then(data => {
+          if (!data.days || !Array.isArray(data.days)) throw new Error('lessons.json missing days array');
+          const d = data.days.find(l => l.day === day);
+          if (d && d.title && d.content) {
+            showLesson({ title: d.title, content: d.content });
+          } else {
+            showLesson({
+              title: 'Lesson Not Found',
+              content: `<p>Sorry, lesson for day ${day} could not be found in lessons.json.</p>`
+            });
+          }
+        })
+        .catch((err) => {
+          // Try XMLHttpRequest as a fallback for file:// local loading
+          try {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'lessons.json', false); // synchronous for simplicity
+            xhr.send(null);
+            if (xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText);
+              if (data.days && Array.isArray(data.days)) {
+                const d = data.days.find(l => l.day === day);
+                if (d && d.title && d.content) {
+                  showLesson({ title: d.title, content: d.content });
+                  return;
+                } else {
+                  showLesson({
+                    title: 'Lesson Not Found',
+                    content: `<p>Sorry, lesson for day ${day} could not be found in lessons.json (local mode).</p>`
+                  });
+                  return;
+                }
+              }
+            }
+            showLesson({
+              title: 'Lesson Not Found',
+              content: `<p>Sorry, this lesson could not be loaded. Error: ${err.message}<br>Also tried local file mode and failed. Please use a local server for best results.</p>`
+            });
+          } catch (e2) {
+            showLesson({
+              title: 'Lesson Not Found',
+              content: `<p>Sorry, this lesson could not be loaded. Error: ${err.message}<br>Local file mode also failed: ${e2.message}. Please use a local server for best results.</p>`
+            });
+          }
+        });
+    }
+  </script>
+</body>
+</html>
