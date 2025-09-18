@@ -707,7 +707,7 @@
 
         <!-- Welcome/About Modal -->
         <div id="welcomeModal" class="fixed inset-0 z-[2000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
-            <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full p-8 relative">
+            <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full p-8 relative overflow-y-auto max-h-[90vh] flex flex-col">
                 <button id="closeWelcomeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
                 <h2 class="text-3xl font-bold text-amber-400 mb-4">Welcome to Specialty Barista Training</h2>
                 <p class="mb-4">Unlock your potential as a coffee professional or passionate home barista. Our free, interactive platform offers step-by-step lessons, expert guides, and hands-on activities to help you master every aspect of specialty coffee—from espresso extraction to latte art, customer service, and more.</p>
@@ -757,6 +757,8 @@
                 <div class="flex justify-end mt-8 gap-4">
                     <button id="closeWelcomeModal2" class="interactive-button px-6 py-2">Close</button>
                     <button id="skipWelcomeModal" class="interactive-button px-6 py-2 bg-amber-500 hover:bg-amber-600">Skip</button>
+                </div>
+                <div class="w-full text-center text-xs text-gray-500 mt-2">You can scroll to read more if needed.</div>
                 </div>
             </div>
         </div>
