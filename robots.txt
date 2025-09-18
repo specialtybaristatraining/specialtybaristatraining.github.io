@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://specialtybaristatraining.github.io/sitemap.xml
