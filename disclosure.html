@@ -1,84 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Disclosure - Specialty Barista Training IO</title>
-      <meta name="description" content="Full disclosure policy for Specialty Barista Training IO. Learn about our use of ads, affiliate links, and our commitment to transparency.">
-      <link rel="icon" type="image/png" href="images/favicon.png">
-      <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-      <style>
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background: #111827; color: #F9FAFB; }
-        .container { max-width: 800px; margin: 40px auto; padding: 32px; background: #1F2937; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); }
-        h1 { color: #F59E0B; font-size: 2.5rem; margin-bottom: 0.5em; }
-        h2 { color: #38BDF8; margin-top: 2em; font-size: 1.5rem; }
-        p, li { color: #B0B7C3; line-height: 1.7; font-size: 1.08rem; }
-        a { color: #F59E0B; text-decoration: underline; }
-        nav { margin-bottom: 2em; }
-        nav a { margin-right: 1.5em; color: #38BDF8; font-weight: 500; text-decoration: none; }
-        nav a.active, nav a:hover { color: #F59E0B; text-decoration: underline; }
-        .last-updated { font-size: 0.95em; color: #94A3B8; margin-bottom: 2em; }
-        @media (max-width: 600px) { .container { padding: 12px; } h1 { font-size: 2rem; } }
-      </style>
-    </head>
-    <body>
-      <div class="min-h-screen flex flex-col bg-[#111827]">
-        <!-- Top Navigation Bar -->
-        <header class="bg-gray-900 text-white py-4 shadow w-full flex items-center justify-center">
-          <nav class="flex space-x-6">
-            <a href="index.html" class="hover:text-amber-400">Home</a>
-            <a href="about.html" class="hover:text-amber-400">About</a>
-            <a href="contact.html" class="hover:text-amber-400">Contact</a>
-            <a href="privacy.html" class="hover:text-amber-400">Privacy</a>
-            <a href="disclosure.html" class="text-amber-400 font-semibold underline" aria-current="page">Disclosure</a>
-          </nav>
-        </header>
-        <div class="flex flex-1 w-full">
-          <!-- Main Content -->
-          <main class="flex-1 flex flex-col items-center justify-center px-2 py-8">
-            <div class="w-full max-w-xl bg-[#1F2937] rounded-2xl shadow-lg p-6 sm:p-10 flex flex-col items-center">
-              <h1 class="text-3xl sm:text-4xl font-bold text-amber-400 mb-2 text-center">Disclosure Policy</h1>
-              <div class="last-updated text-sm text-gray-400 mb-6 text-center">Last Updated: May 24, 2024</div>
-              <section class="w-full text-center">
-                <p class="mb-4"><strong>Specialty Barista Training IO</strong> is committed to providing free, high-quality educational content about barista skills and coffee. To support the ongoing creation and maintenance of this site, we engage in certain forms of monetization, always with transparency and user trust as our top priorities.</p>
-                <h2 class="text-xl text-sky-400 font-semibold mt-8 mb-2">Advertisements</h2>
-                <p class="mb-4">We display advertisements, including those served by Google AdSense, <strong>only on content-rich pages</strong>. No ads are shown on this disclosure page or other legal pages. These ads help us keep our resources free for all users. Advertisers, including Google, may use cookies to serve ads based on your prior visits to this or other websites. For more information, see our <a href="privacy.html">Privacy Policy</a>.</p>
-                <h2 class="text-xl text-sky-400 font-semibold mt-8 mb-2">Affiliate Links</h2>
-                <p class="mb-4">Some links on this site may be affiliate links. If you click an affiliate link and make a purchase, we may earn a small commission at no extra cost to you. We only recommend products or services that we believe are valuable and relevant to our audience. Affiliate revenue helps us maintain and improve the site.</p>
-                <h2 class="text-xl text-sky-400 font-semibold mt-8 mb-2">Editorial Independence</h2>
-                <p class="mb-4">All reviews and recommendations are based on our own experience and research. We do not accept paid content or sponsored posts that would compromise our editorial integrity.</p>
-                <h2 class="text-xl text-sky-400 font-semibold mt-8 mb-2">Your Trust</h2>
-                <p class="mb-4">Your trust is important to us. We strive to be transparent about our relationships with advertisers and affiliate partners. If you have any questions about our disclosure policy, please contact us at <a href="mailto:info@specialtybaristatraining.github.io">info@specialtybaristatraining.github.io</a>.</p>
-              </section>
-            </div>
-          </main>
-    
-        <footer class="bg-gray-900 text-gray-400 py-6 text-center w-full mt-auto">
-          <p>&copy; 2025 Specialty Barista Training. All rights reserved.</p>
-        </footer>
-      </div>
-    </body>
-    </html>
-        <h2>Our Commitment</h2>
-        <p>Our primary goal is to provide high-quality, unbiased educational content. While we do use advertising and affiliate links to support the site, our content and recommendations are driven by what we believe is genuinely helpful to our users.</p>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disclosure - Specialty Barista Training IO</title>
+  <meta name="description" content="Full disclosure policy for Specialty Barista Training IO. Learn about our use of ads, affiliate links, and our commitment to transparency." />
+  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f9fafb;
+      --accent: #fbbf24;
+      --link: #38bdf8;
+      --muted: #94a3b8;
+    }
 
-        <p>If you have any questions regarding our disclosure policy, please feel free to contact us (see our <a href="privacy.html">Privacy Policy</a> for contact details).</p>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        <p>Thank you for your support!</p>
-      </section>
-      <div class="mt-8 text-center">
-        <a href="index.html" class="inline-block px-4 py-2 rounded bg-amber-500 text-gray-900 font-semibold shadow hover:bg-amber-400 transition">Back to Main Site</a>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #1f2937;
+      padding: 1rem 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--link);
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a[aria-current="page"] {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 960px;
+      background-color: var(--card);
+      border-radius: 1.5rem;
+      padding: 3rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .last-updated {
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: var(--link);
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p, li {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #fde68a;
+    }
+
+    .back-button {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .back-button a {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--accent);
+      color: var(--bg);
+      font-weight: 600;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button a:hover {
+      background-color: #fcd34d;
+    }
+
+    footer {
+      background-color: #1f2937;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--link);
+      text-decoration: underline;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="disclosure.html" aria-current="page">Disclosure</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container">
+      <h1>Disclosure Policy</h1>
+      <div class="last-updated">Last Updated: May 24, 2024</div>
+
+      <p><strong>Specialty Barista Training IO</strong> is committed to providing free, high-quality educational content about barista skills and coffee. To support the ongoing creation and maintenance of this site, we engage in certain forms of monetization, always with transparency and user trust as our top priorities.</p>
+
+      <h2>Advertisements</h2>
+      <p>We display advertisements, including those served by Google AdSense, <strong>only on content-rich pages</strong>. No ads are shown on this disclosure page or other legal pages. These ads help us keep our resources free for all users. Advertisers, including Google, may use cookies to serve ads based on your prior visits to this or other websites. For more information, see our <a href="privacy.html">Privacy Policy</a>.</p>
+
+      <h2>Affiliate Links</h2>
+      <p>Some links on this site may be affiliate links. If you click an affiliate link and make a purchase, we may earn a small commission at no extra cost to you. We only recommend products or services that we believe are valuable and relevant to our audience. Affiliate revenue helps us maintain and improve the site.</p>
+
+      <h2>Editorial Independence</h2>
+      <p>All reviews and recommendations are based on our own experience and research. We do not accept paid content or sponsored posts that would compromise our editorial integrity.</p>
+
+      <h2>Your Trust</h2>
+      <p>Your trust is important to us. We strive to be transparent about our relationships with advertisers and affiliate partners. If you have any questions about our disclosure policy, please contact us at <a href="mailto:info@specialtybaristatraining.github.io">info@specialtybaristatraining.github.io</a>.</p>
+
+      <h2>Our Commitment</h2>
+      <p>Our primary goal is to provide high-quality, unbiased educational content. While we do use advertising and affiliate links to support the site, our content and recommendations are driven by what we believe is genuinely helpful to our users.</p>
+
+      <p>If you have any questions regarding our disclosure policy, please feel free to contact us (see our <a href="privacy.html">Privacy Policy</a> for contact details).</p>
+
+      <p>Thank you for your support!</p>
+
+      <div class="back-button">
+        <a href="index.html">Back to Main Site</a>
       </div>
-    </div>
-    <footer class="w-full max-w-2xl mx-auto text-center text-xs text-gray-500 py-4">
-      <a href="disclosure.html" class="underline hover:text-amber-400 font-semibold">Ad/affiliate disclosure</a> |
-      <a href="privacy.html" class="underline hover:text-amber-400">Privacy policy</a>
-      <span class="block mt-2">&copy; 2025 Specialty Barista Training</span>
-    </footer>
+    </section>
   </main>
+
+  <footer>
+    <a href="disclosure.html">Ad/affiliate disclosure</a> |
+    <a href="privacy.html">Privacy policy</a>
+    <div class="mt-2">&copy; 2025 Specialty Barista Training</div>
+  </footer>
 </body>
 </html>

@@ -1,3 +1,4 @@
+    <!-- moved guided tour, help button, and icons guide into the body to fix document order -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,9 +27,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957" crossorigin="anonymous"></script>
     <style>
-        /* AdSense: Hide all ad placeholders by default, show only via JS if content is present */
+        /* AdSense styles */
         .ad-placeholder {
             display: none;
+        }
+        .adsbygoogle {
+            display: block;
+            margin: 0 auto;
+        }
+        .ad-label {
+            font-size: 0.75rem;
+            text-align: center;
+            color: #6B7280;
+            padding: 0.25rem 0;
         }
         :root {
             --bg-primary-dark: #111827; /* bg-gray-900 */
@@ -117,6 +128,14 @@
         .ad-placeholder.hidden > ins { /* Hide the ins tag when placeholder is hidden */
             display:none !important;
         }
+
+    /* Help / Icons guide styles */
+    .help-highlight { box-shadow: 0 0 0 6px rgba(255,195,0,0.14), 0 0 18px rgba(255,195,0,0.28); animation: helpPulse 1.1s ease-in-out 3; border-radius: 8px; }
+        @keyframes helpPulse { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+        .icon-help-tooltip { position: absolute; background: rgba(17,24,39,0.95); color: #fff; padding: 8px 10px; border-radius: 8px; z-index: 5000; box-shadow: 0 6px 18px rgba(0,0,0,0.6); max-width: 260px; font-size: 13px; }
+
+    /* Floating help button sensible focus style (avoid empty rules) */
+    .help-floating:focus { outline: 3px solid rgba(245,158,11,0.22); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
 
 
         .high-contrast .ad-placeholder {
@@ -260,7 +279,7 @@
             border-radius: 0.375rem; /* Tailwind's rounded-md */
             background-color: var(--bg-tertiary-dark);
             border: 1px solid var(--bg-secondary-dark);
-            color: var(--text-primary-dark);
+            color: #000000 !important;
             font-size: 0.875rem; /* text-sm */
             transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
@@ -353,12 +372,33 @@
         #quizTimer.low-time { color: var(--error-color); animation: pulse 1s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
+        /* Modal animations */
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .result-box { padding: 0.75rem 1rem; border-radius: 0.375rem; margin-top: 0.75rem; font-size: 0.875rem; line-height: 1.4; transition: background-color 0.3s ease, color 0.3s ease; }
         .result-box.correct-result { background-color: rgba(var(--success-color_rgb, 16, 185, 129), 0.15); color: var(--success-color); border: 1px solid rgba(var(--success-color_rgb, 16, 185, 129), 0.3); }
         .result-box.incorrect-result { background-color: rgba(var(--error-color_rgb, 239, 68, 68), 0.15); color: var(--error-color); border: 1px solid rgba(var(--error-color_rgb, 239, 68, 68), 0.3); }
         .high-contrast .result-box.correct-result { color: #047857; background-color: #D1FAE5; border-color: #6EE7B7; }
         .high-contrast .result-box.incorrect-result { color: #B91C1C; background-color: #FEE2E2; border-color: #FCA5A5; }
-         :root { --success-color_rgb: 16, 185, 129; --error-color_rgb: 239, 68, 68; }
+        :root { --success-color_rgb: 16, 185, 129; --error-color_rgb: 239, 68, 68; }
+        
+        /* Progress bar styles */
+        .progress-bar-fill {
+            width: var(--progress-percent, 0%);
+            transition: width 0.3s ease-in-out;
+        }
 
         #practicalInteractiveContent .image-gallery img { max-width: 100px; height: auto; border-width: 2px; border-style: solid; border-color: transparent; border-radius: 0.375rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); cursor: pointer; transition: all 0.2s ease-in-out; }
         #practicalInteractiveContent .image-gallery img:hover,
@@ -374,6 +414,19 @@
             display: block; margin-left: auto; margin-right: auto;
             border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
             margin-top: 1.5rem; margin-bottom: 1.5rem; max-width: 90%; height: auto;
+        }
+
+        /* Crema fun-fact styling */
+        .crema-svg { display: inline-block; vertical-align: middle; }
+        .crema-layer { transition: transform 0.6s ease, opacity 0.6s ease; }
+        .crema-shimmer { transform-origin: 50% 50%; }
+        @media (prefers-reduced-motion: no-preference) {
+            .crema-shimmer { animation: cremaFloat 3.2s ease-in-out infinite; }
+            @keyframes cremaFloat {
+                0% { transform: translateY(0); opacity: 0.95; }
+                50% { transform: translateY(-1px); opacity: 1; }
+                100% { transform: translateY(0); opacity: 0.95; }
+            }
         }
         .high-contrast .prose-enhanced img.theory-image { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.04); }
 
@@ -427,13 +480,59 @@
         @media (max-width: 640px) {
             /* Header adjustments */
             header {
-                padding: 0.5rem 0.75rem !important;
+                padding: 0.5rem 1rem !important;
                 height: auto;
                 min-height: 56px;
             }
             
+            /* Logo and brand adjustments */
+            #header-logo {
+                height: 1.75rem !important;
+                width: auto !important;
+            }
+            
+            header .text-xl {
+                font-size: 1rem !important;
+            }
+            
             header .text-2xl {
                 font-size: 1.25rem !important;
+            }
+            
+            /* Improved touch targets for mobile */
+            #hamburgerMenu,
+            #mobileMenuBtn {
+                min-width: 44px;
+                min-height: 44px;
+                padding: 8px;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            #hamburgerMenu:hover,
+            #mobileMenuBtn:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Mobile menu positioning */
+            #mobileNavMenu {
+                width: calc(100vw - 32px);
+                max-width: 300px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Improved mobile button styles */
+            #mobileNavMenu button {
+                min-height: 44px;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
             }
             
             header nav {
@@ -442,47 +541,61 @@
             
             /* Main content spacing */
             main {
-                padding: 0.5rem !important;
-                margin-top: 56px !important; /* Account for fixed header */
+                padding: 0.75rem !important;
+                margin-top: 56px !important;
+            }
+            
+            /* Dashboard content */
+            .premium-hero {
+                padding: 1.5rem !important;
+            }
+            
+            .premium-title {
+                font-size: 2rem !important;
+                line-height: 1.2;
+            }
+            
+            .premium-tagline {
+                font-size: 1.125rem !important;
+                line-height: 1.4;
+            }
+            
+            .hero-badges .hero-badge {
+                font-size: 0.875rem;
+                padding: 0.5rem 0.75rem;
             }
             
             /* Dashboard card */
             #dashboard .glass {
-                padding: 1rem !important;
-                margin-top: 0.5rem !important;
+                padding: 1.25rem !important;
+                margin: 0.75rem auto !important;
             }
             
             /* Sidebar adjustments */
             aside {
-                width: 80% !important;
-                max-width: 300px;
-                transform: translateX(-100%);
-                z-index: 60;
+                width: 85% !important;
+                max-width: 320px;
             }
             
-            .sidebar-open {
-                transform: translateX(0) !important;
+            .sidebar-header {
+                padding: 0.75rem;
             }
             
-            /* Show hamburger menu on mobile */
-            #hamburgerMenu {
-                display: block !important;
-                position: fixed;
-                top: 12px;
-                left: 12px;
-                z-index: 70;
-                background: rgba(0, 0, 0, 0.7);
-                border-radius: 50%;
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            .sidebar .nav-link {
+                padding: 0.875rem 1rem;
+                font-size: 0.9375rem;
             }
             
-            /* Modal adjustments */
+            /* Modal content */
             .modal-content-area {
-                padding: 0.5rem !important;
+                padding: 1rem !important;
+                width: calc(100% - 2rem) !important;
+                max-height: 90vh !important;
+            }
+            
+            .modal-content-area h3 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1rem !important;
             }
             
             /* Certificate page */
@@ -490,49 +603,25 @@
                 padding: 1.5rem !important;
             }
             
-            /* Improve touch targets */
-            .interactive-button, .tab, .sidebar-btn {
-                min-height: 44px; /* Apple's recommended minimum touch target size */
-                display: flex;
-                align-items: center;
-                justify-content: center;
+            #certificate h2 {
+                font-size: 2rem !important;
             }
             
-            /* Improve text readability */
-            body {
-                font-size: 16px; /* Prevent zoom on iOS */
-                -webkit-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-            }
-            
-            /* Prevent horizontal scrolling */
-            html, body {
-                overflow-x: hidden;
-                width: 100%;
-            }
-            
-            /* Improve form elements */
-            input, select, textarea {
-                font-size: 16px !important; /* Prevent zoom on iOS */
-            }
-            
-            /* Adjust text sizes for mobile */
-            h2 {
+            #trainee-name {
                 font-size: 1.5rem !important;
             }
             
-            h3 {
-                font-size: 1.25rem !important;
+            /* Improve touch targets */
+            .interactive-button, .tab, .sidebar-btn {
+                min-height: 44px;
+                padding: 0.75rem 1rem;
+                font-size: 0.9375rem;
             }
             
-            /* Dashboard elements */
-            #dashboard .text-3xl {
-                font-size: 1.75rem !important;
-            }
-            
-            #dashboard .text-4xl {
-                font-size: 2rem !important;
+            /* Form elements */
+            .input-field {
+                font-size: 16px !important;
+                padding: 0.75rem !important;
             }
             
             /* Lesson content */
@@ -541,32 +630,109 @@
                 line-height: 1.6;
             }
             
+            .prose-enhanced h4 {
+                font-size: 1.375rem !important;
+                margin-top: 2rem !important;
+            }
+            
+            .prose-enhanced h5 {
+                font-size: 1.25rem !important;
+                margin-top: 1.5rem !important;
+            }
+            
+            .prose-enhanced p {
+                font-size: 1rem !important;
+                line-height: 1.6 !important;
+                margin-bottom: 1rem !important;
+            }
+            
             /* Tabs */
             #tabs {
                 flex-wrap: wrap;
+                gap: 0.5rem;
             }
             
             #tabs .tab {
                 flex: 1;
-                min-width: 25%;
+                min-width: calc(50% - 0.5rem);
                 text-align: center;
-                padding: 0.5rem;
-                font-size: 0.875rem;
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9375rem;
+            }
+            
+            /* Improved spacing for stacked elements */
+            .space-y-2 > * + * {
+                margin-top: 0.75rem !important;
+            }
+            
+            .space-y-4 > * + * {
+                margin-top: 1.25rem !important;
+            }
+            
+            /* Better image handling */
+            img {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+            
+            /* Adjust button groups */
+            .flex-wrap gap-4 {
+                gap: 0.75rem !important;
             }
         }
+
+    /* Hidden helper class used when features are marked coming-soon */
+    .coming-soon-hidden { display: none !important; }
+        
 
         /* Tablet adjustments */
         @media (min-width: 641px) and (max-width: 1024px) {
             aside {
-                width: 240px !important;
+                width: 280px !important;
             }
             
             main {
-                margin-left: 240px !important;
+                margin-left: 280px !important;
+                padding: 1.5rem !important;
             }
             
             #hamburgerMenu {
                 display: none !important;
+            }
+            
+            /* Tablet-specific content adjustments */
+            .premium-hero {
+                padding: 2rem !important;
+            }
+            
+            .premium-title {
+                font-size: 2.5rem !important;
+            }
+            
+            .premium-tagline {
+                font-size: 1.375rem !important;
+            }
+            
+            /* Lesson content for tablets */
+            #lessonContent {
+                font-size: 1.0625rem;
+                line-height: 1.7;
+            }
+            
+            /* Form and button adjustments */
+            .interactive-button {
+                padding: 0.875rem 1.25rem;
+                font-size: 1rem;
+            }
+            
+            .input-field {
+                padding: 0.875rem !important;
+            }
+            
+            /* Modal adjustments for tablets */
+            .modal-content-area {
+                padding: 1.5rem !important;
+                max-width: 90% !important;
             }
         }
 
@@ -574,20 +740,198 @@
         @media (min-width: 1025px) {
             aside {
                 transform: translateX(0) !important;
+                width: 300px !important;
             }
             
             main {
-                margin-left: 256px !important;
+                margin-left: 300px !important;
+                padding: 2rem !important;
             }
             
             #hamburgerMenu {
                 display: none !important;
             }
+            
+            /* Desktop-specific content adjustments */
+            .premium-hero {
+                padding: 2.5rem 3rem !important;
+            }
+            
+            .premium-title {
+                font-size: 3rem !important;
+            }
+            
+            .premium-tagline {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Lesson content for desktop */
+            #lessonContent {
+                font-size: 1.125rem;
+                line-height: 1.8;
+            }
+            
+            /* Enhanced desktop interactions */
+            .interactive-button:hover {
+                transform: translateY(-2px);
+                transition: transform 0.2s ease;
+            }
+            
+            /* Modal optimizations for larger screens */
+            .modal-content-area {
+                padding: 2rem !important;
+                max-width: 800px !important;
+            }
         }
     </style>
+    <style>
+    /* Premium Home Screen Styles */
+    .premium-bg {
+        background: linear-gradient(120deg, #232526 0%, #414345 100%);
+        min-height: 100vh;
+        position: relative;
+    }
+    .premium-hero {
+        box-shadow: 0 8px 40px 0 rgba(245,158,11,0.10), 0 2px 8px 0 rgba(56,189,248,0.08);
+        border-radius: 2rem;
+        overflow: hidden;
+        position: relative;
+        border: 1.5px solid rgba(245,158,11,0.18);
+    }
+    .premium-hero-bg {
+        background: radial-gradient(ellipse at 60% 40%, rgba(245,158,11,0.18) 0%, rgba(56,189,248,0.10) 60%, transparent 100%),
+            linear-gradient(120deg, rgba(56,189,248,0.10) 0%, rgba(16,185,129,0.10) 100%);
+        filter: blur(8px);
+        z-index: 0;
+        pointer-events: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0; left: 0;
+        animation: premiumHeroBG 8s ease-in-out infinite alternate;
+    }
+    @keyframes premiumHeroBG {
+        0% { filter: blur(8px) brightness(1); }
+        100% { filter: blur(12px) brightness(1.08); }
+    }
+    .premium-logo-glow {
+        box-shadow: 0 0 32px 8px rgba(245,158,11,0.18), 0 0 0 8px rgba(56,189,248,0.10);
+        border-radius: 50%;
+        background: rgba(245,158,11,0.05);
+        animation: logoGlow 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes logoGlow {
+        0% { box-shadow: 0 0 32px 8px rgba(245,158,11,0.18), 0 0 0 8px rgba(56,189,248,0.10); }
+        100% { box-shadow: 0 0 48px 16px rgba(245,158,11,0.22), 0 0 0 12px rgba(56,189,248,0.13); }
+    }
+    .premium-title {
+        font-family: 'Cinzel', serif;
+        letter-spacing: -0.01em;
+        text-shadow: 0 2px 16px rgba(245,158,11,0.12);
+    }
+    .premium-tagline {
+        font-family: 'Playfair Display', serif;
+        color: #f3f4f6;
+        text-shadow: 0 1px 8px rgba(56,189,248,0.08);
+    }
+    .premium-btn {
+        font-family: 'Inter', sans-serif;
+        border: none;
+        border-radius: 1.25rem;
+        box-shadow: 0 2px 16px 0 rgba(56,189,248,0.10), 0 1.5px 6px 0 rgba(245,158,11,0.08);
+        transition: box-shadow 0.2s, transform 0.15s;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        padding: 1.1em 2.2em;
+    }
+    .premium-btn-main {
+        background: linear-gradient(90deg, #38BDF8 0%, #10B981 60%, #F59E0B 100%);
+        color: #fff;
+        box-shadow: 0 4px 32px 0 rgba(245,158,11,0.10), 0 2px 8px 0 rgba(56,189,248,0.08);
+    }
+    .premium-btn:active {
+        box-shadow: 0 1px 4px 0 rgba(56,189,248,0.10), 0 0.5px 2px 0 rgba(245,158,11,0.08);
+        transform: scale(0.98);
+    }
+    .premium-hero::after{ content:''; position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 50%, transparent 100%); pointer-events:none; mix-blend-mode:overlay }
+    @keyframes premiumHeroBG {
+        0% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-6px) scale(1.005); }
+        100% { transform: translateY(0) scale(1); }
+    }
+    .hero-badges .hero-badge{ background: rgba(255,255,255,0.03); color: #f8fafc; padding:6px 10px; border-radius:999px; font-size:0.85rem; display:inline-flex; gap:8px; align-items:center; border:1px solid rgba(255,255,255,0.03); box-shadow:0 6px 18px rgba(0,0,0,0.45); transform:translateY(6px); opacity:0; animation:badgeIn 600ms ease forwards; }
+    .hero-badges .hero-badge[data-delay="1"]{ animation-delay:120ms }
+    .hero-badges .hero-badge[data-delay="2"]{ animation-delay:240ms }
+    .hero-badges .hero-badge[data-delay="3"]{ animation-delay:360ms }
+    @keyframes badgeIn{ from{opacity:0; transform:translateY(10px) scale(0.98)} to{opacity:1; transform:translateY(0) scale(1)} }
+    </style>
+    <style>
+    /* Topbar compact button styles */
+    .topbar-btn{
+        background:transparent;
+        color:var(--text-primary, #f8fafc);
+        border:1px solid rgba(255,255,255,0.04);
+        padding:6px 10px;
+        font-size:0.95rem;
+        border-radius:8px;
+        transition:all 160ms ease;
+        cursor:pointer;
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+    }
+    .topbar-btn:hover{
+        transform:translateY(-2px);
+        background:rgba(255,255,255,0.03);
+        box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    .topbar-btn:active{ transform:translateY(0); }
+    .topbar-btn:focus{ outline:2px solid rgba(96,165,250,0.18); }
+    .topbar-btn-main{
+        background:linear-gradient(90deg,#f59e0b,#f97316);
+        color:#111827;
+        border:none;
+        padding:8px 14px;
+        font-weight:600;
+    }
+    </style>
 <style>
-    html { font-size: 15px; }
-    @media (max-width: 600px) {
+/* Premium sidebar enhancements */
+.sidebar-header { display:flex; align-items:center; gap:12px; padding:8px 10px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.04); margin-bottom:8px }
+.sidebar-header img { width:40px; height:40px; object-fit:contain }
+.sidebar-user-name{ font-weight:700; color:var(--accent-primary); font-size:0.95rem }
+.sidebar-user-meta{ font-size:0.85rem; color:var(--text-secondary-dark) }
+.sidebar .nav-link{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px; transition:transform 0.15s ease, background 0.12s ease; }
+.sidebar .nav-link i{ width:26px; text-align:center }
+.sidebar .nav-link:hover{ transform:translateX(6px); background:rgba(255,255,255,0.02); }
+
+/* Hero badges */
+.hero-badges{ display:flex; gap:8px; align-items:center; justify-content:center; flex-wrap:wrap }
+.hero-badge{ background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:8px 12px; border-radius:999px; font-size:0.85rem; color:var(--text-secondary-dark); display:flex; gap:8px; align-items:center; border:1px solid rgba(255,255,255,0.03) }
+.hero-badge i{ color:var(--accent-secondary) }
+
+/* Small responsive polish */
+@media (max-width:768px){ .sidebar-header img{ width:36px;height:36px } .premium-hero { padding:1rem } }
+</style>
+<style>
+    /* Base responsive typography */
+    html { 
+        font-size: 16px; /* Base font size for desktop */
+    }
+    
+    /* Tablet adjustments */
+    @media (max-width: 1024px) {
+        html { font-size: 15px; }
+    }
+    
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+        html { font-size: 14px; }
+    }
+    
+    /* Small mobile adjustments */
+    @media (max-width: 375px) {
         html { font-size: 13px; }
     }
 </style>
@@ -605,18 +949,152 @@
 </style>
 </head>
 <body id="appBody" class="bg-gray-900 text-gray-100 min-h-screen flex relative">
+    </script>
+
+    <script>
+    // Initialize BaristaApp and its components
+    window.BaristaApp = window.BaristaApp || {};
+    window.BaristaApp.modalManager = {
+        showDonationModal: function() {
+            const modal = document.getElementById('donationModal');
+            if (modal) {
+                // Close any other open modals first
+                document.querySelectorAll('[id$="Modal"]:not(#donationModal)').forEach(m => {
+                    if (!m.classList.contains('hidden')) {
+                        m.classList.add('hidden');
+                        m.classList.remove('flex');
+                    }
+                });
+
+                // Show donation modal
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Add escape key listener
+                const escHandler = function(e) {
+                    if (e.key === 'Escape') {
+                        window.BaristaApp.modalManager.closeDonationModal();
+                        document.removeEventListener('keydown', escHandler);
+                    }
+                };
+                document.addEventListener('keydown', escHandler);
+                
+                // Add click outside listener
+                const clickHandler = function(e) {
+                    if (e.target === modal) {
+                        window.BaristaApp.modalManager.closeDonationModal();
+                        modal.removeEventListener('click', clickHandler);
+                    }
+                };
+                modal.addEventListener('click', clickHandler);
+            }
+        },
+        closeDonationModal: function() {
+            const modal = document.getElementById('donationModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        },
+        closeProfile: function() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    };
+    window.BaristaApp.ui = window.BaristaApp.ui || {};
+    window.BaristaApp.state = window.BaristaApp.state || { 
+        user: { name: 'Trainee', points: 0 }
+    };
+    window.BaristaApp.elements = window.BaristaApp.elements || {};
+
+    // Fallback: ensure hamburger toggles sidebar if BaristaApp wiring fails
+    (function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const existingBarista = window.BaristaApp;
+                const hasAppHamburger = existingBarista && existingBarista.elements && existingBarista.elements.hamburgerMenu && existingBarista.elements.sidebar;
+                // If BaristaApp didn't wire hamburger, attach a safe fallback
+                if (!hasAppHamburger) {
+                    const hm = document.getElementById('hamburgerMenu');
+                    const sb = document.getElementById('sidebar');
+                    if (!hm || !sb) return;
+                    if (hm.dataset.fallbackAttached) return;
+                    hm.dataset.fallbackAttached = '1';
+                    hm.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const wasOpen = sb.classList.toggle('sidebar-open');
+                        // swap icon classes if present
+                        const icon = hm.querySelector('i');
+                        if (icon) {
+                            if (wasOpen) { icon.classList.remove('fa-bars'); icon.classList.add('fa-times'); }
+                            else { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+                        }
+                    });
+                    // close on outside click
+                    document.addEventListener('click', function(e) {
+                        if (sb.classList.contains('sidebar-open') && !sb.contains(e.target) && !hm.contains(e.target)) {
+                            sb.classList.remove('sidebar-open');
+                            const icon = hm.querySelector('i'); if (icon) icon.classList.remove('fa-times'), icon.classList.add('fa-bars');
+                        }
+                    });
+                    // close on Escape
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape' && sb.classList.contains('sidebar-open')) {
+                            sb.classList.remove('sidebar-open');
+                            const icon = hm.querySelector('i'); if (icon) icon.classList.remove('fa-times'), icon.classList.add('fa-bars');
+                        }
+                    });
+                    console.log('Sidebar fallback attached.');
+                }
+            } catch (err) {
+                console.warn('Sidebar fallback init error:', err);
+            }
+        });
+    })();
+    </script>
+    <script>
+        window.BaristaApp = window.BaristaApp || {};
+        window.BaristaApp.modalManager = window.BaristaApp.modalManager || {};
+        window.BaristaApp.ui = window.BaristaApp.ui || {};
+        window.BaristaApp.state = window.BaristaApp.state || { user: { name: 'Trainee', points: 0 } };
+        window.BaristaApp.elements = window.BaristaApp.elements || {};
+    </script>
     <!-- Topbar -->
     <header class="fixed top-0 left-0 w-full bg-gray-900 z-50 shadow flex items-center justify-between px-4 py-3 border-b border-gray-800">
-        <!-- Hamburger Menu (Mobile Only) -->
-        <button id="hamburgerMenu" class="md:hidden text-white focus:outline-none">
-            <i class="fas fa-bars text-xl"></i>
-            <span class="sr-only">Open sidebar menu</span>
-        </button>
-        </button>
-        
-        <div class="flex items-center gap-3 ml-2 md:ml-0">
-            <img src="images/logo.png" alt="Logo" class="h-8 w-auto" id="sidebar-logo">
+        <!-- Left Section with Hamburger and Logo -->
+        <div class="flex items-center gap-4">
+            <!-- Hamburger Menu (Mobile Only) with Combined Navigation -->
+            <button id="hamburgerMenu" class="md:hidden text-white focus:outline-none hover:bg-gray-800 p-2 rounded-lg transition-colors">
+                <i class="fas fa-bars text-xl"></i>
+                <span class="sr-only">Open menu</span>
+            </button>
+        </div>
+
+        <!-- Logo and Title -->
+        <div class="flex items-center gap-3 flex-1 justify-center md:justify-start">
+            <img src="images/logo.png" alt="Logo" class="h-8 w-auto" id="header-logo">
             <span class="text-xl md:text-2xl font-bold text-amber-500 tracking-tight">Specialty Barista</span>
+        </div>
+
+        <!-- Desktop Navigation (hidden on mobile) -->
+        <nav class="hidden md:flex items-center gap-2">
+            <button id="homeBtn" class="topbar-btn topbar-btn-main">Home</button>
+            <button id="aboutBtn" class="topbar-btn">About</button>
+            <button id="contactBtn" class="topbar-btn">Contact</button>
+            <button id="privacyBtn" class="topbar-btn">Privacy</button>
+            <button id="disclosureBtn" class="topbar-btn">Disclosure</button>
+        </nav>
+
+        <!-- Mobile Navigation Menu (Initially Hidden) -->
+        <div id="mobileNavMenu" class="fixed top-14 right-4 bg-gray-800 rounded-lg shadow-xl p-2 hidden z-50 min-w-[200px] animate-fadeIn">
+            <button id="homeBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Home</button>
+            <button id="aboutBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">About</button>
+            <button id="contactBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Contact</button>
+            <button id="privacyBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Privacy</button>
+            <button id="disclosureBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Disclosure</button>
         </div>
         
         <nav class="hidden md:flex gap-4 md:gap-6 text-sm md:text-base font-medium">
@@ -636,34 +1114,208 @@
         </div>
     </header>
 
-    <!-- Sidebar -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-gray-800 text-gray-200 w-64 p-4 space-y-6 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-16">
-        <div class="relative mb-4">
-            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full p-2.5 text-sm">
-            <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+        <!-- Help UI: guided tour modal, floating help button, icons guide modal -->
+        <div id="guidedTourModal" class="fixed inset-0 z-[3000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
+            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md text-center relative">
+                <button id="closeTourModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                <div id="tourStepContent" class="flex flex-col items-center gap-4">
+                    <!-- Step content will be injected here -->
+                </div>
+                <div class="flex gap-2 justify-center mt-6">
+                    <button id="prevTourStep" class="interactive-button bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded hidden">Previous</button>
+                    <button id="nextTourStep" class="interactive-button bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-4 py-2 rounded">Next</button>
+                </div>
+            </div>
         </div>
+
+        <button id="helpFloatingBtn" aria-label="Open Help" title="Help - explain icons" class="help-floating fixed bottom-6 right-6 z-[4000] bg-amber-500 hover:bg-amber-600 text-gray-900 rounded-full w-14 h-14 flex items-center justify-center shadow-xl border-2 border-white">?
+        </button>
+
+        <div id="iconsHelpModal" class="fixed inset-0 z-[3500] bg-black bg-opacity-65 flex items-center justify-center p-4 hidden">
+            <div class="modal-content-area glass p-6 rounded-xl shadow-2xl w-full max-w-lg text-left relative max-h-[85vh] overflow-y-auto custom-scrollbar">
+                <button id="closeIconsHelp" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                <h3 class="text-2xl font-bold text-amber-400 mb-3">Icons Guide — What each icon does</h3>
+                <p class="text-sm text-gray-300 mb-4">Click any entry below to highlight that control in the UI and see a short explanation.</p>
+                <ul id="iconsHelpList" class="space-y-3">
+                    <!-- Populated by JS -->
+                </ul>
+                <div class="mt-4 text-xs text-gray-400">Tip: You can re-open this guide anytime using the Help button.</div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu (Combined with Sidebar) -->
+        <div id="mobileMenu" class="md:hidden fixed top-14 left-4 bg-gray-800 rounded-lg shadow-xl hidden z-50 min-w-[250px] max-w-[90vw] animate-fadeIn">
+            <!-- Quick Navigation -->
+            <div class="p-3 border-b border-gray-700">
+                <div class="flex flex-wrap gap-2">
+                    <a href="index.html" 
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       aria-label="Home"
+                       title="Go to Home">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        <span class="sr-only">Home</span>
+                    </a>
+                    <a href="about.html" 
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       aria-label="About"
+                       title="About Us">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i>
+                        <span class="sr-only">About</span>
+                    </a>
+                    <a href="contact.html" 
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       aria-label="Contact"
+                       title="Contact Us">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <span class="sr-only">Contact</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Course Navigation -->
+            <div class="px-3 py-2">
+                <h3 class="text-xs uppercase tracking-wider text-gray-400 font-semibold mb-2">Course Content</h3>
+                <nav class="space-y-1" id="mobileCourseNav">
+                    <!-- Course navigation items will be populated here -->
+                </nav>
+            </div>
+
+            <!-- Settings & Help -->
+            <div class="border-t border-gray-700 p-3">
+                <div class="flex justify-between items-center">
+                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors" onclick="window.location.href='privacy.html'">
+                        Privacy Policy
+                    </button>
+                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors" onclick="window.location.href='disclosure.html'">
+                        Disclosure
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-gray-800 text-gray-200 w-64 p-4 space-y-4 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-16">
+        <!-- Enhanced Search Bar -->
+        <div class="relative mb-4">
+            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full p-3 text-sm bg-gray-700/50 border border-gray-600/50 focus:border-amber-500 rounded-lg pl-10">
+            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500/70"></i>
+        </div>
+
+        <!-- Enhanced Sidebar Header - Only shown on desktop -->
+        <div class="sidebar-header glass p-3 rounded-xl border border-gray-700/50 mb-4 hidden md:block" id="sidebarHeader">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 premium-logo-glow bg-gray-900/30 rounded-lg flex items-center justify-center p-1">
+                    <img src="images/logo.png" alt="Site logo" class="w-full h-full object-contain">
+                </div>
+                <div class="flex-1">
+                    <div class="text-lg font-bold text-amber-400 leading-tight">Specialty Barista</div>
+                    <div class="text-xs text-sky-400/90 font-medium">Pro Training & Certification</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Navigation Area -->
         <nav class="flex-grow overflow-y-auto custom-scrollbar">
-            <ul id="dayList" class="space-y-1.5"></ul>
+            <div class="mb-3">
+                <div class="text-xs uppercase text-gray-400 font-semibold tracking-wider mb-2 px-2">Course Content</div>
+                <ul id="dayList" class="space-y-2">
+                    <!-- Course days will be dynamically populated here -->
+                </ul>
+            </div>
         </nav>
-        <button id="profileButton" data-tooltip="Edit Profile" class="w-full flex items-center p-2.5 text-sm rounded-md hover:bg-gray-700 transition-colors mt-4">
-            <i class="fas fa-user-edit sidebar-btn-icon text-sky-400"></i> Edit Profile
-        </button>
-        <button id="donationButtonSidebar" data-tooltip="Support Us" class="w-full flex items-center p-2.5 text-sm rounded-md hover:bg-amber-600 bg-amber-500 text-gray-900 font-semibold shadow mt-2 transition-colors">
-            <i class="fas fa-heart sidebar-btn-icon text-red-500 mr-2"></i> <span>Support Us</span>
-        </button>
-        <nav class="flex flex-col gap-1 mt-3" aria-label="Sidebar navigation">
-            <a href="index.html" class="w-full px-3 py-2 rounded-md hover:bg-gray-700 text-left text-sm transition-colors">Home</a>
-            <a href="about.html" class="w-full px-3 py-2 rounded-md hover:bg-gray-700 text-left text-sm transition-colors">About</a>
-            <a href="contact.html" class="w-full px-3 py-2 rounded-md hover:bg-gray-700 text-left text-sm transition-colors">Contact</a>
-            <a href="privacy.html" class="w-full px-3 py-2 rounded-md hover:bg-gray-700 text-left text-sm transition-colors">Privacy</a>
-            <a href="disclosure.html" class="w-full px-3 py-2 rounded-md hover:bg-gray-700 text-left text-sm transition-colors">Disclosure</a>
-        </nav>
-        <div class="pt-4 mt-auto">
-            <!-- Sidebar ad removed for AdSense compliance: no ads in navigation-only areas -->
+
+        <!-- Enhanced Bottom Actions -->
+        <div class="space-y-2 pt-2 border-t border-gray-700/50">
+            <button id="profileButton" data-tooltip="Edit Profile" 
+                class="w-full flex items-center p-3 text-sm rounded-lg hover:bg-gray-700/70 transition-all duration-200 hover:translate-x-1">
+                <i class="fas fa-user-cog text-lg w-8 text-sky-400"></i>
+                <span class="flex-1">My Profile</span>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </button>
+            
+            <button id="supportButton" 
+                class="w-full flex items-center p-3 text-sm rounded-lg hover:bg-gray-700/70 transition-all duration-200 hover:translate-x-1">
+                <i class="fas fa-heart text-lg w-8 text-pink-500"></i>
+                <span class="flex-1">Support Us</span>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </button>
+
+            <button id="helpButton" 
+                class="w-full flex items-center p-3 text-sm rounded-lg hover:bg-gray-700/70 transition-all duration-200 hover:translate-x-1">
+                <i class="fas fa-question-circle text-lg w-8 text-green-400"></i>
+                <span class="flex-1">Help & Guide</span>
+                <i class="fas fa-chevron-right text-gray-500 text-xs"></i>
+            </button>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="mt-auto pt-4 px-2">
+            <div class="text-xs text-gray-400 flex justify-between mb-1">
+                <span>Course Progress</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="w-full h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full progress-bar-fill"></div>
+            </div>
         </div>
     </aside>
 
     <!-- Main Content Area -->
+    <!-- Digital Products Modal -->
+    <div id="shopModal" class="fixed inset-0 z-[2000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
+        <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
+            <button id="closeShopModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+            <h2 class="text-2xl font-bold text-lime-400 mb-4">Digital Products</h2>
+            <div class="space-y-6">
+                <div class="glass p-4 rounded-lg flex flex-col gap-2">
+                    <span class="font-semibold text-lg text-lime-300">Barista Interview Prep E-Book</span>
+                    <span class="text-sm text-gray-300">Ace your next barista interview with expert tips and sample questions.</span>
+                    <span class="font-bold text-lime-400">$5</span>
+                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
+                </div>
+                <div class="glass p-4 rounded-lg flex flex-col gap-2">
+                    <span class="font-semibold text-lg text-lime-300">Advanced Latte Art Stencil Guide</span>
+                    <span class="text-sm text-gray-300">Take your latte art to the next level with printable stencils and pro tips.</span>
+                    <span class="font-bold text-lime-400">$10</span>
+                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
+                </div>
+                <div class="glass p-4 rounded-lg flex flex-col gap-2">
+                    <span class="font-semibold text-lg text-lime-300">Coffee Shop Inventory Spreadsheet</span>
+                    <span class="text-sm text-gray-300">Streamline your café operations with this easy-to-use inventory template.</span>
+                    <span class="font-bold text-lime-400">$7</span>
+                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Product Purchase Modal -->
+        <div id="productModal" class="fixed inset-0 z-[2200] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
+            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-md text-center relative max-h-[85vh] overflow-y-auto custom-scrollbar">
+                <button id="closeProductModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                <img id="productModalIcon" src="images/logo.png" alt="Product" class="w-14 h-14 mx-auto mb-3">
+                <h3 id="productModalTitle" class="text-2xl font-bold text-amber-400 mb-2">Product</h3>
+                <p id="productModalDesc" class="text-gray-300 mb-4 text-sm">Product description</p>
+                <div id="productModalPrice" class="font-bold text-lg text-lime-400 mb-4">$0</div>
+                <div class="flex flex-col gap-3">
+                    <div class="p-3 bg-gray-800 rounded text-sm text-gray-300">Digital products are coming soon. We are finishing the purchase & delivery flow — no payments are being accepted right now.</div>
+                    <button disabled class="interactive-button bg-gray-600 text-gray-400 px-4 py-2 rounded w-full cursor-not-allowed">Coming soon</button>
+                </div>
+
+                <!-- Proof form hidden while product sales are disabled -->
+                <form id="productProofForm" class="mt-4 hidden flex flex-col gap-3 coming-soon-hidden" enctype="multipart/form-data" autocomplete="off">
+                    <input type="hidden" name="productId" id="productProofProductId" value="">
+                    <input type="text" name="name" placeholder="Full Name" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                    <input type="email" name="email" placeholder="Email Address" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                    <label for="productProofScreenshot" class="text-left text-xs text-gray-500">Payment Screenshot</label>
+                    <input id="productProofScreenshot" type="file" name="screenshot" accept="image/*" required class="input-field border border-gray-300 rounded px-3 py-2" title="Upload payment screenshot" />
+                    <button type="submit" class="interactive-button bg-green-600 hover:bg-green-700 text-white w-full py-2 font-semibold flex items-center justify-center gap-2"><i class="fas fa-upload"></i> Submit Proof & Get Download</button>
+                    <div id="productProofStatus" class="text-sm text-center mt-2"></div>
+                </form>
+                <!-- Sample download button (used as fallback by JS). Hidden visually but available to scripts and for manual testing -->
+                <button type="button" id="productSampleDownload" class="hidden" aria-hidden="true">Download sample</button>
+            </div>
+        </div>
     <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto relative mt-14" aria-label="Main content">
         <!-- Lesson Fullscreen Modal -->
         <div id="lessonModal" class="fixed inset-0 w-screen h-screen bg-black bg-opacity-90 flex items-center justify-center z-[9999] p-0 m-0 hidden">
@@ -675,58 +1327,572 @@
 
         <!-- Dashboard Summary Card -->
         <section id="dashboard" class="active">
-            <div class="glass p-6 md:p-8 rounded-2xl shadow-2xl max-w-3xl mx-auto mt-4 mb-8">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6 mb-6">
-                    <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-100 mb-2">Welcome, <span id="userName" class="text-amber-400">Trainee</span>!</h2>
-                        <div class="flex flex-wrap gap-3 items-center mt-2">
-                            <div class="bg-gray-800 rounded-lg px-3 py-2 flex items-center gap-2">
-                                <span id="progress" class="text-sm text-gray-300">Progress: 0/0</span>
+        <!-- Payment Proof Upload Modal -->
+        <div id="paymentProofModal" class="fixed inset-0 z-[2100] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
+            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md text-center relative">
+                <button onclick="BaristaApp.modalManager.closePaymentProofModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">×</button>
+                <h3 class="text-2xl font-bold text-amber-400 mb-4">Upload Payment Proof</h3>
+                <form id="paymentProofForm" enctype="multipart/form-data" class="flex flex-col gap-3" autocomplete="off">
+                    <input type="text" name="name" placeholder="Full Name" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                    <input type="email" name="email" placeholder="Email Address" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                    <input type="text" name="course" placeholder="Course Name" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                    <label for="paymentProofScreenshot" class="text-left text-xs text-gray-500">Payment Screenshot</label>
+                    <input id="paymentProofScreenshot" type="file" name="screenshot" accept="image/*" required class="input-field border border-gray-300 rounded px-3 py-2" title="Upload payment screenshot" />
+                    <button type="submit" class="interactive-button bg-green-600 hover:bg-green-700 text-white w-full py-2 font-semibold flex items-center justify-center gap-2"><i class="fas fa-upload"></i> Submit Proof</button>
+                </form>
+                <div id="paymentProofStatus" class="text-sm text-center mt-2"></div>
+            </div>
+        </div>
+
+        <!-- Payment Proof Upload Logic -->
+        <script>
+        // Guided Tour Data
+        const tourSteps = [
+            {
+                title: "Welcome to Barista Training!",
+                content: "This quick tour will show you how to use the app and get the most out of your learning experience.",
+                icon: "<i class='fas fa-mug-hot text-4xl text-amber-400 mb-2'></i>"
+            },
+            {
+                title: "Dashboard & Progress",
+                content: "Track your learning progress, points, and completed lessons right from the dashboard.",
+                icon: "<i class='fas fa-tachometer-alt text-4xl text-sky-400 mb-2'></i>"
+            },
+            {
+                title: "Lessons",
+                content: "Access step-by-step lessons on espresso, milk, latte art, and more. Click a lesson to start!",
+                icon: "<i class='fas fa-book-open text-4xl text-green-400 mb-2'></i>"
+            },
+            {
+                title: "Certificate",
+                content: "Complete all lessons to earn a free certificate. You can also get a verified certificate for a small fee.",
+                icon: "<i class='fas fa-certificate text-4xl text-amber-500 mb-2'></i>"
+            },
+            {
+                title: "Support & Community",
+                content: "Need help? Use the sidebar to access the glossary, donate, or contact us for support.",
+                icon: "<i class='fas fa-hands-helping text-4xl text-purple-400 mb-2'></i>"
+            },
+            {
+                title: "Ready to Start?",
+                content: "That's it! You're ready to explore. You can revisit this tour anytime from the sidebar menu.",
+                icon: "<i class='fas fa-thumbs-up text-4xl text-green-500 mb-2'></i>"
+            }
+        ];
+
+        let currentTourStep = 0;
+
+        function showTourStep(step) {
+            const stepData = tourSteps[step];
+            document.getElementById('tourStepContent').innerHTML = `
+                ${stepData.icon}
+                <h2 class="text-2xl font-bold text-amber-400 mb-2">${stepData.title}</h2>
+                <p class="text-gray-200 text-base">${stepData.content}</p>
+            `;
+            document.getElementById('prevTourStep').style.display = step === 0 ? 'none' : '';
+            document.getElementById('nextTourStep').textContent = step === tourSteps.length - 1 ? 'Finish' : 'Next';
+        }
+
+        function openGuidedTour() {
+            document.getElementById('guidedTourModal').classList.remove('hidden');
+            showTourStep(0);
+            currentTourStep = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show tour for new users (first visit)
+            if (!localStorage.getItem('baristaTourCompleted')) {
+                setTimeout(openGuidedTour, 800);
+            }
+            document.getElementById('closeTourModal').onclick = function() {
+                document.getElementById('guidedTourModal').classList.add('hidden');
+                localStorage.setItem('baristaTourCompleted', '1');
+            };
+            document.getElementById('nextTourStep').onclick = function() {
+                if (currentTourStep < tourSteps.length - 1) {
+                    currentTourStep++;
+                    showTourStep(currentTourStep);
+                } else {
+                    document.getElementById('guidedTourModal').classList.add('hidden');
+                    localStorage.setItem('baristaTourCompleted', '1');
+                }
+            };
+            document.getElementById('prevTourStep').onclick = function() {
+                if (currentTourStep > 0) {
+                    currentTourStep--;
+                    showTourStep(currentTourStep);
+                }
+            };
+        });
+
+        // Icons Guide: definitions and behavior
+        const iconsHelpData = [
+            { id: 'hamburgerMenu', label: 'Menu (Sidebar)', desc: 'Open or close the sidebar where you can access lessons, search, and settings.' },
+            { id: 'languageToggle', label: 'Language Selector', desc: 'Switch app languages. Choose your preferred language for lessons and UI.' },
+            { id: 'themeToggle', label: 'Theme Toggle', desc: 'Toggle between light and dark modes for comfortable viewing.' },
+            { id: 'profileButton', label: 'Profile', desc: 'Edit your name and email used for certificates and leaderboard.' },
+            { id: 'dashboardVerifiedCert', label: 'Verified Certificate', desc: 'Request a verified certificate (paid) and submit payment proof.' },
+            { id: 'dashboardShop', label: 'Shop / Digital Products', desc: 'Purchase digital add-ons such as printable guides and resources.' },
+            // Support button removed from the hero; donation modal still available when needed.
+            { id: 'search', label: 'Search Lessons', desc: 'Quickly find lessons by keyword or topic.' },
+            { id: 'getVerifiedCertificate', label: 'Get Verified (Certificate page)', desc: 'Alternate entry to request the verified certificate from the certificate page.' }
+        ];
+
+        function createIconsHelpList() {
+            const list = document.getElementById('iconsHelpList');
+            list.innerHTML = '';
+            iconsHelpData.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'p-3 bg-gray-800/60 rounded-md hover:bg-gray-800 cursor-pointer flex items-start gap-3';
+                li.tabIndex = 0;
+                li.innerHTML = `<strong class="w-40 inline-block text-amber-300">${item.label}</strong><span class="text-sm text-gray-300">${item.desc}</span>`;
+                li.onclick = () => highlightUIElement(item);
+                li.onkeydown = (e) => { if (e.key === 'Enter') highlightUIElement(item); };
+                list.appendChild(li);
+            });
+        }
+
+        function highlightUIElement(item) {
+            // close existing tooltip and remove previous highlight
+            document.querySelectorAll('.help-highlight').forEach(el => el.classList.remove('help-highlight'));
+            const target = document.getElementById(item.id) || document.querySelector(`[data-tooltip][title][id='${item.id}']`) || document.querySelector(`#${item.id}`);
+            // special fallback: search by id in attributes
+            let el = document.getElementById(item.id);
+            if (!el) el = document.querySelector(`[data-tooltip='${item.id}']`) || document.querySelector(`#${item.id}`) || document.querySelector(`[title='${item.label}']`);
+            if (!el) {
+                // if not in DOM, show a toast inside the modal
+                const toast = document.createElement('div');
+                toast.className = 'inline-block bg-amber-500 text-gray-900 px-3 py-2 rounded';
+                toast.textContent = `${item.label} control not found on this screen.`;
+                const modal = document.querySelector('#iconsHelpModal .modal-content-area');
+                modal.appendChild(toast);
+                setTimeout(()=>toast.remove(),2500);
+                return;
+            }
+
+            // scroll to the element if it's outside view
+            el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+            // add highlight class
+            el.classList.add('help-highlight');
+
+            // create tooltip near element
+            const rect = el.getBoundingClientRect();
+            const tooltip = document.createElement('div');
+            tooltip.className = 'icon-help-tooltip';
+            tooltip.innerHTML = `<strong>${item.label}</strong><div style="margin-top:6px">${item.desc}</div>`;
+            document.body.appendChild(tooltip);
+            // position tooltip above or below based on space
+            const top = rect.top - tooltip.offsetHeight - 12;
+            if (top > 20) {
+                tooltip.style.left = Math.max(12, rect.left) + 'px';
+                tooltip.style.top = (rect.top - tooltip.offsetHeight - 12) + 'px';
+            } else {
+                tooltip.style.left = Math.max(12, rect.left) + 'px';
+                tooltip.style.top = (rect.bottom + 12) + 'px';
+            }
+
+            setTimeout(()=>{
+                tooltip.remove();
+                el.classList.remove('help-highlight');
+            }, 3500);
+        }
+
+        // Wire help button and icons modal
+        document.addEventListener('DOMContentLoaded', function() {
+            createIconsHelpList();
+            const helpBtn = document.getElementById('helpFloatingBtn');
+            const iconsModal = document.getElementById('iconsHelpModal');
+            helpBtn.onclick = () => { iconsModal.classList.remove('hidden'); iconsModal.classList.add('flex'); };
+            document.getElementById('closeIconsHelp').onclick = () => { iconsModal.classList.add('hidden'); };
+        });
+        document.getElementById('paymentProofForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const status = document.getElementById('paymentProofStatus');
+            status.textContent = 'Uploading...';
+            const data = new FormData(form);
+            try {
+                const res = await fetch('/api/certificate/upload-proof', { method: 'POST', body: data });
+                const result = await res.json();
+                if (result.success) {
+                    status.textContent = 'Proof uploaded! Await admin approval.';
+                    form.reset();
+                } else {
+                    status.textContent = 'Upload failed.';
+                }
+            } catch (err) {
+                status.textContent = 'Error uploading proof.';
+            }
+        };
+
+        // Modal Manager Extensions (kept only for payment proof modal)
+        // Defer wiring until BaristaApp is available to avoid ReferenceError when scripts run earlier
+        (function registerPaymentProofModalHandlers(){
+            function apply() {
+                if (window.BaristaApp && window.BaristaApp.modalManager) {
+                    window.BaristaApp.modalManager.showPaymentProofModal = function() {
+                        const el = document.getElementById('paymentProofModal');
+                        if (!el) return;
+                        el.classList.remove('hidden');
+                        el.classList.add('flex');
+                    };
+                    window.BaristaApp.modalManager.closePaymentProofModal = function() {
+                        const el = document.getElementById('paymentProofModal');
+                        if (!el) return;
+                        el.classList.add('hidden');
+                        el.classList.remove('flex');
+                    };
+                } else {
+                    // try again shortly
+                    setTimeout(apply, 80);
+                }
+            }
+            apply();
+        })();
+
+        // Shop / Product modal handlers
+        function openProductModal(productId){
+            const map = {
+                'ebook': { title: 'Barista Interview Prep E-Book', desc: 'Ace your next barista interview with expert tips and sample questions.', price: 5, cardCheckout: 'https://gumroad.com/l/YOUR_EBOOK_PRODUCT' },
+                'stencils': { title: 'Advanced Latte Art Stencil Guide', desc: 'Printable stencils and pro tips for latte art.', price: 10, cardCheckout: 'https://gumroad.com/l/YOUR_STENCILS_PRODUCT' },
+                'spreadsheet': { title: 'Coffee Shop Inventory Spreadsheet', desc: 'Inventory & ordering template for small cafes.', price: 7, cardCheckout: 'https://gumroad.com/l/YOUR_SPREADSHEET_PRODUCT' }
+            };
+            const p = map[productId] || map['ebook'];
+            document.getElementById('productProofProductId').value = productId;
+            document.getElementById('productModalTitle').textContent = p.title;
+            document.getElementById('productModalDesc').textContent = p.desc;
+            document.getElementById('productModalPrice').textContent = `$${p.price}`;
+            const payBtn = document.getElementById('productCardLink');
+            payBtn.href = p.cardCheckout || '#';
+            payBtn.textContent = `Buy with Card — $${p.price}`;
+            // local pay button wiring — reuse donation modal so payments use the same instructions
+            document.getElementById('productLocalPayBtn').onclick = function(){
+                try{
+                    // Inject a short contextual note into the donation modal explaining the product and next step
+                    const donationModal = document.getElementById('donationModal');
+                    if (donationModal) {
+                        let note = donationModal.querySelector('#donationProductNote');
+                        if (!note) {
+                            note = document.createElement('div');
+                            note.id = 'donationProductNote';
+                            note.className = 'mt-3 p-3 bg-gray-800/40 text-sm text-amber-200 rounded';
+                            const header = donationModal.querySelector('.modal-content-area > h3');
+                            if (header && header.parentNode) header.parentNode.insertBefore(note, header.nextSibling);
+                            else donationModal.querySelector('.modal-content-area').appendChild(note);
+                        }
+                        note.innerHTML = `<strong>Paying for:</strong> ${p.title} &nbsp; — After payment, click <button class="ml-2 inline-block px-3 py-1 bg-amber-500 text-gray-900 rounded" onclick="document.getElementById('donationModal').classList.add('hidden');document.getElementById('productModal').classList.remove('hidden');document.getElementById('productModal').classList.add('flex');document.getElementById('productProofForm').classList.remove('hidden');">Upload Proof</button> to return here and upload your payment screenshot.`;
+                    }
+                    // Open donation modal (reuses the same QR/bank UI)
+                    if (window.BaristaApp && window.BaristaApp.modalManager && window.BaristaApp.modalManager.showDonationModal) window.BaristaApp.modalManager.showDonationModal();
+                    else { document.getElementById('donationModal').classList.remove('hidden'); }
+                }catch(e){ console.warn('productLocalPayBtn.onclick error', e); }
+            };
+            document.getElementById('productModal').classList.remove('hidden');
+            document.getElementById('productModal').classList.add('flex');
+        }
+        document.getElementById('closeProductModal').onclick = function(){ document.getElementById('productModal').classList.add('hidden'); document.getElementById('productModal').classList.remove('flex'); document.getElementById('productProofForm').classList.add('hidden'); };
+
+        // Sample PDF generation (client-side preview)
+        document.getElementById('productSampleDownload').onclick = function(){
+            const title = document.getElementById('productModalTitle').textContent || 'Sample';
+            try{
+                const { jsPDF } = window.jspdf || window.jspdf || {};
+                if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined' && !window.jspdf) {
+                    // fallback: create a simple Blob and download
+                    const blob = new Blob([`${title}\n\nThis is a sample preview. Purchase to get the full product.`], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s+/g,'_')}_sample.txt`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                    return;
+                }
+                const doc = new jspdf.jsPDF();
+                doc.setFontSize(18); doc.text(title, 15, 25);
+                doc.setFontSize(12); doc.text('This is a preview of the product. Purchase to receive the full version.', 15, 40);
+                doc.save(`${title.replace(/\s+/g,'_')}_sample.pdf`);
+            }catch(e){
+                const blob = new Blob([`${title}\n\nThis is a sample preview. Purchase to get the full product.`], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s+/g,'_')}_sample.txt`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+            }
+        };
+
+        // Show proof upload form when user clicks "I've Paid"
+        const _productUploadProofBtn = document.getElementById('productUploadProofBtn');
+        if (_productUploadProofBtn) _productUploadProofBtn.onclick = function(){
+            const _productProofFormEl = document.getElementById('productProofForm');
+            if (_productProofFormEl) _productProofFormEl.classList.remove('hidden');
+        };
+
+        // Handle product proof form submission
+        // Behavior:
+        // - disable inputs during upload
+        // - POST form to /api/shop/upload-proof
+        // - if server returns { success: true, downloadUrl } open the URL (start download)
+        // - if server returns { success: true, downloadBase64, filename } create blob and trigger download
+        // - if server responds with binary (pdf/blob) download it directly
+        // - fallback to client-side sample download button on error
+        const _productProofForm = document.getElementById('productProofForm');
+        if (_productProofForm) _productProofForm.onsubmit = async function(e){
+            e.preventDefault();
+            const form = e.target;
+            const status = document.getElementById('productProofStatus');
+            // collect interactive controls to disable
+            const controls = Array.from(form.querySelectorAll('input, button, select, textarea'));
+            function setDisabled(val){ controls.forEach(c=>{ try{ c.disabled = val; }catch(e){} }); }
+            setDisabled(true);
+            status.textContent = 'Uploading payment proof...';
+
+            try{
+                const data = new FormData(form);
+                const res = await fetch('/api/shop/upload-proof', { method: 'POST', body: data });
+
+                if (!res.ok) {
+                    // if server returned a non-JSON error page, treat as failure
+                    const txt = await res.text().catch(()=>'');
+                    throw new Error('Server error: ' + res.status + ' ' + (txt && txt.slice(0,200)));
+                }
+
+                const contentType = (res.headers.get('content-type') || '').toLowerCase();
+
+                // If server returned binary file directly (PDF, octet-stream)
+                if (contentType.includes('application/pdf') || contentType.includes('application/octet-stream') || contentType.includes('application/zip')){
+                    const blob = await res.blob();
+                    const filename = (form.querySelector('[name="productId"]') && form.querySelector('[name="productId"]').value) ? `${form.querySelector('[name="productId"]').value}.pdf` : 'product_download.pdf';
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                    status.textContent = 'Download started.';
+                    form.reset();
+                    setDisabled(false);
+                    return;
+                }
+
+                // Otherwise expect JSON with details
+                const json = await res.json().catch(()=>null);
+                if (json && json.success){
+                    status.textContent = 'Proof uploaded! Preparing download...';
+                    form.reset();
+
+                    // 1) direct download URL
+                    if (json.downloadUrl){
+                        console.log('Server provided downloadUrl:', json.downloadUrl);
+                        status.textContent = 'Download link received — attempting to fetch file...';
+                        // Try to fetch the file as blob (better UX) then trigger download. If CORS blocks this, fall back to opening the URL.
+                        try{
+                            const downloadResponse = await fetch(json.downloadUrl, { method: 'GET' });
+                            if (downloadResponse.ok) {
+                                const blob = await downloadResponse.blob();
+                                const filename = json.filename || (form.querySelector('[name="productId"]') && form.querySelector('[name="productId"]').value) ? `${form.querySelector('[name="productId"]').value}.pdf` : 'download.pdf';
+                                const url = URL.createObjectURL(blob);
+                                const a = document.createElement('a'); a.href = url; a.download = json.filename || filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                                status.textContent = 'Download started.';
+                                setDisabled(false);
+                                return;
+                            } else {
+                                console.warn('Could not fetch downloadUrl as blob, status:', downloadResponse.status);
+                                // fallback to opening the URL in a new tab
+                                const a = document.createElement('a'); a.href = json.downloadUrl; a.target = '_blank'; if (json.filename) a.download = json.filename; document.body.appendChild(a); a.click(); a.remove();
+                                status.textContent = 'Download opened in new tab. If nothing happened, check your popup blocker or contact support.';
+                                setDisabled(false);
+                                return;
+                            }
+                        }catch(fetchErr){
+                            console.warn('Error fetching downloadUrl directly:', fetchErr);
+                            // fallback to opening the URL in new tab
+                            const a = document.createElement('a'); a.href = json.downloadUrl; a.target = '_blank'; if (json.filename) a.download = json.filename; document.body.appendChild(a); a.click(); a.remove();
+                            status.textContent = 'Opened download link in a new tab. If nothing happened, your browser blocked it.';
+                            setDisabled(false);
+                            return;
+                        }
+                    }
+
+                    // 2) server returned base64 content and filename
+                    if (json.downloadBase64 && json.filename){
+                        // downloadBase64 may include data: prefix or be raw base64
+                        const base64 = json.downloadBase64.indexOf('base64,') !== -1 ? json.downloadBase64.split('base64,')[1] : json.downloadBase64;
+                        const byteChars = atob(base64);
+                        const byteNumbers = new Array(byteChars.length);
+                        for (let i=0;i<byteChars.length;i++) byteNumbers[i] = byteChars.charCodeAt(i);
+                        const byteArray = new Uint8Array(byteNumbers);
+                        const blob = new Blob([byteArray], { type: json.downloadMime || 'application/octet-stream' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a'); a.href = url; a.download = json.filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+                        status.textContent = 'Download ready. Check your downloads.';
+                        setDisabled(false);
+                        return;
+                    }
+
+                    // 3) accepted but no file yet - inform user
+                    status.textContent = json.message || 'Upload accepted. Our team will verify and send the download link via email.';
+                    setDisabled(false);
+                    return;
+                }
+
+                // Unexpected response shape - fallback to client-side sample
+                status.textContent = 'Upload completed. Starting fallback sample download.';
+                const _sampleBtn = document.getElementById('productSampleDownload'); if (_sampleBtn) _sampleBtn.click();
+            }catch(err){
+                console.warn('product proof upload error', err);
+                status.textContent = 'Upload failed. Providing sample download as fallback.';
+                const _sampleBtn = document.getElementById('productSampleDownload'); if (_sampleBtn) _sampleBtn.click();
+            }finally{
+                setDisabled(false);
+            }
+        };
+        </script>
+            <div class="premium-hero glass p-0 md:p-0 rounded-3xl shadow-2xl max-w-3xl mx-auto mt-8 mb-12 overflow-hidden border border-amber-400/30 relative">
+                <div class="premium-hero-bg absolute inset-0 z-0"></div>
+                <div class="relative z-10 p-8 md:p-14 flex flex-col gap-8 items-center justify-center">
+                    <div class="flex flex-col items-center gap-3 text-center">
+                        <div class="w-24 h-24 mb-2 flex items-center justify-center premium-logo-glow">
+                            <img src="images/logo.png" alt="Logo" class="w-full h-full logo-img premium-logo-img">
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-extrabold text-amber-400 drop-shadow-lg mb-3 tracking-tight premium-title">Brew Your Future. One Shot at a Time.</h1>
+                        <p class="text-lg md:text-2xl text-gray-100 mb-4 font-medium premium-tagline">Practical lessons, pro tips, and real certification to turn passion into a career.</p>
+                        <div class="hero-badges mt-3">
+                            <div class="hero-badge"><i class="fas fa-award"></i> Certified Curriculum</div>
+                            <div class="hero-badge"><i class="fas fa-user-graduate"></i> Expert Instructors</div>
+                            <div class="hero-badge"><i class="fas fa-shield-alt"></i> Secure Payments</div>
+                        </div>
+                        <div class="flex flex-wrap gap-4 items-center justify-center mt-2">
+                            <div class="bg-gray-800/80 rounded-xl px-4 py-2 flex items-center gap-2 shadow-lg border border-amber-400/20">
+                                <span id="progress" class="text-base text-gray-200 font-semibold">You're just getting started — 0 lessons complete</span>
                             </div>
-                            <div class="bg-gray-800 rounded-lg px-3 py-2 flex items-center gap-2">
-                                <span id="points" class="text-base md:text-lg font-semibold text-green-400">Points: 0</span>
+                            <div class="bg-gray-800/80 rounded-xl px-4 py-2 flex items-center gap-2 shadow-lg border border-lime-400/20">
+                                <span id="points" class="text-lg md:text-xl font-bold text-green-400">0 points • Level: Beginner</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col items-end gap-2">
-                        <button onclick="BaristaApp.lessonManager.continueToNextLesson()" class="interactive-button text-sm md:text-base px-4 md:px-6 py-2 font-semibold shadow-lg">
-                            <i class="fas fa-play mr-2"></i>Continue Learning
+                    <div class="flex flex-col md:flex-row gap-6 w-full justify-center items-center mt-6">
+                        <div class="flex gap-6 w-full overflow-x-auto pb-2 hide-scrollbar">
+                            <button onclick="BaristaApp.lessonManager.continueToNextLesson()" class="premium-btn text-lg md:text-xl px-8 py-4 font-bold shadow-xl bg-gradient-to-r from-sky-400 via-emerald-400 to-amber-400 text-white rounded-2xl flex-shrink-0 flex items-center justify-center hover:scale-105 transition-transform premium-btn-main">
+                                <i class="fas fa-play mr-2"></i> Start My Journey
+                            </button>
+                            <button id="dashboardVerifiedCert" class="premium-btn bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold px-8 py-4 rounded-2xl flex-shrink-0 flex items-center justify-center shadow-xl hover:scale-105 transition-transform">
+                                <i class="fas fa-certificate mr-2"></i> Get Certified
+                            </button>
+                            <button id="dashboardShop" class="premium-btn bg-gray-600 text-gray-300 font-bold px-8 py-4 rounded-2xl flex-shrink-0 flex items-center justify-center shadow-xl" disabled>
+                                <i class="fas fa-store mr-2"></i> Digital Products — Coming Soon
+                            </button>
+                            <!-- Support button intentionally removed from hero to simplify UI. Donation modal and handlers remain available if needed. -->
+                        </div>
+                    </div>
+                    <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden mb-6 shadow-inner">
+                        <div id="progressBarFill" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500 ease-out"></div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6 w-full">
+                        <!-- Next Lesson card removed per user request -->
+                        <!-- Fun Fact card removed per user request to simplify home screen -->
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8 w-full">
+                        <button onclick="BaristaApp.dataManager.exportProgress()" class="interactive-button bg-indigo-600 hover:bg-indigo-700 flex-1 py-2 rounded-xl font-bold shadow">
+                            <i class="fas fa-download mr-2"></i> Export Progress
                         </button>
-                        <div class="text-xs text-gray-400 mt-1">Progress saved automatically</div>
+                        <button onclick="BaristaApp.dataManager.resetProgress()" class="interactive-button bg-red-600 hover:bg-red-700 flex-1 py-2 rounded-xl font-bold shadow">
+                            <i class="fas fa-undo mr-2"></i> Reset Progress
+                        </button>
                     </div>
-                </div>
-                <div class="w-full h-3 bg-gray-700 rounded-full overflow-hidden mb-6 shadow-inner">
-                    <div id="progressBarFill" class="h-full bg-gradient-to-r from-green-500 to-emerald-400 rounded-full transition-all duration-500 ease-out"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-6">
-                    <div class="glass p-4 md:p-5 rounded-lg hover-lift transition-all">
-                        <h3 class="text-base md:text-lg font-semibold text-sky-300 mb-2">Next Lesson</h3>
-                        <p id="nextLessonInfo" class="text-sm text-gray-200 line-clamp-2">Calculating next lesson...</p>
-                    </div>
-                    <div class="glass p-4 md:p-5 rounded-lg hover-lift transition-all">
-                        <h3 class="text-base md:text-lg font-semibold text-lime-300 mb-2">Fun Fact</h3>
-                        <p id="funFact" class="text-sm text-gray-200 line-clamp-2">Coffee is the second most traded commodity!</p>
-                    </div>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8">
-                    <button onclick="BaristaApp.dataManager.exportProgress()" class="interactive-button bg-indigo-600 hover:bg-indigo-700 flex-1 py-2">
-                        <i class="fas fa-download mr-2"></i>Export Progress
-                    </button>
-                    <button onclick="BaristaApp.dataManager.resetProgress()" class="interactive-button bg-red-600 hover:bg-red-700 flex-1 py-2">
-                        <i class="fas fa-undo mr-2"></i>Reset Progress
-                    </button>
+                    <div class="text-xs text-gray-400 mt-4 text-center w-full">Progress saved automatically</div>
                 </div>
             </div>
        
         </section>
+        <!-- Verified Certificate Modal -->
+        <div id="verifiedCertModal" class="fixed inset-0 z-[2000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
+            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl text-center relative max-h-[85vh] overflow-y-auto custom-scrollbar">
+                <button id="closeVerifiedCertModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                <img src="images/logo.png" alt="Logo Icon" class="w-16 h-16 mx-auto mb-3">
+                <h3 class="text-2xl font-bold text-amber-400 mb-4">Get Your Verified Certificate</h3>
+                <p class="text-gray-300 mb-6 text-sm">Get your official certificate by paying the fee and submitting your details. All payments are handled securely using the same trusted QR and bank details as our donation system.</p>
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-sky-300 mb-3">Pay with eSewa or Khalti</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h5 class="text-md font-semibold text-green-400 mb-2 text-center">eSewa</h5>
+                            <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
+                                <img src="images/esewa_qr.png" alt="eSewa QR Code" class="w-full h-full">
+                            </div>
+                            <p class="text-sm text-gray-300 text-center">Scan QR or use eSewa ID:</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
+                        </div>
+                        <div class="bg-gray-800/50 p-4 rounded-lg">
+                            <h5 class="text-md font-semibold text-indigo-400 mb-2 text-center">Khalti</h5>
+                            <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
+                                <img src="images/khalti_qr_code.png" alt="Khalti QR Code" class="w-full h-full">
+                            </div>
+                            <p class="text-sm text-gray-300 text-center">Scan QR or use Khalti ID:</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
+                        </div>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-2 text-center">Please mention "Barista Certificate" in the payment remarks.</p>
+                </div>
+                <div class="mb-6 pt-4 border-t border-gray-700">
+                    <h4 class="text-lg font-semibold text-sky-300 mb-3">International Payment</h4>
+                    <p class="text-gray-300 text-sm mb-3">You can pay via PayPal or by direct bank transfer (details below). Thank you!</p>
+                    <div class="mb-4 flex justify-center">
+                        <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" rel="noopener noreferrer" class="inline-block my-2">
+                            <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal" class="h-9 w-auto max-w-full">
+                        </a>
+                    </div>
+                    <p class="text-xs text-gray-400">(User: Replace with your actual PayPal link/button)</p>
+                    <details class="group text-left mt-4">
+                        <summary class="interactive-choice py-2 px-4 rounded-md cursor-pointer list-none flex justify-between items-center">
+                            <span class="font-semibold">International Bank Transfer Details</span>
+                            <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i>
+                        </summary>
+                        <div class="mt-2 p-3 bg-gray-800/40 rounded-md text-sm text-gray-300 space-y-1">
+                            <p><strong>Bank Name:</strong> Muktinath Bikash Bank</p>
+                            <p><strong>Account Holder Name:</strong> Sukram Lama</p>
+                            <p><strong>Account Number/IBAN:</strong> 16921101074994000001</p>
+                            <p><strong>SWIFT/BIC Code:</strong>MNBBLNPKA</p>
+                            <p><strong>Bank Address:</strong> Gundu Ext. Counter,Bhaktapur, Nepal</p>
+                            <p class="text-xs text-gray-400 mt-1">( Donor may incur fees.)</p>
+                        </div>
+                    </details>
+                </div>
+                <div class="mb-6 pt-4 border-t border-gray-700">
+                    <h4 class="text-lg font-semibold text-amber-700 mb-3">How to Get Verified</h4>
+                    <ol class="list-decimal list-inside text-gray-700 text-sm pl-4 mb-2 text-left">
+                        <li>Pay <span class="font-bold text-green-700">$15 (NPR 2000)</span> using any of the methods above.</li>
+                        <li>Fill out the form below and click <span class="font-bold text-green-700">Send to WhatsApp</span>.</li>
+                        <li>Attach your payment screenshot in WhatsApp.</li>
+                        <li>Receive your verified certificate by email within 24 hours.</li>
+                    </ol>
+                </div>
+                    <form id="whatsappCertForm" class="bg-white border border-green-200 rounded-lg p-4 flex flex-col gap-3 shadow" autocomplete="off" onsubmit="BaristaApp.ui.sendWhatsAppCert(event)">
+                        <div class="font-semibold text-green-700 mb-2 flex items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i> Send Your Details to WhatsApp</div>
+                        <input type="text" name="fullName" placeholder="Full Name" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                        <input type="email" name="email" placeholder="Email Address" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                        <input type="text" name="transactionDetails" placeholder="Transaction Details (ID, Amount, etc.)" required class="input-field border border-gray-300 rounded px-3 py-2" />
+                        <label class="text-left text-xs text-gray-500 mt-1" for="certPaymentScreenshot">Attach Payment Screenshot (required)</label>
+                        <input id="certPaymentScreenshot" type="file" name="paymentScreenshot" accept="image/*" required class="input-field border border-gray-300 rounded px-3 py-2" title="Upload payment screenshot" />
+                        <button type="submit" class="interactive-button bg-green-600 hover:bg-green-700 text-white w-full py-2 font-semibold flex items-center justify-center gap-2"><i class="fab fa-whatsapp"></i> Send to WhatsApp</button>
+                        <div class="text-xs text-gray-500 mt-2">Your details and payment screenshot will be sent to WhatsApp <span class="font-bold">+9779805670970</span> for confirmation.</div>
+                    </form>
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 flex items-center gap-3 shadow">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-purple-100 text-purple-700 font-bold mr-2"><i class="fas fa-envelope-open-text"></i></span>
+                        <span class="text-gray-700">
+                            <span class="font-bold text-purple-700">What You Get:</span><br>
+                            <ul class="list-disc list-inside text-xs text-gray-600 pl-4 mt-1 mb-1">
+                                <li>Professionally designed certificate (PDF)</li>
+                                <li>Unique certificate ID for verification</li>
+                                <li>Founder signature for authenticity</li>
+                                <li>Instant LinkedIn sharing option</li>
+                                <li>Verification page for employers</li>
+                                <li>Email delivery within 24 hours</li>
+                            </ul>
+                            <span class="text-xs text-gray-700">Showcase your achievement and boost your career!</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Welcome/About Modal -->
         <div id="welcomeModal" class="fixed inset-0 z-[2000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
             <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full p-8 relative overflow-y-auto max-h-[90vh] flex flex-col">
                 <button id="closeWelcomeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
-                <h2 class="text-3xl font-bold text-amber-400 mb-4">Welcome to Specialty Barista Training</h2>
-                <p class="mb-4">Unlock your potential as a coffee professional or passionate home barista. Our free, interactive platform offers step-by-step lessons, expert guides, and hands-on activities to help you master every aspect of specialty coffee—from espresso extraction to latte art, customer service, and more.</p>
-                <p class="mb-4">Whether you’re just starting out or looking to refine your skills, our resources are designed by certified baristas and industry experts. We believe in making specialty coffee education accessible, practical, and fun for everyone.</p>
+                <h2 class="text-3xl font-bold text-amber-400 mb-4">Brew confidence. Build a career.</h2>
+                <p class="mb-4">Turn your passion into professional skill with lessons crafted by real café pros. Learn the techniques that make great coffee reliably, shift after shift.</p>
+                <p class="mb-4">Practical, hands-on modules, clear feedback, and certification that employers trust — everything you need to level up and be proud of your work.</p>
                 <h3 class="text-xl font-semibold mt-6 mb-2">What You’ll Learn</h3>
                 <ul class="list-disc list-inside mb-4 space-y-1">
                     <li>How to pull the perfect espresso shot, every time</li>
@@ -767,33 +1933,37 @@
                     <li>Earn a certificate to showcase your skills</li>
                     <li>Join a supportive community of coffee lovers</li>
                 </ul>
-                <h3 class="text-xl font-semibold mt-6 mb-2">Get Started Today</h3>
-                <p>Ready to begin your barista journey? Explore our lessons, track your progress, and connect with fellow coffee enthusiasts. Specialty Barista Training is here to help you brew with confidence and passion!</p>
+                <h3 class="text-xl font-semibold mt-6 mb-2">Ready to level up?</h3>
+                <p>Start with a short lesson — we'll track your progress and celebrate each milestone. Employers love candidates who invest in their craft.</p>
                 <div class="flex justify-end mt-8 gap-4">
-                    <button id="closeWelcomeModal2" class="interactive-button px-6 py-2">Close</button>
-                    <button id="skipWelcomeModal" class="interactive-button px-6 py-2 bg-amber-500 hover:bg-amber-600">Skip</button>
+                    <button id="closeWelcomeModal2" class="interactive-button px-6 py-2">Maybe later</button>
+                    <button id="skipWelcomeModal" class="interactive-button px-6 py-2 bg-amber-500 hover:bg-amber-600">Start My First Lesson</button>
                 </div>
                 <div class="w-full text-center text-xs text-gray-500 mt-2">You can scroll to read more if needed.</div>
                 </div>
             </div>
         </div>
 
-        <!-- Ads (keep outside dashboard card for clarity) -->
+        <!-- Advertisement Sections -->
         <section id="dashboardAd" class="ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md hidden" aria-label="Advertisement">
+          <div class="ad-label">Advertisement</div>
           <!-- Dashboard ad only shown when dashboard is active and has content -->
           <ins class="adsbygoogle"
               data-ad-client="ca-pub-1343070560951957"
               data-ad-slot="3502133839"
               data-ad-format="auto"
               data-full-width-responsive="true"></ins>
+          <div class="ad-label">Advertisement End</div>
         </section>
         <section id="lessonPageAd" class="ad-placeholder mx-auto my-4 max-w-screen-md hidden" aria-label="Advertisement">
+          <div class="ad-label">Advertisement</div>
           <!-- Lesson ad only shown when lesson page is active and has content -->
           <ins class="adsbygoogle"
               data-ad-client="ca-pub-1343070560951957"
               data-ad-slot="3717756254"
               data-ad-format="autorelaxed"
               data-full-width-responsive="true"></ins>
+          <div class="ad-label">Advertisement End</div>
         </section>
 
         <section id="lessonPage" class="hidden">
@@ -811,6 +1981,9 @@
                     <button id="notesTab" class="tab">Notes</button>
                 </div>
                 <div id="lessonContent" class="min-h-[300px] prose-enhanced"></div>
+                <div class="mt-4">
+                    <button id="markReadButton" class="interactive-button hidden w-full py-2.5 bg-amber-500 hover:bg-amber-600" title="Mark lesson as read when you've reviewed theory and practical">Mark Lesson as Read</button>
+                </div>
             </div>
         </section>
 
@@ -821,7 +1994,7 @@
                 <h2 class="text-4xl font-bold text-amber-400 mb-3">Certificate of Completion</h2>
                 <p class="text-lg text-gray-300 mb-6">This certifies that</p>
                 <p id="trainee-name" class="text-3xl font-semibold text-gray-100 mb-3 border-b-2 border-amber-500 pb-2 inline-block px-4">Trainee Name</p>
-                <p class="text-lg text-gray-300 mb-6">has successfully completed the Basic Barista Training program.</p>
+                <p class="text-lg text-gray-300 mb-6">has successfully completed the <span id="cert-course">Basic Barista Training</span> program.</p>
                 <div class="flex justify-around items-center text-sm text-gray-400 mb-8">
                     <div>
                         <p class="font-semibold text-gray-200">Date of Completion</p>
@@ -832,15 +2005,30 @@
                         <p id="cert-points">0 Points</p>
                     </div>
                 </div>
-                <p class="text-xs text-gray-500 mb-3">Siddha Pokhari, Bhaktapur</p>
-                <p class="text-xs text-gray-500 mb-6">Contact: 9805670970, 9810208828</p>
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mb-6">
+                    <div class="flex flex-col items-center">
+                        <img src="images/founder-signature.png" alt="Founder Signature" class="w-32 h-12 object-contain mb-2" id="cert-signature">
+                        <span class="text-xs text-gray-400">Founder Signature</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div id="cert-qr" class="w-20 h-20 mb-2"></div>
+                        <span class="text-xs text-gray-400">Verify: <span id="cert-id">BARISTA-XXXXXX</span></span>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">Verification Link: <a id="cert-verify-link" href="#" class="text-amber-400 underline">https://barsia.io/verify/BARISTA-XXXXXX</a></p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center mt-8" id="certificateActionButtons">
                     <button onclick="BaristaApp.ui.downloadCertificate()" class="interactive-button">
                         <i class="fas fa-download mr-2"></i> Download PDF
                     </button>
+                    <button id="getVerifiedCertificate" class="interactive-button bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold">
+                        <i class="fas fa-certificate mr-2"></i> Get Verified Certificate ($15)
+                    </button>
                     <button onclick="BaristaApp.elements.backButton?.click()" class="interactive-button bg-sky-600 hover:bg-sky-700">
                         <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
                     </button>
+                    <a id="linkedinShareBtn" href="#" target="_blank" class="interactive-button bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center justify-center">
+                        <i class="fab fa-linkedin mr-2"></i> Share on LinkedIn
+                    </a>
                 </div>
             </div>
         </section>
@@ -849,11 +2037,11 @@
         <div id="onboardingModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
             <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
                 <img src="images/logo.png" alt="Logo Icon" class="w-20 h-20 mx-auto mb-4">
-                <h3 class="text-2xl font-bold text-amber-400 mb-4">Welcome to Specialty Barista Training!</h3>
-                <p class="text-gray-300 mb-6 text-sm">Let's get you started. Tell us your name to personalize your experience and certificate.</p>
+                <h3 class="text-2xl font-bold text-amber-400 mb-4">Welcome — Let’s personalize your certificate</h3>
+                <p class="text-gray-300 mb-6 text-sm">Enter your name and email so your certificate and progress feel truly yours. Small step, big pride.</p>
                 <input type="text" id="onboardingName" placeholder="Your Name (for Certificate)" class="input-field mb-3">
                 <input type="email" id="onboardingEmail" placeholder="Your Email (for Leaderboard)" class="input-field mb-4">
-                <button onclick="BaristaApp.dataManager.completeOnboarding()" class="interactive-button w-full py-2.5">Get Started!</button>
+                <button onclick="BaristaApp.dataManager.completeOnboarding()" class="interactive-button w-full py-2.5">Create My Profile — I’m Ready</button>
             </div>
         </div>
 
@@ -888,8 +2076,8 @@
         </div>
 
         <div id="donationModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
-            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
-                <button onclick="BaristaApp.modalManager.closeDonationModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close donation modal">×</button>
+            <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-xl text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar animate-fadeIn">
+                <button type="button" onclick="BaristaApp.modalManager.closeDonationModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition-colors duration-200" aria-label="Close donation modal">×</button>
                 <img src="images/logo.png" alt="Logo Icon" class="w-16 h-16 mx-auto mb-3">
                 <h3 class="text-2xl font-bold text-amber-400 mb-4">Support This Project</h3>
                 <p class="text-gray-300 mb-6 text-sm">Your contribution helps keep this resource free and accessible!</p>
@@ -904,7 +2092,7 @@
 </div>
 
                             <p class="text-sm text-gray-300 text-center">Scan QR or use eSewa ID:</p>
-                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">9805670970</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
                         </div>
                         <div class="bg-gray-800/50 p-4 rounded-lg">
                             <h5 class="text-md font-semibold text-indigo-400 mb-2 text-center">Khalti</h5>
@@ -914,7 +2102,7 @@
 </div>
 
                             <p class="text-sm text-gray-300 text-center">Scan QR or use Khalti ID:</p>
-                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">9805670970</p>
+                            <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
                         </div>
                     </div>
                     <p class="text-xs text-gray-400 mt-2 text-center">कृपया रिमार्कमा "Barista Training Support" उल्लेख गर्नुहोला।</p>
@@ -973,6 +2161,290 @@
 
 
       <script>
+    // Modal Manager initialization
+    window.BaristaApp = window.BaristaApp || {};
+    window.BaristaApp.modalManager = window.BaristaApp.modalManager || {
+        showDonationModal: function() {
+            const modal = document.getElementById('donationModal');
+            if (modal) {
+                // Close any other open modals first
+                document.querySelectorAll('.modal-content-area').forEach(m => {
+                    const parentModal = m.closest('[id$="Modal"]');
+                    if (parentModal && parentModal !== modal) {
+                        parentModal.classList.add('hidden');
+                        parentModal.classList.remove('flex');
+                    }
+                });
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                
+                // Add escape key listener
+                const escHandler = function(e) {
+                    if (e.key === 'Escape') {
+                        window.BaristaApp.modalManager.closeDonationModal();
+                        document.removeEventListener('keydown', escHandler);
+                    }
+                };
+                document.addEventListener('keydown', escHandler);
+                
+                // Add click outside listener
+                modal.onclick = function(e) {
+                    if (e.target === modal) {
+                        window.BaristaApp.modalManager.closeDonationModal();
+                    }
+                };
+            }
+        },
+        closeDonationModal: function() {
+            const modal = document.getElementById('donationModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    };
+
+    // Dashboard button modal wiring
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile Menu Handler - Combined with Sidebar
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const sidebar = document.getElementById('sidebar');
+        
+        if (hamburgerMenu && mobileMenu && sidebar) {
+            // Toggle mobile menu and sidebar
+            hamburgerMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = !sidebar.classList.contains('sidebar-open');
+                
+                // Toggle menu icon
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-bars', !isOpen);
+                    icon.classList.toggle('fa-times', isOpen);
+                }
+
+                // Toggle sidebar and mobile menu
+                sidebar.classList.toggle('sidebar-open');
+                mobileMenu.classList.toggle('hidden');
+
+                // Track analytics if available
+                if (window.BaristaApp?.util?.trackAnalytics) {
+                    window.BaristaApp.util.trackAnalytics(`Toggled Mobile Menu to ${isOpen ? 'Open' : 'Closed'}`);
+                }
+            });
+
+            // Close menus when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!sidebar.contains(e.target) && 
+                    !mobileMenu.contains(e.target) && 
+                    !hamburgerMenu.contains(e.target)) {
+                    sidebar.classList.remove('sidebar-open');
+                    mobileMenu.classList.add('hidden');
+                    
+                    // Reset hamburger icon
+                    const icon = hamburgerMenu.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            });
+
+            // Close menus on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && 
+                    (sidebar.classList.contains('sidebar-open') || !mobileMenu.classList.contains('hidden'))) {
+                    sidebar.classList.remove('sidebar-open');
+                    mobileMenu.classList.add('hidden');
+                    
+                    // Reset hamburger icon
+                    const icon = hamburgerMenu.querySelector('i');
+                    if (icon) {
+                        icon.classList.add('fa-bars');
+                        icon.classList.remove('fa-times');
+                    }
+                }
+            });
+
+            // Mobile navigation button handlers
+            document.getElementById('homeBtnMobile')?.addEventListener('click', function() {
+                window.location.href = 'index.html';
+                mobileNavMenu.classList.add('hidden');
+            });
+            document.getElementById('aboutBtnMobile')?.addEventListener('click', function() {
+                window.location.href = 'about.html';
+                mobileNavMenu.classList.add('hidden');
+            });
+            document.getElementById('contactBtnMobile')?.addEventListener('click', function() {
+                window.location.href = 'contact.html';
+                mobileNavMenu.classList.add('hidden');
+            });
+            document.getElementById('privacyBtnMobile')?.addEventListener('click', function() {
+                window.location.href = 'privacy.html';
+                mobileNavMenu.classList.add('hidden');
+            });
+            document.getElementById('disclosureBtnMobile')?.addEventListener('click', function() {
+                window.location.href = 'disclosure.html';
+                mobileNavMenu.classList.add('hidden');
+            });
+        }
+
+        // Support Us button handler
+        const supportButton = document.getElementById('supportButton');
+        if (supportButton) {
+            supportButton.addEventListener('click', function() {
+                window.BaristaApp.modalManager.showDonationModal();
+            });
+        }
+
+        // Close button handler for donation modal
+        const closeDonationBtn = document.querySelector('#donationModal button[aria-label="Close donation modal"]');
+        if (closeDonationBtn) {
+            closeDonationBtn.onclick = window.BaristaApp.modalManager.closeDonationModal;
+        }
+
+        // Help & Guide button handler
+        const helpButton = document.getElementById('helpButton');
+        if (helpButton) {
+            helpButton.addEventListener('click', function() {
+                // First, close any open modals
+                document.querySelectorAll('.modal-content-area').forEach(modal => {
+                    const parentModal = modal.closest('[id$="Modal"]');
+                    if (parentModal) {
+                        parentModal.classList.add('hidden');
+                    }
+                });
+                
+                // Show guided tour modal
+                const guidedTourModal = document.getElementById('guidedTourModal');
+                if (guidedTourModal) {
+                    guidedTourModal.classList.remove('hidden');
+                    currentTourStep = 0;
+                    showTourStep(0);
+                }
+
+                // Also show the icons guide after a brief delay
+                setTimeout(() => {
+                    const iconsHelpModal = document.getElementById('iconsHelpModal');
+                    if (iconsHelpModal) {
+                        iconsHelpModal.classList.remove('hidden');
+                        iconsHelpModal.classList.add('flex');
+                        createIconsHelpList(); // Refresh the icons list
+                    }
+                }, 500);
+            });
+        }
+
+        // Topbar navigation button handlers
+        document.getElementById('homeBtn').onclick = function() {
+            window.location.href = 'index.html';
+        };
+        document.getElementById('aboutBtn').onclick = function() {
+            window.location.href = 'about.html';
+        };
+        document.getElementById('contactBtn').onclick = function() {
+            window.location.href = 'contact.html';
+        };
+        document.getElementById('privacyBtn').onclick = function() {
+            window.location.href = 'privacy.html';
+        };
+        document.getElementById('disclosureBtn').onclick = function() {
+            window.location.href = 'disclosure.html';
+        };
+    // Support Us button
+    const supportBtn = document.getElementById('dashboardSupportUs');
+    if (supportBtn) supportBtn.addEventListener('click', function() {
+        if (window.BaristaApp && window.BaristaApp.modalManager && window.BaristaApp.modalManager.showDonationModal) {
+            window.BaristaApp.modalManager.showDonationModal();
+        } else {
+            document.getElementById('donationModal').classList.remove('hidden');
+        }
+    });
+
+    // Verified Certificate button
+    const verifiedBtn = document.getElementById('dashboardVerifiedCert');
+    if (verifiedBtn) verifiedBtn.addEventListener('click', function() {
+        document.getElementById('verifiedCertModal').classList.remove('hidden');
+    });
+    const closeVerifiedCert = document.getElementById('closeVerifiedCertModal');
+    if (closeVerifiedCert) closeVerifiedCert.addEventListener('click', function() {
+        document.getElementById('verifiedCertModal').classList.add('hidden');
+    });
+
+    // Shop button
+    const shopBtn = document.getElementById('dashboardShop');
+    if (shopBtn) shopBtn.addEventListener('click', function() {
+        document.getElementById('shopModal').classList.remove('hidden');
+    });
+    const closeShop = document.getElementById('closeShopModal');
+    if (closeShop) closeShop.addEventListener('click', function() {
+        document.getElementById('shopModal').classList.add('hidden');
+    });
+
+    // Sidebar Shop link
+    const shopSidebarLink = document.getElementById('shopSidebarLink');
+    if (shopSidebarLink) shopSidebarLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('shopModal').classList.remove('hidden');
+    });
+
+    // Admin Dashboard has been removed from the client bundle for security; no action required here.
+});
+// Populate sidebar user card from runtime state
+function populateSidebarUserCard() {
+    try {
+        const headerTagline = document.querySelector('#sidebarHeader .text-xs');
+        // If the old user card elements still exist, update them; otherwise keep sidebar minimal.
+        const avatar = document.getElementById('sidebarUserAvatar');
+        const nameEl = document.getElementById('sidebarUserName');
+        const metaEl = document.getElementById('sidebarUserMeta');
+        const user = (window.BaristaApp && BaristaApp.state && BaristaApp.state.user) ? BaristaApp.state.user : { name: 'Trainee', points: 0 };
+        if (nameEl) nameEl.textContent = user.name || 'Trainee';
+        if (metaEl) metaEl.textContent = `${(user.points||0)} points • Level: ${user.level||'Beginner'}`;
+        if (avatar && user.avatarUrl) avatar.src = user.avatarUrl;
+        // Update compact header tagline (but do not show points): show role or blank
+        if (headerTagline) headerTagline.textContent = user.role ? user.role : 'Interactive training & certification';
+    } catch (e) { console.warn('populateSidebarUserCard:', e); }
+}
+
+// Ensure sidebar user card is populated on initial load and after state changes
+document.addEventListener('DOMContentLoaded', function() {
+    populateSidebarUserCard();
+    // Small observer: if BaristaApp.state.user changes via setUser or other flows, call populateSidebarUserCard()
+    // For projects without a state watcher, developers can call BaristaApp.ui.refreshUserCard = populateSidebarUserCard;
+    if (window.BaristaApp && window.BaristaApp.ui) window.BaristaApp.ui.refreshUserCard = populateSidebarUserCard;
+});
+// Small animated counter for points
+function animatePoints(el, from, to, duration = 700) {
+    if (!el) return;
+    const start = performance.now();
+    const step = () => {
+        const now = performance.now();
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const val = Math.floor(from + (to - from) * eased);
+        el.textContent = `${val} points • Level: ${BaristaApp.state.user.level||'Beginner'}`;
+        if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+}
+
+// Wrap the existing refreshUserCard (if present) to play animation when points change
+if (window.BaristaApp && window.BaristaApp.ui) {
+    const original = window.BaristaApp.ui.refreshUserCard || function(){ populateSidebarUserCard(); };
+    window.BaristaApp.ui.refreshUserCard = function(){
+        try{
+            const metaEl = document.getElementById('sidebarUserMeta');
+            const prev = parseInt((metaEl && metaEl.textContent||'').replace(/[^0-9]/g,'')) || 0;
+            original();
+            const nowPts = (BaristaApp.state.user && BaristaApp.state.user.points) ? BaristaApp.state.user.points : 0;
+            // Animate points only if the meta element exists (we removed it from the UI for a cleaner professional look)
+            if (metaEl) animatePoints(metaEl, prev, nowPts, 700);
+        }catch(e){ original(); }
+    };
+}
                 // Lesson Modal logic
                 function showLessonModal(contentHtml) {
                     document.getElementById('lessonModalContent').innerHTML = contentHtml;
@@ -984,7 +2456,7 @@
                     document.getElementById('lessonModalContent').innerHTML = '';
                     document.body.classList.remove('overflow-hidden'); // Restore scroll
                 }
-                document.getElementById('closeLessonModal').onclick = hideLessonModal;
+                const _closeLessonModalBtn = document.getElementById('closeLessonModal'); if (_closeLessonModalBtn) _closeLessonModalBtn.onclick = hideLessonModal;
                 // Accessibility: Add missing alt/aria-labels for images and buttons
                         document.addEventListener('DOMContentLoaded', function() {
                             document.querySelectorAll('img:not([alt])').forEach(img => {
@@ -1001,9 +2473,9 @@
                                 document.getElementById('welcomeModal').classList.add('hidden');
                                 localStorage.setItem('baristaIO_hideWelcome', '1');
                             }
-                            document.getElementById('closeWelcomeModal').onclick = hideWelcomeModal;
-                            document.getElementById('closeWelcomeModal2').onclick = hideWelcomeModal;
-                            document.getElementById('skipWelcomeModal').onclick = hideWelcomeModal;
+                            const _closeWelcomeModal = document.getElementById('closeWelcomeModal'); if (_closeWelcomeModal) _closeWelcomeModal.onclick = hideWelcomeModal;
+                            const _closeWelcomeModal2 = document.getElementById('closeWelcomeModal2'); if (_closeWelcomeModal2) _closeWelcomeModal2.onclick = hideWelcomeModal;
+                            const _skipWelcomeModal = document.getElementById('skipWelcomeModal'); if (_skipWelcomeModal) _skipWelcomeModal.onclick = hideWelcomeModal;
 
                                         // Hide welcome modal and show lesson modal when a lesson is opened
                                         const dayList = document.getElementById('dayList');
@@ -2265,7 +3737,7 @@
                     lowTimeWarning: "Time is running low!",
                     continueLearning: "Continue Learning",
                     exploreGlossary: "Explore Glossary",
-                    nextLessonInfoDefault: "Calculating next lesson...",
+                    // nextLessonInfoDefault removed
                     allLessonsCompleted: "All lessons completed! View Certificate or review lessons.",
                     funFactDefault: "Coffee is the second most traded commodity in the world after oil!",
                     quizForDay: "Quiz for Day",
@@ -2298,7 +3770,7 @@
                     lowTimeWarning: "समय सकिन लाग्यो!",
                     continueLearning: "सिकाइ जारी राख्नुहोस्",
                     exploreGlossary: "शब्दावली अन्वेषण गर्नुहोस्",
-                    nextLessonInfoDefault: "अर्को पाठ गणना गर्दै...",
+                    // nextLessonInfoDefault removed
                     allLessonsCompleted: "सबै पाठहरू पूरा भए! प्रमाणपत्र हेर्नुहोस् वा पाठहरू समीक्षा गर्नुहोस्।",
                     funFactDefault: "कफी तेल पछि विश्वमा दोस्रो सबैभन्दा बढी व्यापार हुने वस्तु हो!",
                     quizForDay: "दिनको प्रश्नोत्तरी",
@@ -2464,48 +3936,99 @@
                         if (logo) logo.style.filter = 'none';
                     }
                 },
+                    sendWhatsAppCert: function(event) {
+                        event.preventDefault();
+                        const form = event.target;
+                        const name = form.fullName.value.trim();
+                        const email = form.email.value.trim();
+                        const details = form.transactionDetails.value.trim();
+                        // Screenshot upload is not sent via WhatsApp, instruct user to attach manually
+                        const whatsappNumber = '9779805670970';
+                        let msg = `Hello, I have paid for the Verified Certificate.\nName: ${name}\nEmail: ${email}\nDetails: ${details}\n(Please see attached payment screenshot)`;
+                        // WhatsApp API link
+                        const waUrl = `https://wa.me/+${whatsappNumber}?text=${encodeURIComponent(msg)}`;
+                        window.open(waUrl, '_blank');
+                        BaristaApp.util.showSuccess(`WhatsApp message prepared! Please send your details and payment screenshot to WhatsApp number: <span class='font-bold text-green-700'>+9779805670970</span>.`);
+                        form.reset();
+                    },
                 updateProgressDisplay: () => {
                     const completed = BaristaApp.state.progress.filter(Boolean).length;
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
                     if (BaristaApp.elements.progress) BaristaApp.elements.progress.textContent = `${t.progress}: ${completed}/${BaristaApp.state.totalDays}`;
                     if (BaristaApp.elements.progressBarFill) gsap.to(BaristaApp.elements.progressBarFill, { width: `${(BaristaApp.state.totalDays > 0 ? (completed / BaristaApp.state.totalDays) : 0) * 100}%`, duration: 0.6, ease: "power2.out" });
                     localStorage.setItem("baristaIO_progress", JSON.stringify(BaristaApp.state.progress));
-                    if (completed === BaristaApp.state.totalDays && BaristaApp.elements.dashboard?.classList.contains('active') && BaristaApp.elements.certificate?.classList.contains('hidden')) {
-                        BaristaApp.ui.showCertificate();
-                    }
-                    BaristaApp.ui.updateDashboardOverview();
+                    // persist readProgress as well if present
+                    if (BaristaApp.state.readProgress) localStorage.setItem("baristaIO_readProgress", JSON.stringify(BaristaApp.state.readProgress));
+                    // NOTE: Previously the app automatically showed the certificate on completion.
+                    // We now require users to explicitly request a verified certificate (manual flow).
+                    // If you want to show a CTA instead, uncomment the lines below.
+                    // if (completed === BaristaApp.state.totalDays && BaristaApp.elements.dashboard?.classList.contains('active') && BaristaApp.elements.certificate?.classList.contains('hidden')) {
+                    //     BaristaApp.ui.showCertificate();
+                    // }
+                    // updateDashboardOverview removed (Next Lesson feature removed)
                 },
-                updateDashboardOverview: () => {
-                    if (!BaristaApp.elements.nextLessonInfo || !BaristaApp.elements.funFact) return;
-                    const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-                    const firstUncompletedDayIndex = BaristaApp.state.progress.findIndex(p => !p);
-                    if (firstUncompletedDayIndex !== -1) {
-                        const nextDayData = CONTENT.days[firstUncompletedDayIndex];
-                        if(nextDayData && nextDayData.theory) BaristaApp.elements.nextLessonInfo.textContent = `Next: Day ${nextDayData.day} - ${nextDayData.theory.title}`;
-                        else BaristaApp.elements.nextLessonInfo.textContent = t.allLessonsCompleted;
+                // Update the 'Mark as Read' button state for the currently open lesson (if any)
+                updateReadButtonsForCurrentDay: () => {
+                    try {
+                        const day = BaristaApp.state.currentDay;
+                        const btn = document.getElementById('markReadButton');
+                        if (!btn) return;
+                        if (!day || day < 1) { btn.classList.add('hidden'); return; }
+                        const read = BaristaApp.state.readProgress && BaristaApp.state.readProgress[day - 1];
+                        const theoryVisited = read ? !!read.theoryVisited : false;
+                        const practicalVisited = read ? !!read.practicalVisited : false;
+                        // show button but enable only when both sections visited
+                        btn.classList.remove('hidden');
+                        if (theoryVisited && practicalVisited) {
+                            btn.disabled = false;
+                            btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                        } else {
+                            btn.disabled = true;
+                            btn.classList.add('opacity-60', 'cursor-not-allowed');
+                        }
+                    } catch (e) { console.error('updateReadButtonsForCurrentDay error', e); }
+                },
+                // updateDashboardOverview removed per user request (Next Lesson feature removed)
+                populateDays: (filter = "") => {
+            let contentObj = null;
+            try {
+            console.debug('populateDays called', { filter });
+            if (!BaristaApp.elements.dayList) { console.warn('populateDays: dayList element not found (BaristaApp.elements.dayList is falsy)'); return; }
+            // CONTENT may be declared with `const` (not a property on window). Detect it robustly.
+            contentObj = (typeof CONTENT !== 'undefined') ? CONTENT : (window.CONTENT || null);
+            const hasContentObj = !!contentObj;
+            const daysIsArray = Array.isArray(contentObj?.days);
+            if (!hasContentObj || !daysIsArray) {
+                console.warn('populateDays: CONTENT missing or malformed', { hasContentObj, daysIsArray, contentType: typeof CONTENT, windowCONTENTtype: typeof window.CONTENT, daysPreview: contentObj?.days ? contentObj.days : null });
+                BaristaApp.elements.dayList.innerHTML = `<li class="text-red-400 font-semibold text-center p-3">No lessons available (content missing).</li>`;
+                return;
+            }
+            console.debug('populateDays: dayList found, CONTENT.days length=', contentObj.days.length);
+            BaristaApp.elements.dayList.innerHTML = "";
+            } catch (err) { console.error('populateDays: unexpected error at start:', err); return; }
+                    const lowerFilter = String(filter || "").toLowerCase();
+                    // Build filteredDays: when there's no filter, include all valid day entries
+                    let filteredDays;
+                    if (!lowerFilter) {
+                        filteredDays = contentObj.days.filter(d => !!d).map(d => d);
                     } else {
-                        BaristaApp.elements.nextLessonInfo.textContent = t.allLessonsCompleted;
+                        const passingDays = [];
+                        filteredDays = contentObj.days.filter(dayData => {
+                            if (!dayData) return false;
+                            const title = dayData.theory && dayData.theory.title ? String(dayData.theory.title).toLowerCase() : '';
+                            const contentStr = (dayData.theory && dayData.theory.content && typeof dayData.theory.content === 'string') ? dayData.theory.content.toLowerCase() : '';
+                            const matches = title.includes(lowerFilter) || (`day ${dayData.day}`.toLowerCase().includes(lowerFilter)) || contentStr.includes(lowerFilter);
+                            if (matches) passingDays.push(dayData.day);
+                            return matches;
+                        });
+                        console.debug('populateDays: days passing filter ->', passingDays);
                     }
-                     const funFacts = [
-                        t.funFactDefault,
-                        BaristaApp.state.language === 'ne' ? "कफी इथियोपियामा एक बाख्रा गोठालाले पत्ता लगाएको मानिन्छ।" : "Coffee is believed to have been discovered in Ethiopia by a goat herder.",
-                        BaristaApp.state.language === 'ne' ? "ब्राजिल विश्वको सबैभन्दा ठूलो कफी उत्पादक देश हो।" : "Brazil is the world's largest coffee producer.",
-                        BaristaApp.state.language === 'ne' ? "फिनल्याण्डले प्रति व्यक्ति सबैभन्दा बढी कफी खपत गर्दछ।" : "Finland consumes the most coffee per capita.",
-                        BaristaApp.state.language === 'ne' ? "एक सही तरिकाले निकालिएको 'एस्प्रेसो' मा सुनौलो क्रेमाको तह हुन्छ।" : "A properly pulled espresso will have a golden layer of crema."
-                    ];
-                    BaristaApp.elements.funFact.textContent = funFacts[Math.floor(Math.random() * funFacts.length)];
-                },
-                            populateDays: (filter = "") => {
-                    if (!BaristaApp.elements.dayList) return;
-                    BaristaApp.elements.dayList.innerHTML = "";
-                    const lowerFilter = filter.toLowerCase();
-                    const filteredDays = CONTENT.days.filter(dayData =>
-                        dayData.theory.title.toLowerCase().includes(lowerFilter) ||
-                        `day ${dayData.day}`.toLowerCase().includes(lowerFilter) ||
-                        (dayData.theory.content && typeof dayData.theory.content === 'string' && dayData.theory.content.toLowerCase().includes(lowerFilter))
-                    );
+
+                    // Ensure numeric ordering by day number
+                    filteredDays.sort((a, b) => (Number(a?.day) || 0) - (Number(b?.day) || 0));
 
                     if (filteredDays.length === 0) {
+                        console.debug('populateDays: filteredDays is empty for filter=', filter);
                         BaristaApp.elements.dayList.innerHTML = `<li class="text-red-400 font-semibold text-center p-3">No lessons found. Please check back soon!</li>`;
                         // Hide dashboard ad if no lessons
                         const dashboardAd = document.getElementById('dashboardAd');
@@ -2514,6 +4037,9 @@
                     }
 
                     filteredDays.forEach(dayData => {
+                        // Safe title handling
+                        const safeTitle = (dayData && dayData.theory && dayData.theory.title) ? String(dayData.theory.title) : `Lesson ${dayData?.day || 'Unknown'}`;
+                        const shortTitle = safeTitle.length > 30 ? safeTitle.substring(0, 30) + '...' : safeTitle;
                         const li = document.createElement("li");
                         const isCompleted = BaristaApp.state.progress[dayData.day - 1];
                         const isActive = BaristaApp.state.currentDay === dayData.day && BaristaApp.elements.lessonPage && !BaristaApp.elements.lessonPage.classList.contains('hidden');
@@ -2535,7 +4061,7 @@
                                     <svg class="w-6 h-6 flex-shrink-0 ${iconClass}" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="${isCompleted ? 'M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z' : (isActive ? 'M13.803 5.339A.75.75 0 0115 5.558v8.884a.75.75 0 01-1.197.62l-5.962-4.442a.75.75 0 010-1.239l5.962-4.442a.75.75 0 01.94-.021z' : 'M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z')}" clip-rule="evenodd"/>
                                     </svg>
-                                    <span class="text-sm ${textColorClass}">${dayData.day}. ${dayData.theory.title.substring(0,30)}${dayData.theory.title.length > 30 ? '...' : ''}</span>
+                                    <span class="text-sm ${textColorClass}">${dayData.day}. ${shortTitle}</span>
                                 </span>
                                 ${isCompleted ? `<span class="text-xs ${BaristaApp.state.theme === 'light' ? 'text-green-700' : 'text-green-300'} font-semibold">DONE</span>` : ''}
                             </div>`;
@@ -5360,6 +6886,8 @@ setupDay12: function() {
         <div class="result-box mt-3">Consider how different coffees feel in your mouth. This is an important tasting characteristic!</div>`;
     container.appendChild(bodyScaleSection);
 },
+
+
 setupDay13: function() {
     const container = document.getElementById('practicalInteractiveContent');
     if (!container) return;
@@ -5443,26 +6971,18 @@ setupDay13: function() {
 const orderSimSection = BaristaApp.util.createInteractiveSection('');
 
 const mockOrders = [
-    { text: "Can I get a medium caramel macchiato with whole milk and a slice of banana bread?", components: ["Medium", "Macchiato", "Syrup Caramel", "Whole Milk", "Banana Bread"] },
-    { text: "I'd love a small iced Americano with an extra shot and a chocolate chip muffin.", components: ["Small", "Americano", "Extra Shot", "Blueberry Muffin"] },
-    { text: "Could I get a large mocha with hazelnut syrup and a pecan tart?", components: ["Large", "Mocha", "Syrup Hazelnut", "Raspberry Tart"] },
-    { text: "I'll take a medium flat white with oat milk and a cinnamon scone.", components: ["Medium", "Flat White", "Oat Milk", "Cranberry Scone"] },
-    { text: "Can I get a small vanilla latte with almond milk and a cherry Danish?", components: ["Small", "Latte", "Syrup Vanilla", "Almond Milk", "Cherry Danish"] },
-    { text: "I'd like a large cold brew with caramel syrup and a blueberry scone.", components: ["Large", "Cold Brew", "Syrup Caramel", "Blueberry Scone"] },
-    { text: "Could I have a medium chai latte with coconut milk and a sesame bagel?", components: ["Medium", "Chai Latte", "Coconut Milk", "Sesame Bagel"] },
-    { text: "I'll go for a small espresso macchiato with skim milk and a chocolate croissant.", components: ["Small", "Macchiato", "Skim Milk", "Chocolate Croissant"] },
-    { text: "Can I get a large golden turmeric latte with soy milk and a lemon pound cake?", components: ["Large", "Golden Turmeric Latte", "Soy Milk", "Lemon Pound Cake"] },
-    { text: "I'd love a medium hazelnut cappuccino with whole milk and a macadamia cookie.", components: ["Medium", "Cappuccino", "Syrup Hazelnut", "Whole Milk", "Macadamia Cookie"] },
-    { text: "Could I have a small coconut latte and a raspberry tart?", components: ["Small", "Latte", "Coconut Milk", "Raspberry Tart"] },
-    { text: "I'll take a large iced vanilla cold brew with almond milk and a butter croissant.", components: ["Large", "Cold Brew", "Syrup Vanilla", "Almond Milk", "Butter Croissant"] },
-    { text: "Can I get a medium latte with oat milk and a cranberry scone?", components: ["Medium", "Latte", "Oat Milk", "Cranberry Scone"] },
-    { text: "I'd like a small caramel mocha with coconut milk and a peanut butter cookie.", components: ["Small", "Mocha", "Syrup Caramel", "Coconut Milk", "Peanut Butter Cookie"] },
-    { text: "Could I get a large chai latte with almond milk and a honey-glazed donut?", components: ["Large", "Chai Latte", "Almond Milk", "Honey-Glazed Donut"] },
-    { text: "I'll take a medium double espresso and a macadamia cookie.", components: ["Medium", "Espresso", "Extra Shot", "Macadamia Cookie"] },
-    { text: "Can I get a small hazelnut cold brew with skim milk and a lemon tart?", components: ["Small", "Cold Brew", "Syrup Hazelnut", "Skim Milk", "Lemon Tart"] },
-    { text: "I'd love a large dark roast coffee, black, and a cinnamon bun.", components: ["Large", "Dark Roast Coffee", "Cinnamon Bun"] },
-    { text: "Could I have a medium cappuccino with vanilla syrup and a strawberry Danish?", components: ["Medium", "Cappuccino", "Syrup Vanilla", "Strawberry Danish"] },
-    { text: "I'll go for a small iced mocha with caramel drizzle and a slice of pecan pie.", components: ["Small", "Mocha", "Caramel Drizzle", "Pecan Pie Slice"] }
+    {
+        text: "One chocolate chip muffin and a cappuccino, please.",
+        components: ["Chocolate Chip Muffin", "Cappuccino"]
+    },
+    {
+        text: "I'll have a blueberry muffin and a latte.",
+        components: ["Blueberry Muffin", "Latte"]
+    },
+    {
+        text: "Can I get a croissant and an espresso?",
+        components: ["Croissant", "Espresso"]
+    }
 ];
 
 
@@ -5482,72 +7002,239 @@ const allOrderComponents = [
     let currentOrderBuild = [];
 
     function loadOrderSim() {
-        if (!orderSimSection) return;
-        orderSimSection.innerHTML = '';
+                if (!orderSimSection) return;
+                orderSimSection.innerHTML = '';
 
-        const sectionTitle = document.createElement('h4');
-        sectionTitle.className = "text-xl font-semibold mb-4 text-amber-400";
-        sectionTitle.textContent = "Order Taking Simulator";
-        orderSimSection.appendChild(sectionTitle);
+                // Modern POS Header
+       orderSimSection.innerHTML += `
+  <div class="flex items-center justify-between bg-gradient-to-r from-amber-700 via-amber-500 to-amber-300 rounded-t-xl shadow-lg px-6 py-4 mb-2">
+  <img src="images/pos_logo.png" alt="Taboche Café Logo" class="h-10 w-10 rounded-full border-2 border-white shadow" />
+     
+    <span class="text-3xl font-extrabold text-white tracking-wide drop-shadow">Taboche Café POS</span>
+    <span class="text-lg font-semibold text-white/80">#${String(currentMockOrderIdx+1).padStart(2,'0')}</span>
+  </div>
+`;
 
-        if (currentMockOrderIdx >= mockOrders.length) {
-            orderSimSection.innerHTML += `<p class="text-lg text-green-300 font-semibold p-4">All customer orders processed! Great practice!</p>`;
-            return;
-        }
+                if (currentMockOrderIdx >= mockOrders.length) {
+                        orderSimSection.innerHTML += `<div class="bg-green-900/80 rounded-b-xl shadow-lg p-8 text-center animate__animated animate__fadeIn">
+                                <p class="text-3xl text-green-300 font-bold mb-2">All customer orders processed!</p>
+                                <p class="text-lg text-gray-200">Great practice! You are ready for real POS work.</p>
+                        </div>`;
+                        return;
+                }
 
-        const currentOrder = mockOrders[currentMockOrderIdx];
-        orderSimSection.innerHTML += `
-            <p class="text-sm mb-1 text-gray-300">Customer says: "<strong id="customerOrderText" class="text-amber-400">${currentOrder.text}</strong>"</p>
-            <p class="text-xs my-2 text-gray-400">Click buttons below to build the order as you hear it. Then confirm.</p>
-            <div id="orderComponentChoices" class="flex flex-wrap gap-2 my-3">
-                ${allOrderComponents.map(comp => `<button class="interactive-choice p-1.5 px-2.5 text-xs order-comp-btn" data-component="${comp}">${comp}</button>`).join('')}
-            </div>
-            <div class="my-3 p-3 bg-gray-700/50 rounded min-h-[3.5rem] border border-gray-600">
-                <strong>Order Confirmation:</strong> <span id="orderConfirmationText" class="text-gray-300"></span>
-            </div>
-            <div class="flex gap-3 mt-4">
-                <button id="confirmOrderBtn" class="interactive-button flex-1">Confirm Order</button>
-                <button id="resetOrderBuildBtn" class="interactive-button bg-red-600 hover:bg-red-700 flex-1">Clear / Next Customer</button>
-            </div>
-            <div id="orderSimResult" class="result-box mt-3">Build the order based on what the customer says.</div>`;
+                const currentOrder = mockOrders[currentMockOrderIdx];
+                                                orderSimSection.innerHTML += `
+                                                    <div class="bg-gray-900/80 rounded-b-xl shadow-lg p-6 mb-4">
+                                                        <p class="text-lg mb-2 text-gray-300"><span class="font-semibold text-amber-400">Customer says:</span> <span id="customerOrderText" class="text-amber-300">${currentOrder.text}</span></p>
+                                                        <p class="text-xs mb-2 text-gray-400">Build the order below, then confirm.</p>
+                                                        <div class="flex gap-3 my-4 justify-center">
+                                                            <button class="size-btn px-5 py-2 rounded-full font-bold text-lg bg-emerald-200 text-gray-900 shadow hover:bg-emerald-300 transition" data-size="Small">Small</button>
+                                                            <button class="size-btn px-5 py-2 rounded-full font-bold text-lg bg-emerald-200 text-gray-900 shadow hover:bg-emerald-300 transition" data-size="Medium">Medium</button>
+                                                            <button class="size-btn px-5 py-2 rounded-full font-bold text-lg bg-emerald-200 text-gray-900 shadow hover:bg-emerald-300 transition" data-size="Large">Large</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-col md:flex-row gap-6">
+                                                        <div class="flex-1">
+                                                            <div class="flex gap-2 mb-4 justify-center md:justify-start">
+                                                                <button class="pos-tab active px-6 py-2 rounded-full font-bold text-lg bg-amber-300 text-gray-900 shadow hover:bg-amber-400 transition" data-tab="drinks">Drinks</button>
+                                                                <button class="pos-tab px-6 py-2 rounded-full font-bold text-lg bg-amber-300 text-gray-900 shadow hover:bg-amber-400 transition" data-tab="milks">Milks & Syrups</button>
+                                                                <button class="pos-tab px-6 py-2 rounded-full font-bold text-lg bg-amber-300 text-gray-900 shadow hover:bg-amber-400 transition" data-tab="pastries">Pastries & Sides</button>
+                                                            </div>
+                                                            <div id="posTabContent" class="grid grid-cols-2 md:grid-cols-3 gap-4"></div>
+                                                        </div>
+                                                        <div class="w-full md:w-96">
+                                                            <div class="my-3 p-6 bg-gray-800/80 rounded-xl border border-gray-700 shadow-xl sticky top-8">
+                                                                <strong class="text-xl text-amber-300 block mb-2">Order Summary</strong>
+                                                                <ul id="orderSummaryList" class="receipt-list text-gray-200 mb-2"></ul>
+                                                                <div class="mt-2 text-right text-lg font-bold text-emerald-400">Subtotal: $<span id="orderSubtotal">0.00</span></div>
+                                                                <div class="text-right text-md font-semibold text-amber-300">Tax (7%): $<span id="orderTax">0.00</span></div>
+                                                                <div class="mt-1 text-right text-xl font-extrabold text-green-400">Total: $<span id="orderTotal">0.00</span></div>
+                                                                <div class="flex gap-2 mt-4">
+                                                                    <button id="confirmOrderBtn" class="interactive-button flex-1 bg-emerald-700 hover:bg-emerald-800 text-white text-lg font-bold py-2 rounded-lg shadow">Process Payment</button>
+                                                                    <button id="resetOrderBuildBtn" class="interactive-button flex-1 bg-red-600 hover:bg-red-700 text-white text-lg font-bold py-2 rounded-lg shadow">Clear / Next Customer</button>
+                                                                </div>
+                                                                <div id="orderSimResult" class="result-box mt-4 text-lg">Build the order based on what the customer says.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                // Size selection logic
+                                let selectedSize = null;
+                                const sizeBtns = orderSimSection.querySelectorAll('.size-btn');
+                                sizeBtns.forEach(btn => {
+                                    if (currentOrder.components.includes(btn.dataset.size)) {
+                                        btn.classList.add('border-2','border-emerald-400','ring-2','ring-emerald-300');
+                                    }
+                                    btn.addEventListener('click', function() {
+                                        sizeBtns.forEach(b => b.classList.remove('selected'));
+                                        this.classList.add('selected');
+                                        selectedSize = this.dataset.size;
+                                        if (!currentOrderBuild.includes(selectedSize)) {
+                                            currentOrderBuild.unshift(selectedSize);
+                                        } else {
+                                            // Move to front if reselected
+                                            currentOrderBuild = [selectedSize, ...currentOrderBuild.filter(c => c !== selectedSize)];
+                                        }
+                                        updateOrderConfirmationDisplay();
+                                    });
+                                });
 
-        currentOrderBuild = [];
-        updateOrderConfirmationDisplay();
-        orderSimSection.dataset.answeredThisOrder = 'false'; // Reset answered flag
+                // POS Data
+                const posItems = {
+                    drinks: [
+                        {name:"Espresso",price:3.50,icon:"☕"},
+                        {name:"Americano",price:3.50,icon:"🥤"},
+                        {name:"Iced Americano",price:3.50,icon:"🧊🥤"},
+                        {name:"Latte",price:3.50,icon:"🥛"},
+                        {name:"Cappuccino",price:3.50,icon:"🍶"},
+                        {name:"Flat White",price:3.50,icon:"🧋"},
+                        {name:"Mocha",price:3.50,icon:"🍫"},
+                        {name:"Cold Brew",price:3.50,icon:"🧊"},
+                        {name:"Macchiato",price:3.50,icon:"🍮"},
+                        {name:"Chai Latte",price:3.50,icon:"🍵"},
+                        {name:"Golden Turmeric Latte",price:3.50,icon:"🌟"},
+                        {name:"Dark Roast Coffee",price:3.50,icon:"🌑"}
+                    ],
+                    milks: [
+                        {name:"Whole Milk",price:0.75,icon:"🥛"},
+                        {name:"Skim Milk",price:0.75,icon:"🥛"},
+                        {name:"Oat Milk",price:0.75,icon:"🌾"},
+                        {name:"Soy Milk",price:0.75,icon:"🌱"},
+                        {name:"Almond Milk",price:0.75,icon:"🌰"},
+                        {name:"Coconut Milk",price:0.75,icon:"🥥"},
+                        {name:"Extra Shot",price:0.75,icon:"⚡"},
+                        {name:"Decaf",price:0.75,icon:"🚫"},
+                        {name:"Syrup Vanilla",price:0.75,icon:"🍦"},
+                        {name:"Syrup Caramel",price:0.75,icon:"🍯"},
+                        {name:"Syrup Hazelnut",price:0.75,icon:"🌰"},
+                        {name:"Caramel Drizzle",price:0.75,icon:"🍯"}
+                    ],
+                    pastries: [
+                        {name:"Plain Croissant",price:2.25,icon:"🥐"},
+                        {name:"Chocolate Croissant",price:2.25,icon:"🍫"},
+                        {name:"Blueberry Muffin",price:2.25,icon:"🫐"},
+                        {name:"Chocolate Chip Muffin",price:2.25,icon:"🍫🧁"},
+                        {name:"Cookie",price:2.25,icon:"🍪"},
+                        {name:"Macadamia Cookie",price:2.25,icon:"🥜"},
+                        {name:"Peanut Butter Cookie",price:2.25,icon:"🥜"},
+                        {name:"Butter Croissant",price:2.25,icon:"🥐"},
+                        {name:"Raspberry Tart",price:2.25,icon:"🍓"},
+                        {name:"Cherry Danish",price:2.25,icon:"🍒"},
+                        {name:"Pumpkin Loaf",price:2.25,icon:"🎃"},
+                        {name:"Banana Bread",price:2.25,icon:"🍌"},
+                        {name:"Sesame Bagel",price:2.25,icon:"🥯"},
+                        {name:"Cranberry Scone",price:2.25,icon:"🫐"},
+                        {name:"Honey-Glazed Donut",price:2.25,icon:"🍩"},
+                        {name:"Lemon Pound Cake",price:2.25,icon:"🍋"},
+                        {name:"Blueberry Scone",price:2.25,icon:"🫐"},
+                        {name:"Cinnamon Bun",price:2.25,icon:"🍥"},
+                        {name:"Lemon Tart",price:2.25,icon:"🍋"},
+                        {name:"Strawberry Danish",price:2.25,icon:"🍓"},
+                        {name:"Pecan Pie Slice",price:2.25,icon:"🥧"}
+                    ]
+                };
 
-        orderSimSection.querySelectorAll('.order-comp-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                 if (orderSimSection.dataset.answeredThisOrder === 'true') return;
-                const component = this.dataset.component;
-                if (currentOrderBuild.includes(component)) {
-                    currentOrderBuild = currentOrderBuild.filter(c => c !== component);
-                    this.classList.remove('selected');
-                } else {
-                    currentOrderBuild.push(component);
-                    this.classList.add('selected');
+                let currentOrderBuild = [];
+                let currentOrderQty = {};
+
+                // Tab logic
+                function renderTab(tab) {
+                    // Scope tabContent to orderSimSection for reliability
+                    const tabContent = orderSimSection.querySelector('#posTabContent');
+                    if (!tabContent) return;
+                    tabContent.innerHTML = '';
+                    posItems[tab].forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.className = 'interactive-choice pos-btn p-4 px-5 text-lg rounded-2xl shadow-xl flex flex-col items-center gap-2 transition-all duration-150 hover:bg-amber-100/10 hover:scale-105';
+                        btn.dataset.component = item.name;
+                        btn.dataset.price = item.price;
+                        btn.innerHTML = `
+                            <span class='text-3xl mb-1'>${item.icon}</span>
+                            <span class='font-bold text-gray-100 mb-1'>${item.name}</span>
+                            <span class='text-emerald-400 font-semibold text-base'>$${item.price.toFixed(2)}</span>
+                        `;
+                        btn.addEventListener('click', function() {
+                            if (orderSimSection.dataset.answeredThisOrder === 'true') return;
+                            const component = this.dataset.component;
+                            const price = parseFloat(this.dataset.price);
+                            if (!currentOrderBuild.includes(component)) {
+                                currentOrderBuild.push(component);
+                                currentOrderQty[component] = 1;
+                                this.classList.add('selected');
+                            } else {
+                                // Remove item if pressed again
+                                currentOrderBuild = currentOrderBuild.filter(c => c !== component);
+                                delete currentOrderQty[component];
+                                this.classList.remove('selected');
+                            }
+                            updateOrderConfirmationDisplay();
+                        });
+                        // Highlight correct items for current customer order
+                        if (currentOrder.components.includes(item.name)) {
+                            btn.classList.add('border-2','border-emerald-400','ring-2','ring-emerald-300');
+                        }
+                        tabContent.appendChild(btn);
+                    });
+                }
+                // Scope tabBtns to orderSimSection
+                const tabBtns = orderSimSection.querySelectorAll('.pos-tab');
+                tabBtns.forEach(tabBtn => {
+                    tabBtn.addEventListener('click', function() {
+                        tabBtns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        renderTab(this.dataset.tab);
+                    });
+                });
+                // Always render the default tab after DOM is ready
+                setTimeout(() => {
+                    renderTab('drinks');
+                }, 0);
+
+                // Receipt-style summary
+                function updateOrderConfirmationDisplay() {
+                    const summaryList = document.getElementById('orderSummaryList');
+                    const subtotalEl = document.getElementById('orderSubtotal');
+                    const taxEl = document.getElementById('orderTax');
+                    const totalEl = document.getElementById('orderTotal');
+                    let subtotal = 0.00;
+                    if (summaryList) {
+                        summaryList.innerHTML = currentOrderBuild.length > 0 ? currentOrderBuild.map(comp => {
+                            let price = 0;
+                            if (posItems.drinks.some(i=>i.name===comp)) price = 3.50;
+                            else if (posItems.milks.some(i=>i.name===comp)) price = 0.75;
+                            else price = 2.25;
+                            subtotal += price * (currentOrderQty[comp]||1);
+                            return `<li class='flex justify-between items-center py-1'><span>${comp} <span class='text-xs text-gray-400'>x${currentOrderQty[comp]||1}</span></span><span class='text-emerald-400 font-semibold'>$${(price*(currentOrderQty[comp]||1)).toFixed(2)}</span></li>`;
+                        }).join('') : '<li class="text-gray-400">(No items selected)</li>';
+                    }
+                    if (subtotalEl) subtotalEl.textContent = subtotal.toFixed(2);
+                    if (taxEl) taxEl.textContent = (subtotal*0.07).toFixed(2);
+                    if (totalEl) totalEl.textContent = (subtotal*1.07).toFixed(2);
                 }
                 updateOrderConfirmationDisplay();
-            });
-        });
-
-        const resetBtn = orderSimSection.querySelector('#resetOrderBuildBtn');
-        if(resetBtn) {
-            resetBtn.addEventListener('click', () => {
                 orderSimSection.dataset.answeredThisOrder = 'false';
-                currentOrderBuild = [];
-                updateOrderConfirmationDisplay();
-                orderSimSection.querySelectorAll('.order-comp-btn').forEach(btn => btn.classList.remove('selected'));
-                const resultEl = document.getElementById('orderSimResult');
-                if (resultEl) {
-                    resultEl.textContent = 'Order cleared. Ready for the next customer or re-try current.';
-                    resultEl.className = 'result-box mt-3';
-                }
-                const confirmButton = orderSimSection.querySelector('#confirmOrderBtn');
-                if (confirmButton) confirmButton.disabled = false;
-                orderSimSection.querySelectorAll('.order-comp-btn').forEach(el => el.disabled = false);
-                 currentMockOrderIdx = (currentMockOrderIdx + 1) % mockOrders.length; // Cycle through orders
-                 loadOrderSim(); // Load new or current order based on logic above.
-            });
+
+                // Reset button logic
+                const resetBtn = orderSimSection.querySelector('#resetOrderBuildBtn');
+                if(resetBtn) {
+                        resetBtn.addEventListener('click', () => {
+                                orderSimSection.dataset.answeredThisOrder = 'false';
+                                currentOrderBuild = [];
+                                currentOrderQty = {};
+                                updateOrderConfirmationDisplay();
+                                document.querySelectorAll('.pos-btn').forEach(btn => btn.classList.remove('selected'));
+                                const resultEl = document.getElementById('orderSimResult');
+                                if (resultEl) {
+                                        resultEl.textContent = 'Order cleared. Ready for the next customer or re-try current.';
+                                        resultEl.className = 'result-box mt-4 text-lg';
+                                }
+                                const confirmButton = orderSimSection.querySelector('#confirmOrderBtn');
+                                if (confirmButton) confirmButton.disabled = false;
+                                document.querySelectorAll('.pos-btn').forEach(el => el.disabled = false);
+                                currentMockOrderIdx = (currentMockOrderIdx + 1) % mockOrders.length;
+                                loadOrderSim();
+                        });
         }
 
         const confirmBtn = orderSimSection.querySelector('#confirmOrderBtn');
@@ -5592,7 +7279,7 @@ const allOrderComponents = [
     }
     loadOrderSim();
     container.appendChild(orderSimSection);
-},
+        },
 setupDay14: function() {
     const container = document.getElementById('practicalInteractiveContent');
     if (!container) return;
@@ -5742,7 +7429,7 @@ setupDay14: function() {
                     profileName: document.getElementById("profileName"), profileEmail: document.getElementById("profileEmail"), lottieProgress: document.getElementById("lottieProgress"),
                     lottieCertificate: document.getElementById("lottieCertificate"), leaderboardList: document.getElementById("leaderboardList"), glossaryButtonSidebar: document.getElementById("glossaryButtonSidebar"),
                     donationButtonSidebar: document.getElementById("donationButtonSidebar"), glossaryList: document.getElementById("glossaryList"), glossarySearch: document.getElementById("glossarySearch"),
-                    hamburgerMenu: document.getElementById("hamburgerMenu"), nextLessonInfo: document.getElementById("nextLessonInfo"), funFact: document.getElementById("funFact"),
+                    hamburgerMenu: document.getElementById("hamburgerMenu"),
                     closeSidebarButton: document.getElementById("closeSidebar")
                 };
                 BaristaApp.state.totalDays = CONTENT.days.length;
@@ -5827,5 +7514,6 @@ setupDay14: function() {
             BaristaApp.init();
         });
     </script>
+
 </body>
 </html>
