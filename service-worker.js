@@ -8,8 +8,8 @@ const STATIC_ASSETS = [
     '/images/logo.png',
     '/images/favicon.png',
     '/images/social-share.jpg',
-    '/static/js/lesson.js',
-    '/static/js/deeplink.js',
+    'static/js/lesson.js',
+    'static/js/deeplink.js',
     '/js/schema.js'
 ];
 

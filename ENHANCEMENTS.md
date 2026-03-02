@@ -323,6 +323,12 @@ Professional CSS enhancements for all platforms:
 
 ### Search not working
 - Ensure enhancements.js is loaded (check console)
+
+### 🏠 Home Screen Upgrade
+- Added a polished feature section under the hero highlighting key benefits (hands‑on practice, expert guidance, certification, community).
+- Animated feature cards with fade‑up effects for a more engaging first impression.
+- Header (`.glass-nav`) receives glassy backdrop, shadow and smooth transitions across all pages for a consistent premium feel.
+- Hero and dashboard elements refined with new gradients and spacing to make every screen feel worthwhile.
 - Verify lessons have IDs or are wrapped in `[data-lesson]`
 - Check browser console for JS errors
 
