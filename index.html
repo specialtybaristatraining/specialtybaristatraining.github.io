@@ -161,7 +161,7 @@
             }
         }
         </script>
-        <script src="js/schema.js"></script>
+        <script src="/js/schema.js"></script>
         <script>
             // Initialize schema markup
             document.addEventListener('DOMContentLoaded', function() {
@@ -186,8 +186,8 @@
                     }
                 });
             </script>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
     <!-- Load manifest dynamically to handle CORS issues -->
     <script>
         (function() {
@@ -294,9 +294,9 @@
             return Promise.all([
                 window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', { defer: true }),
                 window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', { defer: true }),
-                window.BaristaApp.loadScript('static/js/deeplink.js', { defer: true }),
-                window.BaristaApp.loadScript('static/js/lesson.js', { defer: true }),
-                window.BaristaApp.loadScript('./js/hero.js', { defer: true })
+                window.BaristaApp.loadScript('/static/js/deeplink.js', { defer: true }),
+                window.BaristaApp.loadScript('/static/js/lesson.js', { defer: true }),
+                window.BaristaApp.loadScript('/js/hero.js', { defer: true })
             ]).catch(error => {
                 window.BaristaApp.logError('non-critical-dependencies', error);
             });
@@ -304,8 +304,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./public/hero-animations.css">
-    <link rel="stylesheet" href="./public/hero-accessibility.css">
+    <link rel="stylesheet" href="/public/hero-animations.css">
+    <link rel="stylesheet" href="/public/hero-accessibility.css">
     <!-- ADSENSE_TEST: v20251026 -->
     <script>
         // Load AdSense only when not running on localhost or file:// to avoid 403 noise during local development
@@ -2132,13 +2132,13 @@
             
             <!-- Logo (Desktop) -->
             <div class="hidden md:flex items-center gap-3">
-                <img src="images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto" id="header-logo">
+                <img src="/images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto" id="header-logo">
             </div>
         </div>
 
         <!-- Center Logo and Title (Mobile) -->
         <div class="flex md:hidden items-center justify-center flex-1 gap-3">
-            <img src="images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto">
+            <img src="/images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto">
             <div class="text-lg font-bold text-white">Specialty Barista</div>
         </div>
 
@@ -2347,7 +2347,7 @@
             <div class="sidebar-header glass p-3 rounded-xl border border-gray-700/50 mb-4 hidden md:flex" id="sidebarHeader">
                 <div class="flex items-center gap-3 w-full">
                     <div class="w-12 h-12 premium-logo-glow bg-gray-900/30 rounded-lg flex items-center justify-center p-1">
-                        <img src="images/logo.png" alt="Site logo" class="w-full h-full object-contain">
+                        <img src="/images/logo.png" alt="Site logo" class="w-full h-full object-contain">
                     </div>
                     <div class="flex-1">
                         <div class="text-lg font-bold text-amber-400 leading-tight">Specialty Barista</div>
@@ -2414,7 +2414,7 @@
     </footer>
     
     <!-- Storage Manager -->
-    <script src="js/storage-manager.js"></script>
+    <script src="/js/storage-manager.js"></script>
     
     <!-- Application Initialization -->
     <script>
@@ -3025,7 +3025,7 @@
                 <div class="relative z-10 p-8 md:p-14 flex flex-col gap-8 items-center justify-center">
                     <div class="flex flex-col items-center gap-3 text-center">
                         <div class="w-24 h-24 mb-2 flex items-center justify-center premium-logo-glow">
-                            <img src="images/logo.png" alt="Logo" class="w-full h-full logo-img premium-logo-img">
+                            <img src="/images/logo.png" alt="Logo" class="w-full h-full logo-img premium-logo-img">
                         </div>
                         <h1 class="text-4xl md:text-5xl font-extrabold text-amber-400 drop-shadow-lg mb-3 tracking-tight premium-title">Brew Your Future. One Shot at a Time.</h1>
                         <p class="text-lg md:text-2xl text-gray-100 mb-4 font-medium premium-tagline">Practical lessons, pro tips, and real certification to turn passion into a career.</p>
@@ -3092,7 +3092,7 @@
                         <div class="bg-gray-800/50 p-4 rounded-lg">
                             <h5 class="text-md font-semibold text-green-400 mb-2 text-center">eSewa</h5>
                             <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
-                                <img src="images/esewa_qr.png" alt="eSewa QR Code" class="w-full h-full">
+                                <img src="/images/esewa_qr.png" alt="eSewa QR Code" class="w-full h-full">
                             </div>
                             <p class="text-sm text-gray-300 text-center">Scan QR or use eSewa ID:</p>
                             <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
@@ -3100,7 +3100,7 @@
                         <div class="bg-gray-800/50 p-4 rounded-lg">
                             <h5 class="text-md font-semibold text-indigo-400 mb-2 text-center">Khalti</h5>
                             <div class="w-32 h-32 mx-auto mb-2 border border-gray-600 rounded p-1 bg-white">
-                                <img src="images/khalti_qr_code.png" alt="Khalti QR Code" class="w-full h-full">
+                                <img src="/images/khalti_qr_code.png" alt="Khalti QR Code" class="w-full h-full">
                             </div>
                             <p class="text-sm text-gray-300 text-center">Scan QR or use Khalti ID:</p>
                             <p class="text-md font-bold text-white my-1 text-center bg-gray-700 p-2 rounded">+9779805670970</p>
@@ -3298,7 +3298,7 @@
         <section id="certificate" class="hidden">
             <div class="glass p-8 md:p-12 rounded-xl shadow-2xl max-w-3xl mx-auto text-center">
                 <div id="lottieCertificate" class="w-32 h-32 mx-auto mb-2"></div>
-                <img src="images/logo.png" alt="Logo Icon" class="w-20 h-20 mx-auto mb-4" id="cert-logo">
+                <img src="/images/logo.png" alt="Logo Icon" class="w-20 h-20 mx-auto mb-4" id="cert-logo">
                 <h2 class="text-4xl font-bold text-amber-400 mb-3">Certificate of Completion</h2>
                 <p class="text-lg text-gray-300 mb-6">This certifies that</p>
                 <p id="trainee-name" class="text-3xl font-semibold text-gray-100 mb-3 border-b-2 border-amber-500 pb-2 inline-block px-4">Trainee Name</p>
@@ -4279,13 +4279,13 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                         content: `
                         <article class="prose-enhanced">
                             <p class="gsap-fade-in">Welcome, aspiring coffee connoisseur! This journey begins by understanding that coffee, far more than a simple beverage, is a complex agricultural product with a rich history and global significance. We'll explore its origins, the plant, and the primary species defining your daily cup.</p>
-                            <img src="images/coffee-plantation-overview.jpg" alt="Panoramic view of a coffee plantation" class="theory-image gsap-slide-in-up">
+                            <img src="/images/coffee-plantation-overview.jpg" alt="Panoramic view of a coffee plantation" class="theory-image gsap-slide-in-up">
 
                             <div class="theory-section-break"></div>
 
                             <h4 class="gsap-fade-in">What Exactly is Coffee? The Bean Revealed</h4>
                             <div class="flex flex-col md:flex-row items-center gap-6 my-6">
-                                <img src="images/coffee-cherry-anatomy.jpg" alt="Annotated diagram of a coffee cherry structure" class="theory-image md:w-2/5 gsap-slide-in-left">
+                                <img src="/images/coffee-cherry-anatomy.jpg" alt="Annotated diagram of a coffee cherry structure" class="theory-image md:w-2/5 gsap-slide-in-left">
                                 <p class="md:w-3/5 gsap-slide-in-left" style="animation-delay: 0.2s;">At its heart, the 'coffee bean' is the <strong>seed</strong> of the coffee fruit, or <strong>coffee cherry</strong>. These cherries grow on <em>Coffea</em> genus trees, typically containing two seeds. These seeds are encased in layers: outer skin (exocarp), pulp (mesocarp), a slimy layer (parenchyma), and a parchment-like casing (endocarp). Understanding this structure is fundamental, as it directly influences processing methods and ultimately, the flavor profiles you'll learn to discern.</p>
                             </div>
 
@@ -4293,7 +4293,7 @@ if (window.BaristaApp && window.BaristaApp.ui) {
 
                             <h4 class="gsap-fade-in">The Global Nursery: The Coffee Belt</h4>
                             <p class="gsap-fade-in">Coffee cultivation is largely confined to the <strong>'Coffee Belt'</strong>, a band straddling the Equator between the Tropics of Cancer and Capricorn. Nations within <strong>Africa, Asia, and Central/South America</strong> provide the ideal tropical climates: stable temperatures (typically 15-24°C for Arabica, 24-30°C for Robusta), ample rainfall, and often high altitudes with fertile, well-drained (frequently volcanic) soils. This unique combination of geography, climate, and soil – often referred to as 'terroir' – is what crafts the diverse and unique flavor profiles found in coffees from around the world.</p>
-                            <img src="images/world-map-coffee-belt-detail.jpg" alt="Detailed map of the Coffee Belt with highlighted regions" class="theory-image gsap-slide-in-up">
+                            <img src="/images/world-map-coffee-belt-detail.jpg" alt="Detailed map of the Coffee Belt with highlighted regions" class="theory-image gsap-slide-in-up">
 
                             <div class="theory-section-break"></div>
 
@@ -4301,7 +4301,7 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                             <p class="gsap-fade-in">While over 120 <em>Coffea</em> species exist, two reign supreme in the commercial coffee world: <em>Coffea arabica</em> and <em>Coffea canephora</em> (commonly known as Robusta). Their distinct characteristics shape the coffee landscape.</p>
                             <div class="grid md:grid-cols-2 gap-8 mt-6">
                                 <div class="theory-interactive-block gsap-slide-in-up">
-                                    <img src="images/arabica-beans-plant.jpg" alt="Arabica coffee beans and plant illustration" class="theory-image !max-w-full !my-0 !mb-4">
+                                    <img src="/images/arabica-beans-plant.jpg" alt="Arabica coffee beans and plant illustration" class="theory-image !max-w-full !my-0 !mb-4">
                                     <h5><em>Coffea arabica</em> (Arabica): The Aromatic Connoisseur's Choice</h5>
                                     <p class="text-sm text-gray-300 mb-2">Celebrated for its aromatic complexity and nuanced flavors, Arabica is the dominant species in specialty coffee.</p>
                                     <ul class="text-sm space-y-1.5">
@@ -4314,7 +4314,7 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                                     </ul>
                                 </div>
                                 <div class="theory-interactive-block gsap-slide-in-up" style="animation-delay: 0.2s;">
-                                    <img src="images/robusta-beans-plant.jpg" alt="Robusta coffee beans and plant illustration" class="theory-image !max-w-full !my-0 !mb-4">
+                                    <img src="/images/robusta-beans-plant.jpg" alt="Robusta coffee beans and plant illustration" class="theory-image !max-w-full !my-0 !mb-4">
                                     <h5><em>Coffea canephora</em> (Robusta): The Bold Workhorse</h5>
                                     <p class="text-sm text-gray-300 mb-2">Known for its strong, bold character and higher caffeine content, Robusta plays a vital role in many coffee blends.</p>
                                     <ul class="text-sm space-y-1.5">
@@ -4364,13 +4364,13 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                         content: `
                         <article class="prose-enhanced">
                             <p class="gsap-fade-in">To craft truly exceptional espresso, a barista's skill is amplified by two indispensable pieces of equipment: the <strong>espresso machine</strong> and the <strong>coffee grinder</strong>. Understanding their mechanics and mastering their operation is fundamental to unlocking coffee's full potential.</p>
-                            <img src="images/d2-barista-station.jpg" alt="Barista station with espresso machine and grinder" class="theory-image gsap-slide-in-up">
+                            <img src="/images/d2-barista-station.jpg" alt="Barista station with espresso machine and grinder" class="theory-image gsap-slide-in-up">
 
                             <div class="theory-section-break"></div>
 
                             <h4 class="gsap-fade-in">The Coffee Grinder: Precision in Every Particle</h4>
                             <div class="flex flex-col md:flex-row items-center gap-6 my-6">
-                                <img src="images/d2-coffee-grinder-burr.jpg" alt="Close-up of a burr coffee grinder" class="theory-image md:w-2/5 gsap-slide-in-left">
+                                <img src="/images/d2-coffee-grinder-burr.jpg" alt="Close-up of a burr coffee grinder" class="theory-image md:w-2/5 gsap-slide-in-left">
                                 <div class="md:w-3/5 gsap-slide-in-left" style="animation-delay: 0.2s;">
                                     <p>The coffee grinder is far more than a simple bean crusher; it's a precision instrument. Its primary role is to transform whole coffee beans into the fine, uniform particles essential for proper espresso extraction. The mantra of any skilled barista is to <strong>grind fresh for every shot</strong>. This practice is paramount because coffee's delicate aromatic compounds are highly volatile and begin to degrade rapidly upon grinding due to oxidation. Stale, pre-ground coffee simply cannot deliver the vibrant flavor and aroma of freshly ground beans.</p>
                                     <h5 class="mt-4">Key Grinder Components:</h5>
@@ -4386,7 +4386,7 @@ if (window.BaristaApp && window.BaristaApp.ui) {
 
                             <h4 class="gsap-fade-in">The Espresso Machine: Engineering Espresso Perfection</h4>
                              <div class="flex flex-col md:flex-row-reverse items-center gap-6 my-6">
-                                <img src="images/espresso-machine-parts.jpg" alt="Diagram of an espresso machine with key parts highlighted" class="theory-image md:w-2/5 gsap-slide-in-left">
+                                <img src="/images/espresso-machine-parts.jpg" alt="Diagram of an espresso machine with key parts highlighted" class="theory-image md:w-2/5 gsap-slide-in-left">
                                 <div class="md:w-3/5 gsap-slide-in-left" style="animation-delay: 0.2s;">
                                     <p>The espresso machine is a marvel of engineering, designed to force hot water (precisely heated, typically between <strong>90-96°C or 195-205°F</strong>) through a tightly compacted 'puck' of finely ground coffee. This process occurs under high pressure, ideally <strong>8-10 bars</strong>, to extract the concentrated, flavorful beverage that is espresso.</p>
                                     <h5 class="mt-4">Key Espresso Machine Components:</h5>
@@ -4446,13 +4446,13 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                         <article class="prose-enhanced">
                             <p class="gsap-fade-in">Before the magic of the espresso machine can unfold, meticulous preparation of the coffee grounds is paramount. The trifecta of <strong>grinding, dosing, and tamping</strong> forms the very foundation upon which a perfect shot of espresso is built. Each step requires precision and understanding.</p>
 
-                            <img src="images/d3-grind-dose-tamp.jpg" alt="Collage of grinding, dosing, and tamping coffee" class="theory-image gsap-slide-in-up">
+                            <img src="/images/d3-grind-dose-tamp.jpg" alt="Collage of grinding, dosing, and tamping coffee" class="theory-image gsap-slide-in-up">
 
                             <div class="theory-section-break"></div>
 
                             <h4 class="gsap-fade-in">Grinding: The Pursuit of Uniformity</h4>
                              <div class="flex flex-col md:flex-row-reverse items-center gap-6 my-6">
-                                <img src="images/d3-espresso-grind-closeup.jpg" alt="Close-up of fine espresso grounds" class="theory-image md:w-2/5 gsap-slide-in-left">
+                                <img src="/images/d3-espresso-grind-closeup.jpg" alt="Close-up of fine espresso grounds" class="theory-image md:w-2/5 gsap-slide-in-left">
                                 <div class="md:w-3/5 gsap-slide-in-left" style="animation-delay: 0.2s;">
                                     <p>For espresso, a <strong>very fine and consistent grind</strong> is non-negotiable. Imagine the texture of table salt or slightly finer, like fine sand. Consistency is the watchword here; uneven grounds, with a mix of large and small particles, lead to uneven extraction. During brewing, some particles will over-extract (imparting bitter, harsh flavors), while others will under-extract (resulting in sour, underdeveloped notes).</p>
                                     <p class="mt-2">The correct grind size creates the necessary resistance for the pressurized water. This allows the water to interact optimally with the coffee particles during the relatively short brew time (typically 20-30 seconds), extracting the desirable soluble compounds that create a balanced and flavorful espresso.</p>
@@ -4463,7 +4463,7 @@ if (window.BaristaApp && window.BaristaApp.ui) {
 
                             <h4 class="gsap-fade-in">Dosing: The Measure of Accuracy</h4>
                             <div class="flex flex-col md:flex-row items-center gap-6 my-6">
-                                 <img src="images/d3-dosing-grounds-portafilter.jpg" alt="Dosing coffee grounds into a portafilter using a scale" class="theory-image md:w-2/5 gsap-slide-in-left">
+                                 <img src="/images/d3-dosing-grounds-portafilter.jpg" alt="Dosing coffee grounds into a portafilter using a scale" class="theory-image md:w-2/5 gsap-slide-in-left">
                                 <div class="md:w-3/5 gsap-slide-in-left" style="animation-delay: 0.2s;">
                                     <p>Dosing refers to dispensing the correct amount (by weight) of ground coffee into the portafilter's filter basket. The ideal dose is specific to the size of the filter basket (e.g., 14g, 18g, 20g) and the barista's chosen recipe. Precision in dosing is crucial for consistency.</p>
                                     <p class="mt-2">Too little coffee can lead to a watery, under-extracted shot because the water flows through too quickly. Conversely, too much coffee can 'choke' the machine (preventing water flow) or cause over-extraction due to excessive resistance. Professional baristas universally use high-precision scales to weigh their dose for every shot, ensuring shot-to-shot consistency.</p>
