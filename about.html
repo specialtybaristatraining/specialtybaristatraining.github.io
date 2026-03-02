@@ -77,6 +77,10 @@
       margin-bottom: 0.75rem;
     }
 
+    /* Team avatar */
+    .team-avatar { width: 160px; height: 160px; border-radius: 12px; object-fit: cover; display: block; margin: 1rem auto; }
+    .team-profile { text-align: center; margin-top: 1rem; }
+
     p {
       font-size: 1.125rem;
       line-height: 1.8;
@@ -141,6 +145,25 @@
 
       <h2>Meet the Team</h2>
       <p>Our team includes award-winning baristas, certified trainers, and coffee educators from renowned cafés and competitions. We're united by a passion for coffee and a commitment to helping you grow your skills and confidence behind the bar.</p>
+
+      <div class="team-profile">
+        <picture>
+          <source type="image/jpeg" srcset="images/sukram-lama-800.jpg 800w, images/sukram-lama-400.jpg 400w">
+          <img class="team-avatar" src="images/sukram-lama-400.jpg" alt="Sukram Lama, Lead Trainer at Specialty Barista Training" loading="lazy" width="160" height="160">
+        </picture>
+        <h3>Sukram Lama — Lead Trainer</h3>
+        <p style="text-align:center;font-weight:600;color:var(--link);margin-top:6px;">Seasoned specialty barista and trainer bringing international café standards to Nepal.</p>
+        <p>Sukram Lama is a specialty barista and coffee educator with more than a decade of professional experience across Malaysia, the UAE, and Nepal. He began at The Coffee Bean &amp; Tea Leaf in Malaysia (2013–2015), where in 2014 he was selected as a Top‑Ten finalist in the company’s barista competition. Sukram then advanced to Costa Coffee in Dubai (2016–2020) before joining the UAE specialty scene at Press Specialty Coffee in Dibba Al Fujairah (2021) and The View by Wave in Khor Fakkan (2022–2023).</p>
+
+        <p>In 2023 Sukram returned to Nepal and founded several local ventures that combine hospitality with practical training:</p>
+        <ul>
+          <li><strong>Taboche Restaurant</strong> — a fusion dining experience in Siddhapokhari, Bhaktapur</li>
+          <li><strong>Specialty Barista Training Center</strong> — structured courses and hands‑on training to raise local barista standards</li>
+          <li><strong>Royal Java Time Coffee Shop</strong> — a neighborhood café focused on quality and warmth</li>
+        </ul>
+
+        <p>He trains aspiring baristas in espresso technique, milk preparation, latte art, and café operations—combining technical precision with practical drills and warm hospitality to help trainees meet international standards.</p>
+      </div>
     </section>
 
     <a href="index.html" class="back-link">&larr; Back to Home</a>

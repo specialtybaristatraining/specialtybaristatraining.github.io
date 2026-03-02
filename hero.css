@@ -1,0 +1,128 @@
+/* Hero Section Styles */
+.premium-hero {
+    min-height: 80vh;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.premium-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../images/coffee-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}
+
+.premium-logo-glow {
+    position: relative;
+}
+
+.premium-logo-glow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    z-index: -1;
+}
+
+.premium-title {
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.premium-tagline {
+    color: #e2e8f0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.premium-btn {
+    padding: 0.8rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
+
+.premium-btn-main {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+}
+
+.hero-badges {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    color: #e2e8f0;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.hero-badge i {
+    color: #60a5fa;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.glass:hover {
+    transform: translateY(-5px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger animation for badges */
+.hero-badge[data-delay="1"] {
+    animation-delay: 0.2s;
+}
+.hero-badge[data-delay="2"] {
+    animation-delay: 0.4s;
+}
+.hero-badge[data-delay="3"] {
+    animation-delay: 0.6s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .premium-hero {
+        min-height: 90vh;
+    }
+    
+    .hero-badges {
+        gap: 1rem;
+    }
+    
+    .hero-badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+}

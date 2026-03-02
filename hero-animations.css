@@ -1,0 +1,126 @@
+/* Enhanced Hero Animations */
+.premium-hero {
+    --x: 50%;
+    --y: 50%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg,
+        rgba(17, 24, 39, 0.95),
+        rgba(31, 41, 55, 0.98)
+    );
+}
+
+/* Glass morphism effect */
+.premium-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--x) var(--y),
+        rgba(255, 255, 255, 0.1),
+        transparent 25%
+    );
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+/* Steam particles */
+.steam-particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(4px);
+    background: linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+    );
+}
+
+/* Enhanced logo glow */
+.premium-logo-glow {
+    position: relative;
+}
+
+.premium-logo-glow::after {
+    content: '';
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(
+        circle at center,
+        rgba(245, 158, 11, 0.15),
+        transparent 70%
+    );
+    z-index: -1;
+    animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+/* Enhanced button animations */
+.premium-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.premium-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+}
+
+.premium-btn:hover::before {
+    transform: translateX(100%);
+}
+
+/* Trust badges enhanced animation */
+.hero-badge {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .premium-hero::before {
+        display: none; /* Disable reflection effect on mobile */
+    }
+    
+    .steam-particle {
+        display: none; /* Disable steam particles on mobile */
+    }
+    
+    .premium-logo-glow::after {
+        animation: none; /* Disable glow animation on mobile */
+    }
+}
+
+/* Ensure smooth transitions */
+.premium-hero * {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
+}

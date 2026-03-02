@@ -1,0 +1,21 @@
+{
+  "name": "specialty-barista-training",
+  "version": "1.0.0",
+  "description": "Generator and tooling for Specialty Barista Training site",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate": "node ./tools/generate_static_lessons.js --quiet",
+    "build": "node ./tools/generate_static_lessons.js && node ./tools/prepare_public.js && node ./tools/generate_language_sitemaps.js",
+    "deploy": "npm run build && npx firebase deploy --only hosting",
+    "test": "node ./tools/tests/run_tests.js"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
+    "sharp": "^0.34.4"
+  }
+}

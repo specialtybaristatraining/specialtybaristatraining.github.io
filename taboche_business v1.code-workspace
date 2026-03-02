@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../taboche files and folder/TabocheApps/taboche_business v1"
+		},
+		{
+			"path": "../taboche files and folder/TabocheApps/taboche_loyalty_app v1"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"codium.codeCompletion.enable": false
+	}
+}

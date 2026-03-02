@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    <!-- Language-specific sitemap for ne -->
+    <url>
+        <loc>https://baristatraining-488d8.web.app/ne/</loc>
+        <lastmod>2025-10-27T04:52:09.684Z</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://baristatraining-488d8.web.app/en/"/>
+    </url>
+</urlset>

@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Generated: 2025-10-24 - Includes site pages and suggested changefreq/priority -->
   <url>
     <loc>https://specialtybaristatraining.github.io/</loc>
-    <priority>1.0</priority>
+    <lastmod>2025-10-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.00</priority>
   </url>
   <url>
     <loc>https://specialtybaristatraining.github.io/about.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://specialtybaristatraining.github.io/contact.html</loc>
-    <priority>0.8</priority>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://specialtybaristatraining.github.io/privacy.html</loc>
-    <priority>0.5</priority>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
   </url>
   <url>
     <loc>https://specialtybaristatraining.github.io/disclosure.html</loc>
-    <priority>0.5</priority>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.50</priority>
+  </url>
+  <url>
+    <loc>https://specialtybaristatraining.github.io/lesson.html</loc>
+    <lastmod>2025-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://specialtybaristatraining.github.io/verify.html</loc>
+    <lastmod>2025-10-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
   </url>
 </urlset>

@@ -1,0 +1,69 @@
+JSON-LD validation run: 2025-10-26T09:07:55.556Z
+
+JSON-LD Validator - scanning 16 files under public
+
+File: public\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-1\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-10\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-11\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-12\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-13\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-14\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-2\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-3\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-4\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-5\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-6\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-7\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-8\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+File: public\lessons\day-9\index.html -> found 2 JSON-LD block(s)
+  [OK] Block 1: parsed and required fields present
+  [OK] Block 2: parsed and required fields present
+
+Summary:
+  files scanned: 16
+  JSON-LD blocks: 30
+  parse errors: 0
+  total failures: 0

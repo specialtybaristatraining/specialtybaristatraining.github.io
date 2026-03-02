@@ -4,30 +4,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Specialty Barista Training IO</title>
-    <meta name="description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
+    <title>Specialty Barista Training — Barista training in Nepal</title>
+    <!-- Global error handling and script loading management -->
+    <script>
+        // Initialize global error tracking
+        window.BaristaApp = {
+            errors: [],
+            initialized: false,
+            dependencies: {
+                required: ['BaristaStorageManager'],
+                animation: {
+                    gsap: false,
+                    scrollTrigger: false,
+                    lottie: false
+                },
+                optional: ['html2canvas', 'jspdf']
+            },
+            logError: function(component, error, details = {}) {
+                const errorInfo = {
+                    component,
+                    error,
+                    details,
+                    timestamp: new Date(),
+                    url: window.location.href
+                };
+                
+                this.errors.push(errorInfo);
+                console.error(`[${component}]`, error, details);
+                document.body?.classList.add('js-error');
+                
+                // Track specific error types
+                if (component === 'script-load') {
+                    document.body?.classList.add('js-script-error');
+                }
+                
+                return errorInfo;
+            }
+        };
+
+        // Global error handler
+        window.onerror = function(msg, url, line, col, error) {
+            const errorInfo = window.BaristaApp.logError('global', error || new Error(msg), {
+                message: msg,
+                url,
+                line,
+                column: col
+            });
+            
+            // Show user-friendly error notification if UI is ready
+            if (window.BaristaApp?.ui?.showError) {
+                // Only show user-visible errors for certain types of errors
+                if (!msg.includes('Script error') && !msg.includes('ResizeObserver')) {
+                    window.BaristaApp.ui.showError('An error occurred. Please try refreshing the page.');
+                }
+            }
+            
+            return false; // Let other error handlers run
+        };
+
+        // Handle unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(event) {
+            window.BaristaApp.logError('promise', event.reason);
+        });
+
+        // Script loading error handler
+        function handleScriptError(scriptUrl) {
+            window.BaristaApp.logError('script-load', new Error(`Failed to load script: ${scriptUrl}`));
+        }
+
+        // Check dependencies when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const missing = window.BaristaApp.dependencies.required.filter(lib => !window[lib]);
+            if (missing.length) {
+                window.BaristaApp.logError('dependencies', new Error('Missing required libraries'), { missing });
+            }
+        });
+
+        // Function to load scripts with retry
+        window.BaristaApp.loadScript = function(src, { async = false, defer = false, retries = 2 } = {}) {
+            return new Promise((resolve, reject) => {
+                function attemptLoad(attemptsLeft) {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    if (async) script.async = true;
+                    if (defer) script.defer = true;
+
+                    script.onload = () => resolve(script);
+                    script.onerror = () => {
+                        if (attemptsLeft > 0) {
+                            console.warn(`Retrying script load: ${src}, attempts left: ${attemptsLeft}`);
+                            attemptLoad(attemptsLeft - 1);
+                        } else {
+                            const error = new Error(`Failed to load script: ${src}`);
+                            window.BaristaApp.logError('script-load', error);
+                            reject(error);
+                        }
+                    };
+
+                    document.head.appendChild(script);
+                }
+
+                attemptLoad(retries);
+            });
+        };
+    </script>
+    <meta name="description" content="Free, practical specialty barista training in Nepal — learn espresso, milk texturing, latte art, customer service and earn a certificate.">
+    <link rel="canonical" href="https://specialtybaristatraining.github.io/">
     <meta name="keywords" content="barista, coffee, espresso, training, specialty, latte art, cafe, course, certificate">
     <meta property="og:title" content="Specialty Barista Training IO">
-    <meta property="og:description" content="Free interactive specialty barista training. Learn espresso, milk, customer service, and more.">
+        <meta property="og:description" content="Free, practical specialty barista training in Nepal — learn espresso, milk texturing, latte art, and earn a certificate.">
     <meta property="og:image" content="images/social-share.jpg">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://specialtybaristatraining.github.io/">
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Specialty Barista Training",
+            "url": "https://specialtybaristatraining.github.io/",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://specialtybaristatraining.github.io/lesson.html?lesson={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "Specialty Barista Training",
+            "url": "https://specialtybaristatraining.github.io/",
+            "logo": "https://specialtybaristatraining.github.io/images/logo.png",
+            "description": "Professional barista training program covering coffee fundamentals, espresso preparation, milk texturing, and manual brewing methods.",
+            "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Barista Training Programs",
+                "itemListElement": [
+                    {
+                        "@type": "Course",
+                        "name": "Specialty Barista Training Program",
+                        "description": "Comprehensive 14-day barista training program covering coffee fundamentals, espresso preparation, milk texturing, and manual brewing methods.",
+                        "provider": {
+                            "@type": "Organization",
+                            "name": "Specialty Barista Training",
+                            "url": "https://specialtybaristatraining.github.io/"
+                        },
+                        "hasCourseInstance": {
+                            "@type": "CourseInstance",
+                            "courseMode": "online",
+                            "educationalLevel": "Beginner",
+                            "timeRequired": "P14D"
+                        }
+                    }
+                ]
+            }
+        }
+        </script>
+        <script src="js/schema.js"></script>
+        <script>
+            // Initialize schema markup
+            document.addEventListener('DOMContentLoaded', function() {
+                if (window.schemaGenerator) {
+                    // Add HowTo schema for brewing methods
+                    const howToSchema = document.createElement('script');
+                    howToSchema.type = 'application/ld+json';
+                    howToSchema.text = JSON.stringify(window.schemaGenerator.generatePourOverHowToSchema());
+                    document.head.appendChild(howToSchema);
+                    
+                    // Add FAQ schema
+                    const faqSchema = document.createElement('script');
+                    faqSchema.type = 'application/ld+json';
+                    faqSchema.text = JSON.stringify(window.schemaGenerator.generateFAQSchema());
+                    document.head.appendChild(faqSchema);
+                    
+                    // Add Espresso HowTo schema
+                        const espressoSchema = document.createElement('script');
+                        espressoSchema.type = 'application/ld+json';
+                        espressoSchema.text = JSON.stringify(window.schemaGenerator.generateEspressoHowToSchema());
+                        document.head.appendChild(espressoSchema);
+                    }
+                });
+            </script>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.png">
-    <link rel="manifest" href="manifest.json">
+    <!-- Load manifest dynamically to handle CORS issues -->
+    <script>
+        (function() {
+            // Only try to load manifest when not using file:// protocol
+            if (window.location.protocol !== 'file:') {
+                const link = document.createElement('link');
+                link.rel = 'manifest';
+                link.href = 'manifest.json';
+                document.head.appendChild(link);
+            }
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Script Loading Management -->
+    <script>
+        // Initialize deferred initialization queue
+        window.BaristaApp.initQueue = [];
+        window.BaristaApp.deferInit = function(fn) {
+            if (this.initialized) {
+                fn();
+            } else {
+                this.initQueue.push(fn);
+            }
+        };
+        
+        // Execute queued initializations
+        window.BaristaApp.runInitQueue = function() {
+            while (this.initQueue.length > 0) {
+                try {
+                    const fn = this.initQueue.shift();
+                    fn();
+                } catch (error) {
+                    this.logError('init-queue', error);
+                }
+            }
+        };
+
+        // Load animation dependencies
+        const loadAnimationDeps = async () => {
+            try {
+                // Load GSAP core first and wait for it to be available
+                await window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js');
+                // Wait for GSAP to be available in window
+                await new Promise(resolve => {
+                    const checkGSAP = () => {
+                        if (window.gsap) {
+                            window.BaristaApp.dependencies.animation.gsap = true;
+                            document.body?.classList.add('gsap-loaded');
+                            resolve();
+                        } else {
+                            setTimeout(checkGSAP, 50);
+                        }
+                    };
+                    checkGSAP();
+                });
+                
+                // Try to load ScrollTrigger after GSAP is confirmed loaded
+                try {
+                    await window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js');
+                    // Wait for ScrollTrigger to be available
+                    await new Promise(resolve => {
+                        const checkScrollTrigger = () => {
+                            if (window.ScrollTrigger) {
+                                gsap.registerPlugin(ScrollTrigger);
+                                window.BaristaApp.dependencies.animation.scrollTrigger = true;
+                                document.body?.classList.add('scrolltrigger-loaded');
+                                resolve();
+                            } else {
+                                setTimeout(checkScrollTrigger, 50);
+                            }
+                        };
+                        checkScrollTrigger();
+                    });
+                } catch (error) {
+                    console.warn('ScrollTrigger not loaded, falling back to CSS animations for scroll effects');
+                    document.body?.classList.add('no-scroll-animations');
+                }
+                
+                // Try to load Lottie
+                try {
+                    await window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js');
+                    window.BaristaApp.dependencies.animation.lottie = true;
+                    document.body?.classList.add('lottie-loaded');
+                } catch (error) {
+                    console.warn('Lottie not loaded, showing static images instead');
+                    document.body?.classList.add('no-lottie');
+                }
+            } catch (error) {
+                console.warn('GSAP core not loaded, using CSS animations');
+                document.body?.classList.add('no-animations');
+            }
+        };
+
+        // Initialize animation dependencies
+        const initPromise = loadAnimationDeps().then(() => {
+            window.BaristaApp.initialized = true;
+            window.BaristaApp.runInitQueue();
+        });
+
+        // Load non-critical scripts after animation initialization
+        initPromise.then(() => {
+            return Promise.all([
+                window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js', { defer: true }),
+                window.BaristaApp.loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js', { defer: true }),
+                window.BaristaApp.loadScript('static/js/deeplink.js', { defer: true }),
+                window.BaristaApp.loadScript('static/js/lesson.js', { defer: true }),
+                window.BaristaApp.loadScript('./js/hero.js', { defer: true })
+            ]).catch(error => {
+                window.BaristaApp.logError('non-critical-dependencies', error);
+            });
+        });</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./public/hero-animations.css">
+    <link rel="stylesheet" href="./public/hero-accessibility.css">
+    <!-- ADSENSE_TEST: v20251026 -->
+    <script>
+        // Load AdSense only when not running on localhost or file:// to avoid 403 noise during local development
+        (function(){
+            try {
+                const host = window.location.hostname;
+                const protocol = window.location.protocol;
+                const isLocal = host === 'localhost' || host === '127.0.0.1' || protocol === 'file:';
+                if (!isLocal) {
+                    const s = document.createElement('script');
+                    s.async = true;
+                    s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1343070560951957';
+                    s.crossOrigin = 'anonymous';
+                    document.head.appendChild(s);
+                } else {
+                    console.info('AdSense script skipped in local development to avoid 403 errors.');
+                }
+            } catch (e) { console.warn('AdSense loader error', e); }
+        })();
+    </script>
     <style>
         /* AdSense styles */
+        #adsense_test_marker {
+            position: fixed;
+            left: 8px;
+            bottom: 8px;
+            z-index: 99999;
+            background: #fff;
+            color: #000;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        
         .ad-placeholder {
             display: none;
         }
@@ -136,6 +450,9 @@
 
     /* Floating help button sensible focus style (avoid empty rules) */
     .help-floating:focus { outline: 3px solid rgba(245,158,11,0.22); box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+
+    /* Hide the floating help button on the corner (user requested) */
+    #helpFloatingBtn { display: none !important; }
 
 
         .high-contrast .ad-placeholder {
@@ -409,6 +726,25 @@
 
         .modal-content-area { position: relative; max-height: 85vh; overflow-y: auto; }
 
+    /* Bank details block styles (replaces inline styles) */
+    .bank-details-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+    .bank-col { flex:1; min-width:200px; }
+    .bank-col-large { min-width:260px; }
+    .bank-label { font-weight:600; color:#e6edf3; }
+    .bank-value { color:#cbd5e1; }
+    .bank-account-row { display:flex; align-items:center; gap:8px; }
+    .account-number { font-family:monospace; color:#f8fafc; }
+    .copy-btn-sm { padding:6px 8px; font-size:0.85rem; }
+
+    /* Toast styling (moved from inline style) */
+    #copiedToast { position:fixed; right:16px; bottom:24px; z-index:6000; display:none; align-items:center; gap:8px; padding:10px 14px; border-radius:8px; background:rgba(17,24,39,0.95); color:#f8fafc; font-size:0.95rem; box-shadow:0 6px 18px rgba(0,0,0,0.4); }
+
+        /* Testimonials modal styles */
+        .testimonials-modal { background: linear-gradient(180deg, rgba(17,24,39,0.9), rgba(23,27,34,0.95)); border: 1px solid rgba(255,255,255,0.04); }
+        @media (max-width:640px) {
+            .testimonials-modal { padding: 1rem; max-width: 92%; }
+        }
+
         /* Theory Content Specific Styling */
         .prose-enhanced img.theory-image {
             display: block; margin-left: auto; margin-right: auto;
@@ -477,62 +813,122 @@
         }
 
         /* Mobile-specific improvements */
+        /* Sidebar layout improvements */
+        #sidebarHomeContent {
+            background: rgba(31, 41, 55, 0.5);
+            margin: -1rem;
+            margin-bottom: 0;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+       
+       
+
         @media (max-width: 640px) {
-            /* Header adjustments */
+            /* Ensure main content doesn't overlap the header */
+            main {
+                margin-top: 56px !important;
+                margin-left: 0 !important;
+            }
+
+            /* Position header properly */
             header {
                 padding: 0.5rem 1rem !important;
                 height: auto;
                 min-height: 56px;
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+                background: rgba(17, 24, 39, 0.95);
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
             }
             
             /* Logo and brand adjustments */
             #header-logo {
-                height: 1.75rem !important;
+                height: 1.5rem !important;
+                width: auto !important;
+            }
+            
+            header img[alt="Specialty Barista Logo"] {
+                height: 1.5rem !important;
                 width: auto !important;
             }
             
             header .text-xl {
-                font-size: 1rem !important;
+                font-size: 0.875rem !important;
             }
             
             header .text-2xl {
-                font-size: 1.25rem !important;
+                font-size: 1rem !important;
             }
             
             /* Improved touch targets for mobile */
             #hamburgerMenu,
             #mobileMenuBtn {
-                min-width: 44px;
-                min-height: 44px;
-                padding: 8px;
+                min-width: 48px;
+                min-height: 48px;
+                padding: 12px;
                 display: flex !important;
                 align-items: center;
                 justify-content: center;
                 background: rgba(255, 255, 255, 0.05);
-                border-radius: 8px;
+                border-radius: 12px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
             }
 
-            #hamburgerMenu:hover,
-            #mobileMenuBtn:hover {
-                background: rgba(255, 255, 255, 0.1);
+            #hamburgerMenu:active,
+            #mobileMenuBtn:active {
+                background: rgba(255, 255, 255, 0.15);
+                transform: scale(0.97);
             }
             
             /* Mobile menu positioning */
             #mobileNavMenu {
                 width: calc(100vw - 32px);
-                max-width: 300px;
+                max-width: 320px;
                 border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 16px;
+                background: rgba(31, 41, 55, 0.98);
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                margin-top: 8px;
+                animation: menuSlideIn 0.2s ease-out;
+            }
+            
+            @keyframes menuSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-8px) scale(0.97);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
             }
             
             /* Improved mobile button styles */
             #mobileNavMenu button {
-                min-height: 44px;
+                min-height: 48px;
                 width: 100%;
                 display: flex;
                 align-items: center;
-                padding: 0.75rem 1rem;
+                padding: 0.875rem 1.25rem;
                 font-size: 1rem;
+                transition: all 0.2s ease;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            #mobileNavMenu button:active {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(4px);
             }
             
             header nav {
@@ -548,138 +944,283 @@
             /* Dashboard content */
             .premium-hero {
                 padding: 1.5rem !important;
+                border-radius: 20px !important;
+                margin: 0.75rem !important;
             }
             
             .premium-title {
                 font-size: 2rem !important;
                 line-height: 1.2;
+                margin-bottom: 0.75rem !important;
             }
             
             .premium-tagline {
                 font-size: 1.125rem !important;
                 line-height: 1.4;
+                margin-bottom: 1.5rem !important;
             }
             
             .hero-badges .hero-badge {
                 font-size: 0.875rem;
-                padding: 0.5rem 0.75rem;
+                padding: 0.625rem 1rem;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                margin: 0.375rem;
             }
             
             /* Dashboard card */
             #dashboard .glass {
-                padding: 1.25rem !important;
-                margin: 0.75rem auto !important;
+                padding: 1.5rem !important;
+                margin: 1rem auto !important;
+                border-radius: 20px !important;
             }
             
-            /* Sidebar adjustments */
+            /* Enhanced Sidebar adjustments */
             aside {
                 width: 85% !important;
                 max-width: 320px;
+                height: calc(100% - 56px) !important;
+                top: 56px !important;
+                padding-bottom: 1rem !important;
+                background: rgba(31, 41, 55, 0.98);
+                -webkit-backdrop-filter: blur(12px);
+                backdrop-filter: blur(12px);
+                box-shadow: 8px 0 32px rgba(0, 0, 0, 0.3);
+                overflow-y: auto;
+              
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            
+            /* Ensure search and header stay fixed */
+            aside .sidebar-search {
+                position: sticky;
+                top: 0;
+                z-index: 2;
+                background: inherit;
+                padding: 1rem;
+                padding-bottom: 0.5rem;
+                margin: -1rem;
+                margin-bottom: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Make the navigation area flexible and scrollable */
+            aside nav {
+                flex: 1 1 auto;
+                overflow-y: auto;
+                padding: 0.5rem 0;
+                margin: 0 -0.5rem;
+            }
+            
+            /* Style the day list container */
+            aside #dayList {
+                padding: 0.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            /* Style individual day items */
+            aside #dayList .nav-link {
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            
+            aside #dayList .nav-link:active {
+                transform: scale(0.98);
+                background: rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Keep bottom actions fixed */
+            aside .sidebar-bottom {
+                position: sticky;
+                bottom: 0;
+                z-index: 2;
+                background: inherit;
+                padding: 1rem;
+                margin: -1rem;
+                margin-top: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .sidebar-header {
-                padding: 0.75rem;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 16px;
+                margin: 0.75rem;
             }
             
             .sidebar .nav-link {
-                padding: 0.875rem 1rem;
-                font-size: 0.9375rem;
+                padding: 1rem 1.25rem;
+                font-size: 1rem;
+                border-radius: 12px;
+                margin: 0.375rem 0.75rem;
+                transition: all 0.2s ease;
+            }
+            
+            .sidebar .nav-link:active {
+                transform: translateX(4px);
+                background: rgba(255, 255, 255, 0.08);
             }
             
             /* Modal content */
             .modal-content-area {
-                padding: 1rem !important;
+                padding: 1.5rem !important;
                 width: calc(100% - 2rem) !important;
                 max-height: 90vh !important;
+                border-radius: 20px !important;
             }
             
             .modal-content-area h3 {
                 font-size: 1.5rem !important;
-                margin-bottom: 1rem !important;
+                margin-bottom: 1.25rem !important;
             }
             
             /* Certificate page */
             #certificate .glass {
-                padding: 1.5rem !important;
+                padding: 1.75rem !important;
+                border-radius: 20px !important;
             }
             
             #certificate h2 {
                 font-size: 2rem !important;
+                line-height: 1.2;
             }
             
             #trainee-name {
                 font-size: 1.5rem !important;
+                margin: 1rem 0 !important;
             }
             
             /* Improve touch targets */
             .interactive-button, .tab, .sidebar-btn {
-                min-height: 44px;
-                padding: 0.75rem 1rem;
-                font-size: 0.9375rem;
+                min-height: 48px;
+                padding: 0.875rem 1.25rem;
+                font-size: 1rem;
+                border-radius: 12px;
+                touch-action: manipulation;
+                -webkit-tap-highlight-color: transparent;
+                transition: all 0.2s ease;
+            }
+            
+            .interactive-button:active,
+            .tab:active,
+            .sidebar-btn:active {
+                transform: scale(0.97);
             }
             
             /* Form elements */
             .input-field {
                 font-size: 16px !important;
-                padding: 0.75rem !important;
+                padding: 0.875rem 1.125rem !important;
+                border-radius: 12px !important;
             }
             
             /* Lesson content */
             #lessonContent {
                 font-size: 1rem;
                 line-height: 1.6;
+                padding: 0 0.5rem;
             }
             
             .prose-enhanced h4 {
                 font-size: 1.375rem !important;
                 margin-top: 2rem !important;
+                margin-bottom: 1rem !important;
             }
             
             .prose-enhanced h5 {
                 font-size: 1.25rem !important;
-                margin-top: 1.5rem !important;
+                margin-top: 1.75rem !important;
+                margin-bottom: 0.75rem !important;
             }
             
             .prose-enhanced p {
                 font-size: 1rem !important;
+                line-height: 1.7 !important;
+                margin: 1rem 0 !important;
+            }
+            
+            .prose-enhanced ul,
+            .prose-enhanced ol {
+                margin: 1rem 0 !important;
+                padding-left: 1.5rem !important;
+            }
+            
+            .prose-enhanced li {
+                margin: 0.5rem 0 !important;
                 line-height: 1.6 !important;
-                margin-bottom: 1rem !important;
             }
             
             /* Tabs */
             #tabs {
                 flex-wrap: wrap;
                 gap: 0.5rem;
+                padding: 0.5rem;
             }
             
             #tabs .tab {
                 flex: 1;
                 min-width: calc(50% - 0.5rem);
                 text-align: center;
-                padding: 0.75rem 0.5rem;
+                padding: 0.875rem 0.75rem;
                 font-size: 0.9375rem;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            #tabs .tab.active {
+                background: rgba(245, 158, 11, 0.15);
+                border-color: rgba(245, 158, 11, 0.3);
             }
             
             /* Improved spacing for stacked elements */
             .space-y-2 > * + * {
-                margin-top: 0.75rem !important;
+                margin-top: 1rem !important;
             }
             
             .space-y-4 > * + * {
-                margin-top: 1.25rem !important;
+                margin-top: 1.5rem !important;
             }
             
             /* Better image handling */
             img {
                 max-width: 100% !important;
                 height: auto !important;
+                border-radius: 16px !important;
+                margin: 1.5rem auto !important;
             }
             
             /* Adjust button groups */
-            .flex-wrap gap-4 {
-                gap: 0.75rem !important;
+            .flex-wrap.gap-4 {
+                gap: 1rem !important;
+            }
+            
+            /* Improved focus states */
+            :focus {
+                outline: none !important;
+            }
+            
+            :focus-visible {
+                outline: 2px solid rgba(245, 158, 11, 0.5) !important;
+                outline-offset: 2px !important;
+            }
+            
+            /* Bottom nav padding */
+            main {
+                padding-bottom: 5rem !important;
             }
         }
+        
 
     /* Hidden helper class used when features are marked coming-soon */
     .coming-soon-hidden { display: none !important; }
@@ -785,86 +1326,329 @@
         }
     </style>
     <style>
-    /* Premium Home Screen Styles */
+    /* Premium Home Screen Styles - Enhanced 2025 Edition */
+    :root {
+        --hero-primary: #f59e0b;
+        --hero-secondary: #38bdf8;
+        --hero-accent: #10b981;
+        --hero-glow-primary: rgba(245,158,11,0.15);
+        --hero-glow-secondary: rgba(56,189,248,0.12);
+        --hero-glow-accent: rgba(16,185,129,0.1);
+    }
+
     .premium-bg {
-        background: linear-gradient(120deg, #232526 0%, #414345 100%);
+        background: linear-gradient(150deg, #1a1e2d 0%, #232b3d 50%, #1f2937 100%);
         min-height: 100vh;
         position: relative;
     }
+
     .premium-hero {
-        box-shadow: 0 8px 40px 0 rgba(245,158,11,0.10), 0 2px 8px 0 rgba(56,189,248,0.08);
-        border-radius: 2rem;
+        box-shadow: 
+            0 20px 60px -12px var(--hero-glow-primary),
+            0 8px 24px -4px var(--hero-glow-secondary),
+            0 0 0 1.5px rgba(245,158,11,0.2) inset;
+        border-radius: 2.5rem;
         overflow: hidden;
         position: relative;
-        border: 1.5px solid rgba(245,158,11,0.18);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
+
     .premium-hero-bg {
-        background: radial-gradient(ellipse at 60% 40%, rgba(245,158,11,0.18) 0%, rgba(56,189,248,0.10) 60%, transparent 100%),
-            linear-gradient(120deg, rgba(56,189,248,0.10) 0%, rgba(16,185,129,0.10) 100%);
-        filter: blur(8px);
+        background: 
+            radial-gradient(circle at 20% 30%, var(--hero-glow-primary) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, var(--hero-glow-secondary) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, var(--hero-glow-accent) 0%, transparent 50%);
+        filter: blur(40px);
         z-index: 0;
         pointer-events: none;
-        width: 100%;
-        height: 100%;
+        width: 120%;
+        height: 120%;
         position: absolute;
-        top: 0; left: 0;
-        animation: premiumHeroBG 8s ease-in-out infinite alternate;
+        top: -10%;
+        left: -10%;
+        animation: heroBackgroundFloat 20s ease-in-out infinite;
+        mix-blend-mode: screen;
+        opacity: 0.8;
+        transform-style: preserve-3d;
     }
-    @keyframes premiumHeroBG {
-        0% { filter: blur(8px) brightness(1); }
-        100% { filter: blur(12px) brightness(1.08); }
+
+    @keyframes heroBackgroundFloat {
+        0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+        25% { transform: translate3d(2%, -2%, 20px) rotate(1deg); }
+        50% { transform: translate3d(0, 2%, 40px) rotate(-1deg); }
+        75% { transform: translate3d(-2%, -1%, 20px) rotate(0.5deg); }
     }
+
     .premium-logo-glow {
-        box-shadow: 0 0 32px 8px rgba(245,158,11,0.18), 0 0 0 8px rgba(56,189,248,0.10);
+        box-shadow: 
+            0 0 60px 20px var(--hero-glow-primary),
+            0 0 100px 40px var(--hero-glow-secondary),
+            0 0 0 8px rgba(255,255,255,0.1) inset;
         border-radius: 50%;
-        background: rgba(245,158,11,0.05);
-        animation: logoGlow 3.5s ease-in-out infinite alternate;
+        background: rgba(245,158,11,0.08);
+        animation: logoGlowEnhanced 6s ease-in-out infinite;
+        position: relative;
+        transform-style: preserve-3d;
     }
-    @keyframes logoGlow {
-        0% { box-shadow: 0 0 32px 8px rgba(245,158,11,0.18), 0 0 0 8px rgba(56,189,248,0.10); }
-        100% { box-shadow: 0 0 48px 16px rgba(245,158,11,0.22), 0 0 0 12px rgba(56,189,248,0.13); }
+
+    @keyframes logoGlowEnhanced {
+        0%, 100% { 
+            transform: translateZ(0px);
+            box-shadow: 
+                0 0 60px 20px var(--hero-glow-primary),
+                0 0 100px 40px var(--hero-glow-secondary),
+                0 0 0 8px rgba(255,255,255,0.1) inset;
+        }
+        50% { 
+            transform: translateZ(40px);
+            box-shadow: 
+                0 0 80px 30px var(--hero-glow-primary),
+                0 0 120px 50px var(--hero-glow-secondary),
+                0 0 0 8px rgba(255,255,255,0.15) inset;
+        }
     }
+
     .premium-title {
         font-family: 'Cinzel', serif;
-        letter-spacing: -0.01em;
-        text-shadow: 0 2px 16px rgba(245,158,11,0.12);
+        letter-spacing: -0.02em;
+        text-shadow: 
+            0 2px 20px var(--hero-glow-primary),
+            0 8px 40px rgba(0,0,0,0.5);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: titleReveal 1s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
     }
+
+    @keyframes titleReveal {
+        from { 
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(10px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+
+    .premium-title-gradient {
+        background: linear-gradient(
+            135deg,
+            var(--hero-primary) 0%,
+            #fbbf24 25%,
+            var(--hero-primary) 50%,
+            #f97316 75%,
+            var(--hero-primary) 100%
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: gradientFlow 8s linear infinite;
+    }
+
+    @keyframes gradientFlow {
+        to { background-position: 200% center; }
+    }
+
     .premium-tagline {
         font-family: 'Playfair Display', serif;
-        color: #f3f4f6;
-        text-shadow: 0 1px 8px rgba(56,189,248,0.08);
+        color: #f8fafc;
+        text-shadow: 
+            0 2px 10px rgba(0,0,0,0.2),
+            0 8px 40px rgba(0,0,0,0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: taglineReveal 1s cubic-bezier(0.2, 0.9, 0.3, 1) 0.2s forwards;
     }
+
+    @keyframes taglineReveal {
+        from { 
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(5px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+    }
+
     .premium-btn {
         font-family: 'Inter', sans-serif;
         border: none;
-        border-radius: 1.25rem;
-        box-shadow: 0 2px 16px 0 rgba(56,189,248,0.10), 0 1.5px 6px 0 rgba(245,158,11,0.08);
-        transition: box-shadow 0.2s, transform 0.15s;
+        border-radius: 1.5rem;
+        box-shadow: 
+            0 4px 20px -4px var(--hero-glow-primary),
+            0 2px 10px -2px var(--hero-glow-secondary),
+            0 0 0 1px rgba(255,255,255,0.1) inset;
+        transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
         font-size: 1.1rem;
         font-weight: 600;
         letter-spacing: 0.01em;
-        padding: 1.1em 2.2em;
+        padding: 1.2em 2.4em;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(20px);
+        opacity: 0;
+        animation: buttonReveal 1s cubic-bezier(0.2, 0.9, 0.3, 1) 0.4s forwards;
     }
+
+    @keyframes buttonReveal {
+        from { 
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .premium-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            var(--hero-secondary) 0%,
+            var(--hero-accent) 50%,
+            var(--hero-primary) 100%
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
     .premium-btn-main {
-        background: linear-gradient(90deg, #38BDF8 0%, #10B981 60%, #F59E0B 100%);
+        background: linear-gradient(
+            90deg,
+            var(--hero-secondary) 0%,
+            var(--hero-accent) 50%,
+            var(--hero-primary) 100%
+        );
         color: #fff;
-        box-shadow: 0 4px 32px 0 rgba(245,158,11,0.10), 0 2px 8px 0 rgba(56,189,248,0.08);
+        position: relative;
+        z-index: 1;
     }
+
+    .premium-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            0 8px 30px -6px var(--hero-glow-primary),
+            0 4px 15px -2px var(--hero-glow-secondary),
+            0 0 0 1px rgba(255,255,255,0.2) inset;
+    }
+
     .premium-btn:active {
-        box-shadow: 0 1px 4px 0 rgba(56,189,248,0.10), 0 0.5px 2px 0 rgba(245,158,11,0.08);
-        transform: scale(0.98);
+        transform: translateY(1px);
+        box-shadow: 
+            0 2px 10px -4px var(--hero-glow-primary),
+            0 1px 6px -2px var(--hero-glow-secondary),
+            0 0 0 1px rgba(255,255,255,0.1) inset;
     }
-    .premium-hero::after{ content:''; position:absolute; inset:0; background:linear-gradient(120deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 50%, transparent 100%); pointer-events:none; mix-blend-mode:overlay }
-    @keyframes premiumHeroBG {
-        0% { transform: translateY(0) scale(1); }
-        50% { transform: translateY(-6px) scale(1.005); }
-        100% { transform: translateY(0) scale(1); }
+
+    .premium-hero::before,
+    .premium-hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
     }
-    .hero-badges .hero-badge{ background: rgba(255,255,255,0.03); color: #f8fafc; padding:6px 10px; border-radius:999px; font-size:0.85rem; display:inline-flex; gap:8px; align-items:center; border:1px solid rgba(255,255,255,0.03); box-shadow:0 6px 18px rgba(0,0,0,0.45); transform:translateY(6px); opacity:0; animation:badgeIn 600ms ease forwards; }
-    .hero-badges .hero-badge[data-delay="1"]{ animation-delay:120ms }
-    .hero-badges .hero-badge[data-delay="2"]{ animation-delay:240ms }
-    .hero-badges .hero-badge[data-delay="3"]{ animation-delay:360ms }
-    @keyframes badgeIn{ from{opacity:0; transform:translateY(10px) scale(0.98)} to{opacity:1; transform:translateY(0) scale(1)} }
+
+    .premium-hero::before {
+        background: radial-gradient(
+            circle at center,
+            transparent 30%,
+            rgba(0,0,0,0.2) 100%
+        );
+        mix-blend-mode: multiply;
+        z-index: 2;
+    }
+
+    .premium-hero::after {
+        background: linear-gradient(
+            120deg,
+            rgba(255,255,255,0.03) 0%,
+            rgba(255,255,255,0.02) 50%,
+            transparent 100%
+        );
+        mix-blend-mode: overlay;
+        z-index: 3;
+    }
+
+    .hero-badges {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        perspective: 1000px;
+    }
+
+    .hero-badge {
+        background: rgba(255,255,255,0.03);
+        color: #f8fafc;
+        padding: 8px 16px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 
+            0 8px 24px rgba(0,0,0,0.2),
+            0 2px 8px rgba(0,0,0,0.1),
+            0 0 0 1px rgba(255,255,255,0.05) inset;
+       
+        transform: translate3d(0, 30px, 0) rotateX(10deg);
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .hero-badge i {
+        color: var(--hero-secondary);
+        transition: color 0.3s ease;
+    }
+
+    .hero-badge:hover {
+        transform: translate3d(0, -2px, 20px) rotateX(0deg);
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(255,255,255,0.1);
+    }
+
+    .hero-badge:hover i {
+        color: var(--hero-primary);
+    }
+
+    .hero-badges .hero-badge[data-delay="1"] {
+        animation: badgeReveal 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) 0.6s forwards;
+    }
+    .hero-badges .hero-badge[data-delay="2"] {
+        animation: badgeReveal 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) 0.8s forwards;
+    }
+    .hero-badges .hero-badge[data-delay="3"] {
+        animation: badgeReveal 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) 1s forwards;
+    }
+
+    @keyframes badgeReveal {
+        from {
+            opacity: 0;
+            transform: translate3d(0, 30px, 0) rotateX(10deg);
+            filter: blur(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) rotateX(0deg);
+            filter: blur(0);
+        }
+    }
     </style>
     <style>
     /* Topbar compact button styles */
@@ -947,9 +1731,239 @@
         object-fit: cover;
     }
 </style>
+    <style>
+        /* Modal overlay for lesson page so lessons appear over the screen */
+        #lessonPage.modal-overlay {
+            position: fixed !important;
+            inset: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 1rem !important;
+            z-index: 1060 !important;
+            background: rgba(17, 24, 39, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        #lessonPage.modal-overlay .glass {
+            position: relative !important;
+            max-width: 980px;
+            width: 100%;
+            max-height: calc(100vh - 8rem);
+            margin: auto;
+            background: rgba(31, 41, 55, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.25rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+         
+            padding: 2rem;
+        }
+        
+        /* Scroll indicator animation */
+        #lessonPage.modal-overlay .glass::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 1rem;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 158, 11, 0.1);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            animation: scrollIndicator 2s infinite;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f59e0b' width='24' height='24'%3E%3Cpath d='M12 15.5a1 1 0 01-.7-.29l-4-4a1 1 0 111.41-1.42L12 13.09l3.29-3.3a1 1 0 111.41 1.42l-4 4a1 1 0 01-.7.29z'/%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 10;
+        }
+        
+        #lessonPage.modal-overlay .glass.can-scroll::after {
+            opacity: 1;
+        }
+
+        /* Also provide a scroll indicator for the full-screen lesson modal
+           (the alternative showLessonModal path). We toggle `.can-scroll` on
+           the modal content area to show this. */
+        #lessonModal .modal-content-area::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 1rem;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 158, 11, 0.08);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            animation: scrollIndicator 2s infinite;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f59e0b' width='24' height='24'%3E%3Cpath d='M12 15.5a1 1 0 01-.7-.29l-4-4a1 1 0 111.41-1.42L12 13.09l3.29-3.3a1 1 0 111.41 1.42l-4 4a1 1 0 01-.7.29z'/%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 10;
+        }
+        #lessonModal .modal-content-area.can-scroll::after { opacity: 1; }
+        
+        @keyframes scrollIndicator {
+            0% { transform: translate(-50%, 0); opacity: 0.8; }
+            50% { transform: translate(-50%, 10px); opacity: 0.5; }
+            100% { transform: translate(-50%, 0); opacity: 0.8; }
+        }
+        
+        #lessonPage.modal-overlay .glass::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #lessonPage.modal-overlay .glass::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        #lessonPage.modal-overlay .glass::-webkit-scrollbar-thumb {
+            background: rgba(245, 158, 11, 0.3);
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        #lessonPage.modal-overlay .glass::-webkit-scrollbar-thumb:hover {
+            background: rgba(245, 158, 11, 0.5);
+        }
+        #lessonPage.modal-overlay .glass #lessonContent {
+            padding: 2rem;
+        }
+        /* When a lesson modal is open, reduce or hide the large home hero so
+           lesson content is immediately visible and users don't need to
+           scroll. This targets the hero and badges while preserving other
+           dashboard blocks. */
+        /* Reduce hero footprint when modal is open instead of hiding it entirely.
+           This keeps visual context but prevents the hero from pushing lesson
+           content below the fold. */
+        /* When a modal is open we fully collapse the hero for maximum content visibility.
+           The collapse is animated (max-height + opacity) for a smooth premium effect. */
+        body.modal-open .premium-hero {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+            transform: translateY(-6px) !important;
+            transition: max-height 220ms cubic-bezier(.2,.9,.2,1), opacity 200ms ease, padding 180ms ease;
+        }
+
+        /* Instead of removing the hero completely, shrink it to a compact
+           header when a lesson view is active so branding remains but it
+           doesn't push lesson content below the fold. This applies to both
+           SPA and programmatic modal flows via the `lesson-open` body class. */
+        body.lesson-open .premium-hero,
+        body.modal-open .premium-hero {
+            max-height: 56px !important;
+            padding-top: 6px !important;
+            padding-bottom: 6px !important;
+            opacity: 0.98 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+            transform: translateY(-2px) !important;
+            transition: max-height 220ms cubic-bezier(.2,.9,.2,1), opacity 180ms ease, padding 180ms ease, transform 220ms ease;
+            border-radius: 0.5rem !important;
+        }
+        /* Hide the large hero content while showing a compact left-aligned logo */
+        body.lesson-open .premium-hero .premium-hero-content,
+        body.modal-open .premium-hero .premium-hero-content {
+            display: flex !important; align-items: center; justify-content: flex-start; gap: 0.6rem; padding-left: 0.75rem !important;
+        }
+        body.lesson-open .premium-hero .premium-title,
+        body.lesson-open .premium-hero .premium-tagline,
+        body.lesson-open .premium-hero .premium-cta-buttons,
+        body.lesson-open .premium-hero .hero-badges,
+        body.modal-open .premium-hero .premium-title,
+        body.modal-open .premium-hero .premium-tagline,
+        body.modal-open .premium-hero .premium-cta-buttons,
+        body.modal-open .premium-hero .hero-badges {
+            display: none !important;
+        }
+        body.lesson-open .premium-logo, body.modal-open .premium-logo { width: 40px !important; height: 40px !important; }
+        body.lesson-open .premium-hero .premium-logo i, body.modal-open .premium-hero .premium-logo i { font-size: 18px !important; }
+
+        /* Shrink the trust section instead of hiding it completely so it
+           doesn't occupy vertical space; keep a subtle hint for context */
+        body.lesson-open #trustSection, body.modal-open #trustSection {
+            max-height: 0 !important;
+            opacity: 0 !important;
+            transform: translateY(-8px) !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+            transition: max-height 220ms ease, opacity 180ms ease, transform 180ms ease;
+        }
+
+        body.modal-open .premium-hero .premium-logo-glow img {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        body.modal-open .hero-badges {
+            transform: scale(0.9) !important;
+            opacity: 0.65 !important;
+            pointer-events: none !important;
+        }
+
+        /* Hide trust / marketing cards when a lesson modal is open so lesson content
+           is visible without scrolling. Adjust size instead of removing permanently. */
+        body.modal-open #trustSection {
+            display: none !important;
+        }
+
+        /* Slightly de-emphasize the dashboard cards while modal is open */
+        body.modal-open #dashboard .glass {
+            opacity: 0.6 !important;
+            transform: scale(0.995) !important;
+            pointer-events: none !important;
+        }
+        /* Prevent background scroll when modal active */
+        body.overflow-hidden, body.modal-open { overflow: hidden !important; }
+        
+        @media (max-width: 640px) {
+            #lessonPage.modal-overlay {
+                padding: 0.75rem;
+            }
+            #lessonPage.modal-overlay .glass {
+                max-height: calc(100vh - 3rem);
+                margin: 0 auto;
+                border-radius: 1rem;
+                padding: 1.25rem;
+            }
+            #lessonPage.modal-overlay .glass::after {
+                bottom: 0.75rem;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
 </head>
-<body id="appBody" class="bg-gray-900 text-gray-100 min-h-screen flex relative">
-    </script>
+<body id="appBody" class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+    <style>
+        /* Small helper to keep primary site navigation buttons consistent across layouts */
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.45rem 0.8rem;
+            border-radius: 0.375rem; /* match Tailwind rounded-md */
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+
+        /* Desktop topbar tweaks: ensure nav sits to the right and buttons have consistent gap */
+        header .topbar-nav { display: flex; gap: 0.5rem; align-items: center; }
+
+        /* On mobile full-width nav items keep full width but use same vertical rhythm */
+        .nav-btn.fullwidth { display: flex; width: 100%; justify-content: flex-start; padding-left: 1rem; }
+    </style>
 
     <script>
     // Initialize BaristaApp and its components
@@ -998,6 +2012,15 @@
         },
         closeProfile: function() {
             const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+        ,
+        // Close onboarding modal (added to ensure every modal has a standard close method)
+        closeOnboarding: function() {
+            const modal = document.getElementById('onboardingModal');
             if (modal) {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
@@ -1061,45 +2084,145 @@
         window.BaristaApp.ui = window.BaristaApp.ui || {};
         window.BaristaApp.state = window.BaristaApp.state || { user: { name: 'Trainee', points: 0 } };
         window.BaristaApp.elements = window.BaristaApp.elements || {};
+
+        // Add sidebar auto-hide functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const dayList = document.getElementById('dayList');
+            
+            if (dayList && sidebar) {
+                dayList.addEventListener('click', function(e) {
+                    // Check if clicked element is a lesson/day link
+                    if (e.target.closest('a') || e.target.closest('button')) {
+                        // Hide sidebar on mobile
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('sidebar-open');
+                            // Update hamburger icon if exists
+                            const hamburger = document.querySelector('#hamburgerMenu i');
+                            if (hamburger) {
+                                hamburger.classList.remove('fa-times');
+                                hamburger.classList.add('fa-bars');
+                            }
+                        }
+                    }
+                });
+            }
+        });
     </script>
     <!-- Topbar -->
-    <header class="fixed top-0 left-0 w-full bg-gray-900 z-50 shadow flex items-center justify-between px-4 py-3 border-b border-gray-800">
+    <header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-4 py-2 transition-all duration-200 glass-nav">
+        <style>
+            .glass-nav {
+                background: rgba(17, 24, 39, 0.95);
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
+        </style>
         <!-- Left Section with Hamburger and Logo -->
-        <div class="flex items-center gap-4">
-            <!-- Hamburger Menu (Mobile Only) with Combined Navigation -->
-            <button id="hamburgerMenu" class="md:hidden text-white focus:outline-none hover:bg-gray-800 p-2 rounded-lg transition-colors">
-                <i class="fas fa-bars text-xl"></i>
-                <span class="sr-only">Open menu</span>
+        <div class="flex items-center gap-3">
+            <!-- Hamburger Menu Button -->
+            <button id="hamburgerMenu" 
+                    type="button"
+                    class="md:hidden flex items-center justify-center w-12 h-12 rounded-xl bg-gray-800/50 border border-gray-700/50 active:scale-95 transition-all duration-150"
+                    aria-label="Toggle navigation menu">
+                <i class="fas fa-bars text-lg text-gray-200"></i>
             </button>
+            
+            <!-- Logo (Desktop) -->
+            <div class="hidden md:flex items-center gap-3">
+                <img src="images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto" id="header-logo">
+            </div>
         </div>
 
-        <!-- Logo and Title -->
-        <div class="flex items-center gap-3 flex-1 justify-center md:justify-start">
-            <img src="images/logo.png" alt="Logo" class="h-8 w-auto" id="header-logo">
-            <span class="text-xl md:text-2xl font-bold text-amber-500 tracking-tight">Specialty Barista</span>
+        <!-- Center Logo and Title (Mobile) -->
+        <div class="flex md:hidden items-center justify-center flex-1 gap-3">
+            <img src="images/logo.png" alt="Specialty Barista Logo" class="h-8 w-auto">
+            <div class="text-lg font-bold text-white">Specialty Barista</div>
         </div>
 
-        <!-- Desktop Navigation (hidden on mobile) -->
-        <nav class="hidden md:flex items-center gap-2">
-            <button id="homeBtn" class="topbar-btn topbar-btn-main">Home</button>
-            <button id="aboutBtn" class="topbar-btn">About</button>
-            <button id="contactBtn" class="topbar-btn">Contact</button>
-            <button id="privacyBtn" class="topbar-btn">Privacy</button>
-            <button id="disclosureBtn" class="topbar-btn">Disclosure</button>
-        </nav>
-
-        <!-- Mobile Navigation Menu (Initially Hidden) -->
-        <div id="mobileNavMenu" class="fixed top-14 right-4 bg-gray-800 rounded-lg shadow-xl p-2 hidden z-50 min-w-[200px] animate-fadeIn">
-            <button id="homeBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Home</button>
-            <button id="aboutBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">About</button>
-            <button id="contactBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Contact</button>
-            <button id="privacyBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Privacy</button>
-            <button id="disclosureBtnMobile" class="w-full text-left px-4 py-2 text-white hover:bg-gray-700 rounded transition-colors">Disclosure</button>
+        <!-- Right Section -->
+        <div class="flex items-center gap-3">
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-2">
+                <div class="topbar-nav flex items-center gap-2">
+                    <button type="button" id="homeBtn" class="topbar-btn topbar-btn-main nav-btn">Home</button>
+                    <button type="button" id="aboutBtn" class="topbar-btn nav-btn">About</button>
+                    <button type="button" id="contactBtn" class="topbar-btn nav-btn">Contact</button>
+                    <div class="relative group">
+                        <button type="button" class="topbar-btn nav-btn flex items-center gap-1">
+                            More <i class="fas fa-chevron-down text-xs ml-1"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 hidden group-hover:block">
+                            <div class="bg-gray-800 rounded-lg shadow-xl py-2 min-w-[140px] border border-gray-700">
+                                <button type="button" id="privacyBtn" class="w-full text-left px-4 py-2 hover:bg-gray-700 text-gray-200 text-sm">Privacy</button>
+                                <button type="button" id="disclosureBtn" class="w-full text-left px-4 py-2 hover:bg-gray-700 text-gray-200 text-sm">Disclosure</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
-        
-        <nav class="hidden md:flex gap-4 md:gap-6 text-sm md:text-base font-medium">
-        <nav class="flex gap-2 md:gap-6 text-xs md:text-base font-medium overflow-x-auto whitespace-nowrap w-auto md:w-fit px-1 md:px-0">
-        <!-- Navigation links removed from top bar; now only in sidebar -->
+        </div>
+
+        <!-- Enhanced Mobile Navigation Menu -->
+        <div id="mobileNavMenu" class="fixed top-14 right-4 bg-gray-800/95 rounded-2xl shadow-2xl hidden z-50 min-w-[270px] max-w-[calc(100vw-2rem)] backdrop-blur-lg border border-gray-700/50">
+            <!-- Quick Actions -->
+            <div class="p-3 grid grid-cols-3 gap-2 border-b border-gray-700/50">
+                <button type="button" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-700/30 hover:bg-gray-700/50 transition-all active:scale-95">
+                    <i class="fas fa-home text-amber-400 text-lg mb-1"></i>
+                    <span class="text-xs">Home</span>
+                </button>
+                <button type="button" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-700/30 hover:bg-gray-700/50 transition-all active:scale-95">
+                    <i class="fas fa-book text-sky-400 text-lg mb-1"></i>
+                    <span class="text-xs">Lessons</span>
+                </button>
+                <button type="button" class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-700/30 hover:bg-gray-700/50 transition-all active:scale-95">
+                    <i class="fas fa-certificate text-green-400 text-lg mb-1"></i>
+                    <span class="text-xs">Certificate</span>
+                </button>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="py-2 px-1">
+                <button type="button" id="homeBtnMobile" class="w-full flex items-center gap-3 px-4 py-3 text-gray-200 hover:bg-gray-700/50 rounded-xl transition-all">
+                    <i class="fas fa-home w-5 text-amber-400"></i>
+                    <span>Home</span>
+                </button>
+                <button type="button" id="aboutBtnMobile" class="w-full flex items-center gap-3 px-4 py-3 text-gray-200 hover:bg-gray-700/50 rounded-xl transition-all">
+                    <i class="fas fa-info-circle w-5 text-sky-400"></i>
+                    <span>About Us</span>
+                </button>
+                <button type="button" id="contactBtnMobile" class="w-full flex items-center gap-3 px-4 py-3 text-gray-200 hover:bg-gray-700/50 rounded-xl transition-all">
+                    <i class="fas fa-envelope w-5 text-green-400"></i>
+                    <span>Contact</span>
+                </button>
+            </div>
+
+            <!-- Additional Links -->
+            <div class="border-t border-gray-700/50 py-2 px-1">
+                <button type="button" id="privacyBtnMobile" class="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-700/50 rounded-xl transition-all text-sm">
+                    <i class="fas fa-shield-alt w-5 text-purple-400"></i>
+                    <span>Privacy Policy</span>
+                </button>
+                <button type="button" id="disclosureBtnMobile" class="w-full flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-700/50 rounded-xl transition-all text-sm">
+                    <i class="fas fa-file-alt w-5 text-pink-400"></i>
+                    <span>Disclosure</span>
+                </button>
+            </div>
+
+            <!-- Settings Row -->
+            <div class="border-t border-gray-700/50 p-3 flex items-center justify-between">
+                <select id="languageToggleMobile" class="bg-gray-700/50 text-sm p-2 rounded-lg border border-gray-600/50" aria-label="Select language" title="Select language">
+                    <option value="en">English</option>
+                    <option value="ne">नेपाली</option>
+                </select>
+                <button id="themeToggleMobile" class="p-2 rounded-lg hover:bg-gray-700/50 text-lg" aria-label="Toggle theme">
+                    🌙
+                </button>
+            </div>
+        </div>
         
         <div class="flex items-center gap-2 md:gap-4">
             <select id="languageToggle" class="bg-gray-700 text-xs p-1 md:p-2 rounded-md border border-gray-600 focus:ring-amber-500 focus:border-amber-500" aria-label="Select language" title="Select language">
@@ -1128,6 +2251,20 @@
             </div>
         </div>
 
+        <script>
+            // Wire onboarding close button (if present in the DOM)
+            document.addEventListener('DOMContentLoaded', function(){
+                const closeBtn = document.getElementById('closeOnboardingModalBtn');
+                if (closeBtn) closeBtn.addEventListener('click', function(){
+                    if (window.BaristaApp && window.BaristaApp.modalManager && window.BaristaApp.modalManager.closeOnboarding) {
+                        window.BaristaApp.modalManager.closeOnboarding();
+                    } else {
+                        const m = document.getElementById('onboardingModal'); if (m) m.classList.add('hidden');
+                    }
+                });
+            });
+        </script>
+
         <button id="helpFloatingBtn" aria-label="Open Help" title="Help - explain icons" class="help-floating fixed bottom-6 right-6 z-[4000] bg-amber-500 hover:bg-amber-600 text-gray-900 rounded-full w-14 h-14 flex items-center justify-center shadow-xl border-2 border-white">?
         </button>
 
@@ -1149,21 +2286,21 @@
             <div class="p-3 border-b border-gray-700">
                 <div class="flex flex-wrap gap-2">
                     <a href="index.html" 
-                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center nav-btn"
                        aria-label="Home"
                        title="Go to Home">
                         <i class="fas fa-home" aria-hidden="true"></i>
                         <span class="sr-only">Home</span>
                     </a>
                     <a href="about.html" 
-                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center nav-btn"
                        aria-label="About"
                        title="About Us">
                         <i class="fas fa-info-circle" aria-hidden="true"></i>
                         <span class="sr-only">About</span>
                     </a>
                     <a href="contact.html" 
-                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center"
+                       class="flex-1 px-3 py-2 bg-gray-700/50 rounded-md text-white text-center hover:bg-gray-600/50 transition-colors flex items-center justify-center nav-btn"
                        aria-label="Contact"
                        title="Contact Us">
                         <i class="fas fa-envelope" aria-hidden="true"></i>
@@ -1183,10 +2320,10 @@
             <!-- Settings & Help -->
             <div class="border-t border-gray-700 p-3">
                 <div class="flex justify-between items-center">
-                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors" onclick="window.location.href='privacy.html'">
+                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors nav-btn" onclick="window.location.href='privacy.html'">
                         Privacy Policy
                     </button>
-                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors" onclick="window.location.href='disclosure.html'">
+                    <button class="px-3 py-2 text-sm text-gray-300 hover:text-white transition-colors nav-btn" onclick="window.location.href='disclosure.html'">
                         Disclosure
                     </button>
                 </div>
@@ -1194,34 +2331,40 @@
         </div>
 
         <!-- Sidebar -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-gray-800 text-gray-200 w-64 p-4 space-y-4 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-16">
-        <!-- Enhanced Search Bar -->
-        <div class="relative mb-4">
-            <input type="text" id="search" placeholder="Search lessons..." class="input-field w-full p-3 text-sm bg-gray-700/50 border border-gray-600/50 focus:border-amber-500 rounded-lg pl-10">
-            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500/70"></i>
-        </div>
-
-        <!-- Enhanced Sidebar Header - Only shown on desktop -->
-        <div class="sidebar-header glass p-3 rounded-xl border border-gray-700/50 mb-4 hidden md:block" id="sidebarHeader">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12 premium-logo-glow bg-gray-900/30 rounded-lg flex items-center justify-center p-1">
-                    <img src="images/logo.png" alt="Site logo" class="w-full h-full object-contain">
+    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-gray-800 text-gray-200 w-64 p-4 z-40 flex flex-col transition-transform duration-300 ease-in-out shadow-lg pt-16">
+        <!-- Home Screen Content Section -->
+        <div id="sidebarHomeContent" class="flex-shrink-0 border-b border-gray-700/50 pb-4 mb-4">
+            <!-- Enhanced Search Bar -->
+            <div class="sidebar-search mb-4">
+                <div class="relative">
+                    <input type="text" id="search" placeholder="Search lessons..." 
+                        class="input-field w-full p-3 text-sm bg-gray-700/50 border border-gray-600/50 focus:border-amber-500 rounded-lg pl-10">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-amber-500/70"></i>
                 </div>
-                <div class="flex-1">
-                    <div class="text-lg font-bold text-amber-400 leading-tight">Specialty Barista</div>
-                    <div class="text-xs text-sky-400/90 font-medium">Pro Training & Certification</div>
+            </div>
+
+            <!-- Enhanced Sidebar Header - Only shown on desktop -->
+            <div class="sidebar-header glass p-3 rounded-xl border border-gray-700/50 mb-4 hidden md:flex" id="sidebarHeader">
+                <div class="flex items-center gap-3 w-full">
+                    <div class="w-12 h-12 premium-logo-glow bg-gray-900/30 rounded-lg flex items-center justify-center p-1">
+                        <img src="images/logo.png" alt="Site logo" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-lg font-bold text-amber-400 leading-tight">Specialty Barista</div>
+                        <div class="text-xs text-sky-400/90 font-medium">Pro Training & Certification</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Enhanced Navigation Area -->
-        <nav class="flex-grow overflow-y-auto custom-scrollbar">
-            <div class="mb-3">
+        <!-- Course Content Section -->
+        <nav id="sidebarCourseContent" class="flex-grow overflow-y-auto custom-scrollbar">
+            <div class="sticky top-0 z-10 bg-gray-800 py-2">
                 <div class="text-xs uppercase text-gray-400 font-semibold tracking-wider mb-2 px-2">Course Content</div>
-                <ul id="dayList" class="space-y-2">
-                    <!-- Course days will be dynamically populated here -->
-                </ul>
             </div>
+            <ul id="dayList" class="space-y-2">
+                <!-- Course days will be dynamically populated here -->
+            </ul>
         </nav>
 
         <!-- Enhanced Bottom Actions -->
@@ -1260,63 +2403,149 @@
         </div>
     </aside>
 
-    <!-- Main Content Area -->
-    <!-- Digital Products Modal -->
+   
+
+               
+            <!-- Copyright -->
+            <div class="text-center pt-4 border-t border-gray-800">
+                 <p class="text-xs text-gray-500">&copy; 2025 Specialty Barista Training</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Storage Manager -->
+    <script src="js/storage-manager.js"></script>
+    
+    <!-- Application Initialization -->
+    <script>
+        // Global error boundary and script loading management
+        window.BaristaApp = window.BaristaApp || {
+            initialized: false,
+            errors: [],
+            logError: function(component, error) {
+                this.errors.push({
+                    component: component,
+                    error: error,
+                    timestamp: new Date()
+                });
+                console.error(`${component} error:`, error);
+                document.body?.classList.add('js-error');
+            }
+        };
+
+    // Development environment helpers
+    const __IS_LOCAL_FILE = (location.protocol === 'file:' || location.origin === 'null');
+
+    // Define initialization function
+        window.BaristaApp.init = function() {
+            return new Promise((resolve, reject) => {
+                if (this.initialized) {
+                    resolve();
+                    return;
+                }
+
+                try {
+                    // Check for required dependencies
+                    if (typeof BaristaStorageManager === 'undefined') {
+                        throw new Error('Storage manager not loaded');
+                    }
+
+                    // Initialize storage
+                    this.storage = new BaristaStorageManager();
+                    this.storage.init()
+                        .then(() => {
+                            console.log('Storage system initialized');
+                            this.initialized = true;
+                            resolve();
+                        })
+                        .catch(error => {
+                            this.logError('storage', error);
+                            reject(error);
+                        });
+                } catch (error) {
+                    this.logError('initialization', error);
+                    reject(error);
+                }
+            });
+        };
+
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Delay initialization slightly to ensure all scripts are loaded
+            setTimeout(() => {
+                window.BaristaApp.init()
+                    .catch(error => {
+                        console.error('Failed to initialize app:', error);
+                    });
+            }, 100);
+        });
+        
+        // Register Service Worker (only when served over http(s) or on localhost)
+        if ('serviceWorker' in navigator) {
+            // Skip registration when running from file:// or when origin is null (local filesystem)
+            if (!__IS_LOCAL_FILE && (location.protocol === 'https:' || location.hostname === 'localhost' || location.protocol === 'http:')) {
+                window.addEventListener('load', function() {
+                    try {
+                        const swPath = window.location.pathname.endsWith('/') ? 'service-worker.js' : '/service-worker.js';
+                        navigator.serviceWorker.register(swPath, { scope: '/' })
+                            .then(function(registration) {
+                                console.log('ServiceWorker registration successful with scope:', registration.scope);
+                            })
+                            .catch(function(err) {
+                                console.warn('ServiceWorker registration failed:', err);
+                            });
+                    } catch (err) {
+                        console.warn('ServiceWorker registration skipped due to error:', err);
+                    }
+                });
+            } else {
+                // Informative message for local dev environments
+                if (__IS_LOCAL_FILE) console.info('ServiceWorker registration skipped: running from local file system. Use a local webserver to enable service worker.');
+            }
+        }
+
+        // Add offline/online handlers
+        window.addEventListener('online', function() {
+            document.body.classList.remove('offline');
+            // Sync any pending data
+            if (window.BaristaApp && window.BaristaApp.storage) {
+                window.BaristaApp.storage.syncPendingData();
+            }
+        });
+
+        window.addEventListener('offline', function() {
+            document.body.classList.add('offline');
+        });
+    </script>
+
+    <!-- Digital products section hidden until launch. Removed from UI to avoid 'Coming soon' placeholders -->
+    <!--
     <div id="shopModal" class="fixed inset-0 z-[2000] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
         <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-lg w-full p-8 relative">
             <button id="closeShopModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
             <h2 class="text-2xl font-bold text-lime-400 mb-4">Digital Products</h2>
             <div class="space-y-6">
-                <div class="glass p-4 rounded-lg flex flex-col gap-2">
-                    <span class="font-semibold text-lg text-lime-300">Barista Interview Prep E-Book</span>
-                    <span class="text-sm text-gray-300">Ace your next barista interview with expert tips and sample questions.</span>
-                    <span class="font-bold text-lime-400">$5</span>
-                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
-                </div>
-                <div class="glass p-4 rounded-lg flex flex-col gap-2">
-                    <span class="font-semibold text-lg text-lime-300">Advanced Latte Art Stencil Guide</span>
-                    <span class="text-sm text-gray-300">Take your latte art to the next level with printable stencils and pro tips.</span>
-                    <span class="font-bold text-lime-400">$10</span>
-                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
-                </div>
-                <div class="glass p-4 rounded-lg flex flex-col gap-2">
-                    <span class="font-semibold text-lg text-lime-300">Coffee Shop Inventory Spreadsheet</span>
-                    <span class="text-sm text-gray-300">Streamline your café operations with this easy-to-use inventory template.</span>
-                    <span class="font-bold text-lime-400">$7</span>
-                    <button disabled class="interactive-button bg-gray-600 text-gray-400 font-semibold w-full cursor-not-allowed">Coming soon</button>
-                </div>
+                <!-- product cards -->
             </div>
         </div>
     </div>
+    -->
 
         <!-- Product Purchase Modal -->
+        <!-- product modal removed until the digital shop is ready; users should not see any purchase UI -->
+        <!--
         <div id="productModal" class="fixed inset-0 z-[2200] bg-black bg-opacity-80 flex items-center justify-center p-4 hidden">
             <div class="modal-content-area glass p-6 sm:p-8 rounded-xl shadow-2xl w-full max-w-md text-center relative max-h-[85vh] overflow-y-auto custom-scrollbar">
-                <button id="closeProductModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
-                <img id="productModalIcon" src="images/logo.png" alt="Product" class="w-14 h-14 mx-auto mb-3">
-                <h3 id="productModalTitle" class="text-2xl font-bold text-amber-400 mb-2">Product</h3>
-                <p id="productModalDesc" class="text-gray-300 mb-4 text-sm">Product description</p>
-                <div id="productModalPrice" class="font-bold text-lg text-lime-400 mb-4">$0</div>
-                <div class="flex flex-col gap-3">
-                    <div class="p-3 bg-gray-800 rounded text-sm text-gray-300">Digital products are coming soon. We are finishing the purchase & delivery flow — no payments are being accepted right now.</div>
-                    <button disabled class="interactive-button bg-gray-600 text-gray-400 px-4 py-2 rounded w-full cursor-not-allowed">Coming soon</button>
-                </div>
-
-                <!-- Proof form hidden while product sales are disabled -->
-                <form id="productProofForm" class="mt-4 hidden flex flex-col gap-3 coming-soon-hidden" enctype="multipart/form-data" autocomplete="off">
-                    <input type="hidden" name="productId" id="productProofProductId" value="">
-                    <input type="text" name="name" placeholder="Full Name" required class="input-field border border-gray-300 rounded px-3 py-2" />
-                    <input type="email" name="email" placeholder="Email Address" required class="input-field border border-gray-300 rounded px-3 py-2" />
-                    <label for="productProofScreenshot" class="text-left text-xs text-gray-500">Payment Screenshot</label>
-                    <input id="productProofScreenshot" type="file" name="screenshot" accept="image/*" required class="input-field border border-gray-300 rounded px-3 py-2" title="Upload payment screenshot" />
-                    <button type="submit" class="interactive-button bg-green-600 hover:bg-green-700 text-white w-full py-2 font-semibold flex items-center justify-center gap-2"><i class="fas fa-upload"></i> Submit Proof & Get Download</button>
-                    <div id="productProofStatus" class="text-sm text-center mt-2"></div>
-                </form>
-                <!-- Sample download button (used as fallback by JS). Hidden visually but available to scripts and for manual testing -->
-                <button type="button" id="productSampleDownload" class="hidden" aria-hidden="true">Download sample</button>
+                <!-- content hidden -->
             </div>
         </div>
-    <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto relative mt-14" aria-label="Main content">
+        -->
+        <!-- orphaned proof form markup removed -->
+    <main class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto relative mt-14 mb-auto" aria-label="Main content">
+                <!-- HERO moved into the dashboard section so it only renders on the homepage -->
+
+    <!-- Trust section removed from the global area and kept within the dashboard only -->
+
         <!-- Lesson Fullscreen Modal -->
         <div id="lessonModal" class="fixed inset-0 w-screen h-screen bg-black bg-opacity-90 flex items-center justify-center z-[9999] p-0 m-0 hidden">
             <div class="modal-content-area glass w-full h-full min-h-0 min-w-0 p-2 sm:p-6 md:p-10 rounded-none shadow-none border-none relative overflow-y-auto flex flex-col max-w-full">
@@ -1505,6 +2734,35 @@
             helpBtn.onclick = () => { iconsModal.classList.remove('hidden'); iconsModal.classList.add('flex'); };
             document.getElementById('closeIconsHelp').onclick = () => { iconsModal.classList.add('hidden'); };
         });
+
+        // Testimonials wiring: open/close overlay, Shift+click on day item opens it, floating button opens it
+        document.addEventListener('DOMContentLoaded', function(){
+            const overlay = document.getElementById('testimonialsOverlay');
+            const openBtn = document.getElementById('openTestimonialsBtn');
+            const closeBtn = document.getElementById('closeTestimonialsBtn');
+            const dayList = document.getElementById('dayList');
+
+            function showTestimonials(){
+                if (!overlay) return;
+                overlay.classList.remove('hidden'); overlay.classList.add('flex'); overlay.setAttribute('aria-hidden','false');
+                document.addEventListener('keydown', escHandler);
+            }
+            function hideTestimonials(){
+                if (!overlay) return;
+                overlay.classList.add('hidden'); overlay.classList.remove('flex'); overlay.setAttribute('aria-hidden','true');
+                document.removeEventListener('keydown', escHandler);
+            }
+            function escHandler(e){ if (e.key === 'Escape') hideTestimonials(); }
+
+            if (openBtn) openBtn.addEventListener('click', showTestimonials);
+            if (closeBtn) closeBtn.addEventListener('click', hideTestimonials);
+            if (overlay) overlay.addEventListener('click', function(e){ if (e.target === overlay) hideTestimonials(); });
+
+            // NOTE: removed non-home triggers for testimonials
+            // - Shift+click on sidebar dayList previously opened testimonials from lesson sidebar
+            // - Delegated listener for [data-open-testimonials] also opened the overlay from various places
+            // To ensure testimonials appear only on the home screen, those global listeners were intentionally removed.
+        });
         document.getElementById('paymentProofForm').onsubmit = async function(e) {
             e.preventDefault();
             const form = e.target;
@@ -1552,10 +2810,16 @@
 
         // Shop / Product modal handlers
         function openProductModal(productId){
+            const modal = document.getElementById('productModal');
+            if (!modal) {
+                // modal removed while shop is disabled
+                alert('The shop is currently closed. Please check back later.');
+                return;
+            }
             const map = {
-                'ebook': { title: 'Barista Interview Prep E-Book', desc: 'Ace your next barista interview with expert tips and sample questions.', price: 5, cardCheckout: 'https://gumroad.com/l/YOUR_EBOOK_PRODUCT' },
-                'stencils': { title: 'Advanced Latte Art Stencil Guide', desc: 'Printable stencils and pro tips for latte art.', price: 10, cardCheckout: 'https://gumroad.com/l/YOUR_STENCILS_PRODUCT' },
-                'spreadsheet': { title: 'Coffee Shop Inventory Spreadsheet', desc: 'Inventory & ordering template for small cafes.', price: 7, cardCheckout: 'https://gumroad.com/l/YOUR_SPREADSHEET_PRODUCT' }
+                'ebook': { title: 'Barista Interview Prep E-Book', desc: 'Ace your next barista interview with expert tips and sample questions.', price: 5, cardCheckout: '#' },
+                'stencils': { title: 'Advanced Latte Art Stencil Guide', desc: 'Printable stencils and pro tips for latte art.', price: 10, cardCheckout: '#' },
+                'spreadsheet': { title: 'Coffee Shop Inventory Spreadsheet', desc: 'Inventory & ordering template for small cafes.', price: 7, cardCheckout: '#' }
             };
             const p = map[productId] || map['ebook'];
             document.getElementById('productProofProductId').value = productId;
@@ -1590,13 +2854,22 @@
             document.getElementById('productModal').classList.remove('hidden');
             document.getElementById('productModal').classList.add('flex');
         }
-        document.getElementById('closeProductModal').onclick = function(){ document.getElementById('productModal').classList.add('hidden'); document.getElementById('productModal').classList.remove('flex'); document.getElementById('productProofForm').classList.add('hidden'); };
+        const closeProductBtn = document.getElementById('closeProductModal');
+        if (closeProductBtn) {
+            closeProductBtn.onclick = function(){
+                const modal = document.getElementById('productModal'); if(modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
+                const pf = document.getElementById('productProofForm'); if(pf) pf.classList.add('hidden');
+            };
+        }
 
         // Sample PDF generation (client-side preview)
-        document.getElementById('productSampleDownload').onclick = function(){
-            const title = document.getElementById('productModalTitle').textContent || 'Sample';
-            try{
-                const { jsPDF } = window.jspdf || window.jspdf || {};
+        const sampleDownloadBtn = document.getElementById('productSampleDownload');
+        if (sampleDownloadBtn) {
+            sampleDownloadBtn.onclick = function(){
+                const titleEl = document.getElementById('productModalTitle');
+                const title = titleEl ? titleEl.textContent : 'Sample';
+                try{
+                    const { jsPDF } = window.jspdf || window.jspdf || {};
                 if (typeof jspdf === 'undefined' && typeof window.jspdf === 'undefined' && !window.jspdf) {
                     // fallback: create a simple Blob and download
                     const blob = new Blob([`${title}\n\nThis is a sample preview. Purchase to get the full product.`], { type: 'text/plain' });
@@ -1614,6 +2887,7 @@
                 const a = document.createElement('a'); a.href = url; a.download = `${title.replace(/\s+/g,'_')}_sample.txt`; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
             }
         };
+        } // close sampleDownloadBtn if-block
 
         // Show proof upload form when user clicks "I've Paid"
         const _productUploadProofBtn = document.getElementById('productUploadProofBtn');
@@ -1622,14 +2896,22 @@
             if (_productProofFormEl) _productProofFormEl.classList.remove('hidden');
         };
 
-        // Handle product proof form submission
-        // Behavior:
-        // - disable inputs during upload
-        // - POST form to /api/shop/upload-proof
-        // - if server returns { success: true, downloadUrl } open the URL (start download)
-        // - if server returns { success: true, downloadBase64, filename } create blob and trigger download
-        // - if server responds with binary (pdf/blob) download it directly
-        // - fallback to client-side sample download button on error
+    // Handle product proof form submission
+    // Developer notes:
+    // - This handler attempts to POST the proof to /api/shop/upload-proof and handles multiple response formats:
+    //   1) binary (application/pdf, application/octet-stream) - downloaded via Blob
+    //   2) JSON with downloadUrl - client tries to fetch the URL as a blob then falls back to opening the URL
+    //   3) JSON with base64 payload (downloadBase64 + filename) - decoded and downloaded
+    // - If the server does not return a downloadable resource, the handler falls back to the local sample download button (#productSampleDownload).
+    // - Keep this logic in sync with server behavior. If the server uses signed URLs or requires auth, prefer returning the file bytes or a CORS-enabled pre-signed URL.
+    // - Update the /api/shop/upload-proof endpoint contract before changing client logic.
+    // Behavior:
+    // - disable inputs during upload
+    // - POST form to /api/shop/upload-proof
+    // - if server returns { success: true, downloadUrl } open the URL (start download)
+    // - if server returns { success: true, downloadBase64, filename } create blob and trigger download
+    // - if server responds with binary (pdf/blob) download it directly
+    // - fallback to client-side sample download button on error
         const _productProofForm = document.getElementById('productProofForm');
         if (_productProofForm) _productProofForm.onsubmit = async function(e){
             e.preventDefault();
@@ -1769,9 +3051,11 @@
                             <button id="dashboardVerifiedCert" class="premium-btn bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold px-8 py-4 rounded-2xl flex-shrink-0 flex items-center justify-center shadow-xl hover:scale-105 transition-transform">
                                 <i class="fas fa-certificate mr-2"></i> Get Certified
                             </button>
+                            <!-- shop button removed while digital products are not available
                             <button id="dashboardShop" class="premium-btn bg-gray-600 text-gray-300 font-bold px-8 py-4 rounded-2xl flex-shrink-0 flex items-center justify-center shadow-xl" disabled>
                                 <i class="fas fa-store mr-2"></i> Digital Products — Coming Soon
                             </button>
+                            -->
                             <!-- Support button intentionally removed from hero to simplify UI. Donation modal and handlers remain available if needed. -->
                         </div>
                     </div>
@@ -1826,25 +3110,45 @@
                 </div>
                 <div class="mb-6 pt-4 border-t border-gray-700">
                     <h4 class="text-lg font-semibold text-sky-300 mb-3">International Payment</h4>
-                    <p class="text-gray-300 text-sm mb-3">You can pay via PayPal or by direct bank transfer (details below). Thank you!</p>
+                    <p class="text-gray-300 text-sm mb-3">PayPal payments are currently not available; please use eSewa, Khalti or the international bank transfer below.</p>
+                    <!-- PayPal link removed until account is set up -->
+                    <!--
                     <div class="mb-4 flex justify-center">
                         <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" rel="noopener noreferrer" class="inline-block my-2">
                             <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal" class="h-9 w-auto max-w-full">
                         </a>
                     </div>
                     <p class="text-xs text-gray-400">(User: Replace with your actual PayPal link/button)</p>
+                    -->
                     <details class="group text-left mt-4">
                         <summary class="interactive-choice py-2 px-4 rounded-md cursor-pointer list-none flex justify-between items-center">
                             <span class="font-semibold">International Bank Transfer Details</span>
                             <i class="fas fa-chevron-down group-open:rotate-180 transition-transform"></i>
                         </summary>
-                        <div class="mt-2 p-3 bg-gray-800/40 rounded-md text-sm text-gray-300 space-y-1">
-                            <p><strong>Bank Name:</strong> Muktinath Bikash Bank</p>
-                            <p><strong>Account Holder Name:</strong> Sukram Lama</p>
-                            <p><strong>Account Number/IBAN:</strong> 16921101074994000001</p>
-                            <p><strong>SWIFT/BIC Code:</strong>MNBBLNPKA</p>
-                            <p><strong>Bank Address:</strong> Gundu Ext. Counter,Bhaktapur, Nepal</p>
-                            <p class="text-xs text-gray-400 mt-1">( Donor may incur fees.)</p>
+                        <div class="mt-2 p-3 bg-gray-800/40 rounded-md text-sm text-gray-300">
+                            <!-- Improved bank details block with copy button -->
+                            <div class="bank-details-row">
+                                <div class="bank-col">
+                                    <div class="bank-label">Bank Name</div>
+                                    <div class="bank-value">Muktinath Bikash Bank</div>
+                                </div>
+                                <div class="bank-col">
+                                    <div class="bank-label">Account Holder</div>
+                                    <div class="bank-value">Sukram Lama</div>
+                                </div>
+                                <div class="bank-col bank-col-large">
+                                    <div class="bank-label">Account Number</div>
+                                    <div class="bank-account-row">
+                                        <span id="accountNumberDisplay" class="account-number">16921101074994000001</span>
+                                        <button type="button" data-copy-target="accountNumberDisplay" class="copy-btn interactive-button copy-btn-sm">Copy</button>
+                                    </div>
+                                </div>
+                                <div class="bank-col">
+                                    <div class="bank-label">SWIFT / BIC</div>
+                                    <div class="bank-value">MNBBLNPKA</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-400 mt-3">Please include the payment reference <strong>"Barista Certificate"</strong> in your transfer remarks so we can match payment quickly. Bank fees may apply.</div>
                         </div>
                     </details>
                 </div>
@@ -1891,8 +3195,10 @@
             <div class="bg-gray-900 rounded-2xl shadow-2xl max-w-2xl w-full p-8 relative overflow-y-auto max-h-[90vh] flex flex-col">
                 <button id="closeWelcomeModal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
                 <h2 class="text-3xl font-bold text-amber-400 mb-4">Brew confidence. Build a career.</h2>
-                <p class="mb-4">Turn your passion into professional skill with lessons crafted by real café pros. Learn the techniques that make great coffee reliably, shift after shift.</p>
-                <p class="mb-4">Practical, hands-on modules, clear feedback, and certification that employers trust — everything you need to level up and be proud of your work.</p>
+                <p class="mb-4">Specialty Barista Training is run by a small team of experienced baristas and café professionals based in Kathmandu, Nepal. Our course is free and created from the practical, on-shift techniques we use every day — not only theory but skills you can practice on real equipment.</p>
+                <p class="mb-4">Our mission is to make specialty coffee skills accessible to learners worldwide. We design lessons for both home baristas and café staff so that anyone can improve consistency, speed, and drink quality using approachable, step-by-step instruction.</p>
+                <p class="mb-4">We emphasize applied learning: every module contains demonstrations, troubleshooting tips, and practical exercises that mirror real service conditions. This focus helps learners build muscle memory and confidence, whether at home or behind a busy espresso machine.</p>
+                <p class="mb-4">For learners who want formal recognition, we offer an optional paid verified certificate that supports career progression. The certificate program is professional and optional — the course content remains free for everyone.</p>
                 <h3 class="text-xl font-semibold mt-6 mb-2">What You’ll Learn</h3>
                 <ul class="list-disc list-inside mb-4 space-y-1">
                     <li>How to pull the perfect espresso shot, every time</li>
@@ -1944,6 +3250,8 @@
             </div>
         </div>
 
+    
+
         <!-- Advertisement Sections -->
         <section id="dashboardAd" class="ad-placeholder mx-auto mt-8 mb-4 max-w-screen-md hidden" aria-label="Advertisement">
           <div class="ad-label">Advertisement</div>
@@ -1972,7 +3280,7 @@
                     <button id="backButton" class="interactive-button text-sm py-2 px-4">
                         <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
                     </button>
-                    <h2 id="lessonTitle" class="text-xl sm:text-2xl font-bold text-center text-gray-100 flex-grow mx-4 line-clamp-2">Lesson Title</h2>
+                    <h2 id="lessonTitle" class="text-xl sm:text-2xl font-bold text-center text-gray-100 flex-grow mx-4 line-clamp-2">Loading...</h2>
                 </div>
                 <div id="tabs" class="flex border-b border-gray-700 mb-6 text-sm sm:text-base">
                     <button id="theoryTab" class="tab active">Theory</button>
@@ -2007,7 +3315,7 @@
                 </div>
                 <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mb-6">
                     <div class="flex flex-col items-center">
-                        <img src="images/founder-signature.png" alt="Founder Signature" class="w-32 h-12 object-contain mb-2" id="cert-signature">
+                        <img src="images/founder-signature.png" alt="Founder Signature (replace with real scan)" class="w-32 h-12 object-contain mb-2" id="cert-signature" onerror="this.style.display='none'">
                         <span class="text-xs text-gray-400">Founder Signature</span>
                     </div>
                     <div class="flex flex-col items-center">
@@ -2034,14 +3342,262 @@
         </section>
 
         <!-- Modals -->
-        <div id="onboardingModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1050] hidden">
-            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-md text-center transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto custom-scrollbar">
-                <img src="images/logo.png" alt="Logo Icon" class="w-20 h-20 mx-auto mb-4">
-                <h3 class="text-2xl font-bold text-amber-400 mb-4">Welcome — Let’s personalize your certificate</h3>
-                <p class="text-gray-300 mb-6 text-sm">Enter your name and email so your certificate and progress feel truly yours. Small step, big pride.</p>
-                <input type="text" id="onboardingName" placeholder="Your Name (for Certificate)" class="input-field mb-3">
-                <input type="email" id="onboardingEmail" placeholder="Your Email (for Leaderboard)" class="input-field mb-4">
-                <button onclick="BaristaApp.dataManager.completeOnboarding()" class="interactive-button w-full py-2.5">Create My Profile — I’m Ready</button>
+
+        <!-- Onboarding modal (shows once per user) -->
+        <style>
+            /* Theme variables for easy customization and dark mode */
+            :root {
+                --brand-primary: #8B4513;     /* espresso brown */
+                --brand-primary-hover: #654321;
+                --brand-secondary: #228B22;   /* forest green */
+                --brand-secondary-hover: #006400;
+                --neutral-bg: #1F2937;
+                --neutral-border: #374151;
+                --text-primary: #F3F4F6;
+                --text-secondary: #D1D5DB;
+                --text-muted: #9CA3AF;
+                --error: #DC2626;
+                --success: #059669;
+            }
+
+            /* Staggered entrance animations */
+            @keyframes slideUpFade {
+                from { 
+                    transform: translateY(20px) scale(0.96); 
+                    opacity: 0; 
+                }
+                to { 
+                    transform: translateY(0) scale(1); 
+                    opacity: 1; 
+                }
+            }
+
+            @keyframes pulseComplete {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-4px); }
+                75% { transform: translateX(4px); }
+            }
+
+            .validation-error {
+                color: var(--error);
+                font-size: 0.875rem;
+                margin-top: 0.25rem;
+                display: flex;
+                align-items: center;
+                gap: 0.375rem;
+                animation: shake 0.4s ease-in-out;
+            }
+
+            .validation-success {
+                color: var(--success);
+                font-size: 0.875rem;
+                margin-top: 0.25rem;
+                display: flex;
+                align-items: center;
+                gap: 0.375rem;
+                animation: fadeIn 0.3s ease-out;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .onboarding-step,
+                .onboarding-step-dot,
+                .onboarding-btn,
+                .onboarding-input,
+                .onboarding-radio-label,
+                .step-complete-tag {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+
+            .onboarding-step {
+                animation: slideUpFade 0.3s ease-out forwards;
+            }
+
+            .onboarding-btn {
+                padding: 0.625rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 500;
+                transition: all 0.2s;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .onboarding-btn:focus-visible {
+                outline: 2px solid var(--brand-primary);
+                outline-offset: 2px;
+            }
+
+            .onboarding-btn:active {
+                transform: translateY(1px);
+            }
+
+            .onboarding-btn-primary {
+                background-color: var(--brand-primary);
+                color: var(--text-primary);
+            }
+
+            .onboarding-btn-primary:hover {
+                background-color: var(--brand-primary-hover);
+            }
+
+            .onboarding-btn-secondary {
+                background-color: var(--neutral-bg);
+                color: var(--text-primary);
+                border: 1px solid var(--neutral-border);
+            }
+
+            .onboarding-btn-secondary:hover {
+                background-color: var(--neutral-border);
+            }
+
+            .onboarding-input {
+                width: 100%;
+                padding: 0.75rem 1rem;
+                border-radius: 0.5rem;
+                background-color: rgba(31, 41, 55, 0.5);
+                border: 1px solid var(--neutral-border);
+                color: var(--text-primary);
+                transition: all 0.2s;
+            }
+
+            .onboarding-input::placeholder {
+                color: var(--text-muted);
+            }
+
+            .onboarding-input:focus {
+                outline: none;
+                border-color: var(--brand-primary);
+                box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.25);
+            }
+
+            .onboarding-input:focus-visible {
+                outline: 2px solid var(--brand-primary);
+                outline-offset: 2px;
+            }
+
+            .onboarding-radio-label {
+                display: flex;
+                align-items: center;
+                padding: 0.75rem;
+                border-radius: 0.5rem;
+                border: 1px solid var(--neutral-border);
+                margin-bottom: 0.5rem;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .onboarding-radio-label:hover {
+                background-color: rgba(31, 41, 55, 0.3);
+            }
+
+            .onboarding-radio-label:focus-within {
+                outline: 2px solid var(--brand-primary);
+                outline-offset: 2px;
+            }
+
+            .onboarding-radio-label input[type="radio"] {
+                width: 1rem;
+                height: 1rem;
+                margin-right: 0.75rem;
+                accent-color: var(--brand-primary);
+            }
+
+            .onboarding-step-indicator {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .onboarding-step-dot {
+                width: 0.5rem;
+                height: 0.5rem;
+                border-radius: 9999px;
+                background-color: var(--neutral-border);
+                transition: all 0.2s;
+            }
+
+            .onboarding-step-dot.active {
+                width: 0.75rem;
+                height: 0.75rem;
+                background-color: var(--brand-primary);
+            }
+
+            .onboarding-step-dot.completed {
+                background-color: var(--brand-secondary);
+                animation: pulseComplete 2s ease-out;
+            }
+
+            .helper-text {
+                color: var(--text-muted);
+                font-size: 0.875rem;
+                margin-top: 0.25rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .step-complete-tag {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.25rem 0.75rem;
+                background-color: rgba(34, 139, 34, 0.2);
+                border: 1px solid var(--brand-secondary);
+                color: var(--brand-secondary);
+                border-radius: 9999px;
+                font-size: 0.75rem;
+                animation: slideUpFade 0.3s ease-out;
+            }
+
+            .step-complete-tag i {
+                margin-right: 0.375rem;
+            }
+            .status-inline {
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                font-size: 0.875rem;
+                color: var(--text-muted);
+            }
+            .status-inline i { color: var(--text-muted); }
+        </style>
+        <div id="onboardingModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-[1045] hidden" aria-hidden="true">
+            <div class="modal-content-area glass p-8 rounded-xl shadow-2xl w-full max-w-2xl transform scale-95 opacity-0 relative max-h-[85vh] overflow-y-auto">
+                <button id="closeOnboardingModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                <div class="max-w-lg mx-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-amber-400 mb-2">Welcome to Specialty Barista Training</h2>
+                        <p class="text-sm text-gray-300">Let's get you set up with a personalized learning path.</p>
+                    </div>
+                    <div class="bg-gray-800/30 rounded-lg p-4 mb-6">
+                        <h3 class="text-sm font-semibold text-sky-300 mb-2">What's included:</h3>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Personalized certificate with your name</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Progress tracking & milestone badges</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-green-400 mr-2"></i> Professional barista certification</li>
+                        </ul>
+                    </div>
+                    <p class="text-sm text-gray-400 text-center mb-4">Quick setup takes about 2 minutes.</p>
+                    <div class="flex gap-3 justify-center">
+                        <button id="startOnboardingBtn" class="interactive-button bg-amber-500 hover:bg-amber-600 text-gray-900 font-semibold px-6 py-2.5 rounded-lg">
+                            <i class="fas fa-arrow-right mr-2"></i> Start Here
+                        </button>
+                        <button id="skipOnboardingBtn" class="interactive-button bg-gray-700 hover:bg-gray-600 text-gray-100 px-6 py-2.5 rounded-lg">
+                            Remind me later
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -2109,13 +3665,16 @@
                 </div>
                 <div class="mb-6 pt-4 border-t border-gray-700">
                     <h4 class="text-lg font-semibold text-sky-300 mb-3">For International Donors</h4>
-                    <p class="text-gray-300 text-sm mb-3">You can support us via PayPal or by direct bank transfer (details below). Thank you!</p>
+                    <p class="text-gray-300 text-sm mb-3">PayPal support is currently disabled; please use bank transfer details below if you'd like to donate.</p>
+                    <!-- paypal link removed -->
+                    <!--
                     <div class="mb-4 flex justify-center">
                         <a href="https://paypal.me/YOUR_PAYPAL_USERNAME" target="_blank" rel="noopener noreferrer" class="inline-block my-2">
                             <img src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg" alt="PayPal" class="h-9 w-auto max-w-full">
                         </a>
                     </div>
                     <p class="text-xs text-gray-400">(User: Replace with your actual PayPal link/button)</p>
+                    -->
                     <details class="group text-left mt-4">
                         <summary class="interactive-choice py-2 px-4 rounded-md cursor-pointer list-none flex justify-between items-center">
                             <span class="font-semibold">International Bank Transfer Details</span>
@@ -2158,6 +3717,78 @@
             </div>
         </div>
     </main>
+        <!-- Toast for copy feedback -->
+    <div id="copiedToast" aria-hidden="true">Copied to clipboard</div>
+
+        <!-- Testimonials overlay (hidden by default) -->
+        <div id="testimonialsOverlay" class="fixed inset-0 z-[6000] bg-black bg-opacity-70 hidden items-center justify-center p-4" aria-hidden="true">
+            <div class="testimonials-modal glass p-6 rounded-lg max-w-2xl w-full relative text-gray-100">
+                <button id="closeTestimonialsBtn" class="absolute top-3 right-3 text-gray-300 hover:text-white text-2xl" aria-label="Close testimonials">×</button>
+                <h3 class="text-2xl font-bold text-amber-400 mb-3">What learners say</h3>
+                <div class="space-y-4 text-gray-200 text-sm">
+                    <blockquote class="testimonial p-4 bg-gray-800/50 rounded">
+                        <p class="mb-2">"The latte art lessons were a game-changer — clear steps, helpful troubleshooting, and practical drills that actually improved my pours. I went from simple hearts to more intricate patterns within a week."</p>
+                        <footer class="text-xs text-gray-400">— Maya R.</footer>
+                    </blockquote>
+                    <blockquote class="testimonial p-4 bg-gray-800/50 rounded">
+                        <p class="mb-2">"This course boosted my confidence during interviews and on the shop floor. The role-play and service workflow tips taught me how to stay calm under pressure and impress managers."</p>
+                        <footer class="text-xs text-gray-400">— Anil P.</footer>
+                    </blockquote>
+                    <blockquote class="testimonial p-4 bg-gray-800/50 rounded">
+                        <p class="mb-2">"The espresso extraction modules are precise and no-nonsense — they helped me dial in shots faster and get more consistent crema and flavor. The troubleshooting section is especially useful."</p>
+                        <footer class="text-xs text-gray-400">— Sofia L.</footer>
+                    </blockquote>
+                    <blockquote class="testimonial p-4 bg-gray-800/50 rounded">
+                        <p class="mb-2">"Their workflow and station organization advice made my morning shifts smoother. The course helped me speed up without sacrificing drink quality — my co-workers noticed the difference."</p>
+                        <footer class="text-xs text-gray-400">— Rajesh K.</footer>
+                    </blockquote>
+                    <blockquote class="testimonial p-4 bg-gray-800/50 rounded">
+                        <p class="mb-2">"Buying the verified certificate was worth it for my resume; employers responded positively when I mentioned it. The certificate process felt professional and the verification made my skills credible."</p>
+                        <footer class="text-xs text-gray-400">— Hannah M.</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+    <!-- Floating Testimonials button (for mobile/desktop quick access) -->
+    <button id="openTestimonialsBtn" aria-label="Open testimonials" title="Learners say" class="fixed bottom-6 right-6 z-[7000] bg-amber-500 hover:bg-amber-600 text-gray-900 rounded-full w-12 h-12 flex items-center justify-center shadow-xl border-2 border-white">“</button>
+
+        <script>
+        // Copy-to-clipboard handler for elements with .copy-btn and data-copy-target
+        (function(){
+            function showToast(msg){
+                const t = document.getElementById('copiedToast');
+                if(!t) return;
+                t.textContent = msg || 'Copied to clipboard';
+                t.style.display = 'flex';
+                clearTimeout(t._hideTimer);
+                t._hideTimer = setTimeout(()=>{ t.style.display = 'none'; }, 1600);
+            }
+
+            document.addEventListener('click', function(e){
+                const btn = e.target.closest && e.target.closest('.copy-btn');
+                if (!btn) return;
+                const targetId = btn.getAttribute('data-copy-target');
+                if (!targetId) return;
+                const el = document.getElementById(targetId);
+                if (!el) return;
+                const text = el.textContent.trim();
+                if (!text) return;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(()=>{ showToast('Account number copied'); })
+                    .catch(()=>{ fallbackCopy(text, showToast); });
+                } else {
+                    fallbackCopy(text, showToast);
+                }
+            });
+
+            function fallbackCopy(text, cb){
+                const ta = document.createElement('textarea'); ta.value = text; ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select();
+                try{ document.execCommand('copy'); cb && cb('Account number copied'); }catch(e){ alert('Copy failed — please select and copy manually.'); }
+                ta.remove();
+            }
+        })();
+        </script>
 
 
       <script>
@@ -2353,6 +3984,39 @@
         document.getElementById('disclosureBtn').onclick = function() {
             window.location.href = 'disclosure.html';
         };
+        
+        // Control testimonials visibility: only show on allowed pages/screens
+        function updateTestimonialsVisibility() {
+            // Only show testimonials on the home page (index.html or root).
+            const allowedPaths = ['index.html', '/'];
+            const path = window.location.pathname.split('/').pop() || 'index.html';
+            const overlay = document.getElementById('testimonialsOverlay');
+            const inline = document.getElementById('testimonials');
+            const tbtn = document.getElementById('openTestimonialsBtn');
+            const lessonVisible = !document.getElementById('lessonPage').classList.contains('hidden') || !document.getElementById('lessonModal').classList.contains('hidden');
+
+            const shouldShow = allowedPaths.includes(path) && !lessonVisible;
+
+            // Inline testimonials (home section) should only be present on index/about/contact/privacy/disclosure
+            if (inline) inline.style.display = shouldShow ? '' : 'none';
+            // Floating button and overlay availability
+            if (tbtn) tbtn.style.display = shouldShow ? '' : 'none';
+            if (overlay) {
+                if (!shouldShow) {
+                    overlay.classList.add('hidden'); overlay.classList.remove('flex'); overlay.setAttribute('aria-hidden','true');
+                }
+            }
+        }
+
+        // Run once on load
+        document.addEventListener('DOMContentLoaded', function(){ updateTestimonialsVisibility(); });
+
+        // Also run when navigation buttons might change page
+        ['homeBtn','aboutBtn','contactBtn','privacyBtn','disclosureBtn'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('click', function(){ setTimeout(updateTestimonialsVisibility, 200); });
+        });
     // Support Us button
     const supportBtn = document.getElementById('dashboardSupportUs');
     if (supportBtn) supportBtn.addEventListener('click', function() {
@@ -2373,21 +4037,24 @@
         document.getElementById('verifiedCertModal').classList.add('hidden');
     });
 
-    // Shop button
+    // Shop button (modal currently hidden/removed)
     const shopBtn = document.getElementById('dashboardShop');
     if (shopBtn) shopBtn.addEventListener('click', function() {
-        document.getElementById('shopModal').classList.remove('hidden');
+        const m = document.getElementById('shopModal');
+        if (m) m.classList.remove('hidden');
     });
     const closeShop = document.getElementById('closeShopModal');
     if (closeShop) closeShop.addEventListener('click', function() {
-        document.getElementById('shopModal').classList.add('hidden');
+        const m = document.getElementById('shopModal');
+        if (m) m.classList.add('hidden');
     });
 
     // Sidebar Shop link
     const shopSidebarLink = document.getElementById('shopSidebarLink');
     if (shopSidebarLink) shopSidebarLink.addEventListener('click', function(e) {
         e.preventDefault();
-        document.getElementById('shopModal').classList.remove('hidden');
+        const m = document.getElementById('shopModal');
+        if (m) m.classList.remove('hidden');
     });
 
     // Admin Dashboard has been removed from the client bundle for security; no action required here.
@@ -2409,12 +4076,37 @@ function populateSidebarUserCard() {
     } catch (e) { console.warn('populateSidebarUserCard:', e); }
 }
 
+// UI helpers
+window.BaristaApp = window.BaristaApp || {};
+window.BaristaApp.ui = window.BaristaApp.ui || {};
+window.BaristaApp.ui.updateHeroVisibility = function() {
+    try {
+        const page = (window.BaristaApp && window.BaristaApp.state && window.BaristaApp.state.page) ? window.BaristaApp.state.page : 'dashboard';
+        const hero = document.querySelector('.premium-hero');
+        const trust = document.getElementById('trustSection');
+        if (hero) {
+            if (page === 'dashboard') {
+                hero.style.display = '';
+            } else {
+                hero.style.display = 'none';
+            }
+        }
+        if (trust) {
+            if (page === 'dashboard') trust.style.display = '';
+            else trust.style.display = 'none';
+        }
+    } catch (e) { /* ignore */ }
+};
+
 // Ensure sidebar user card is populated on initial load and after state changes
 document.addEventListener('DOMContentLoaded', function() {
     populateSidebarUserCard();
     // Small observer: if BaristaApp.state.user changes via setUser or other flows, call populateSidebarUserCard()
     // For projects without a state watcher, developers can call BaristaApp.ui.refreshUserCard = populateSidebarUserCard;
     if (window.BaristaApp && window.BaristaApp.ui) window.BaristaApp.ui.refreshUserCard = populateSidebarUserCard;
+    // Ensure initial page state is set so hero visibility is correct
+    try { if (!window.BaristaApp.state) window.BaristaApp.state = {}; if (!window.BaristaApp.state.page) window.BaristaApp.state.page = 'dashboard'; } catch(e){}
+    try { window.BaristaApp.ui && typeof window.BaristaApp.ui.updateHeroVisibility === 'function' && window.BaristaApp.ui.updateHeroVisibility(); } catch(e){}
 });
 // Small animated counter for points
 function animatePoints(el, from, to, duration = 700) {
@@ -2447,14 +4139,67 @@ if (window.BaristaApp && window.BaristaApp.ui) {
 }
                 // Lesson Modal logic
                 function showLessonModal(contentHtml) {
-                    document.getElementById('lessonModalContent').innerHTML = contentHtml;
-                    document.getElementById('lessonModal').classList.remove('hidden');
-                    document.body.classList.add('overflow-hidden'); // Prevent background scroll
+                    // When showing lesson content, hide testimonials overlay, inline section, and floating button
+                    const overlay = document.getElementById('testimonialsOverlay');
+                    if (overlay) { overlay.classList.add('hidden'); overlay.classList.remove('flex'); overlay.setAttribute('aria-hidden','true'); }
+                    const inlineTestimonials = document.getElementById('testimonials'); if (inlineTestimonials) inlineTestimonials.style.display = 'none';
+                    const tbtn = document.getElementById('openTestimonialsBtn'); if (tbtn) tbtn.style.display = 'none';
+
+                    const modal = document.getElementById('lessonModal');
+                    const modalContent = document.getElementById('lessonModalContent');
+                    modalContent.innerHTML = contentHtml;
+                    modal.classList.remove('hidden');
+                    // Mark app as on lesson page and mark body so global UI (hero/trust) can react consistently
+                    try { if (!window.BaristaApp.state) window.BaristaApp.state = {}; window.BaristaApp.state.page = 'lesson'; } catch(e){}
+                    try { window.BaristaApp.ui && typeof window.BaristaApp.ui.updateHeroVisibility === 'function' && window.BaristaApp.ui.updateHeroVisibility(); } catch(e){}
+                    document.body.classList.add('overflow-hidden', 'modal-open', 'lesson-open'); // Prevent background scroll
+
+                    // If the modal content is taller than the viewport, show subtle scroll indicator
+                    try {
+                        const seen = (function(){ try { return !!sessionStorage.getItem('lessonIndicatorShown'); } catch(e){ return false; }})();
+                        const checkScrollable = () => {
+                            if (!modalContent) return;
+                            if (modalContent.scrollHeight > modalContent.clientHeight && !seen) {
+                                modalContent.classList.add('can-scroll');
+                                // attach scroll handler to hide indicator after user scrolls
+                                if (!modalContent.__lessonScrollHandler) {
+                                    modalContent.__lessonScrollHandler = function(){
+                                        if (modalContent.scrollTop > 20) {
+                                            modalContent.classList.remove('can-scroll');
+                                            try { sessionStorage.setItem('lessonIndicatorShown', '1'); } catch(e){}
+                                        }
+                                    };
+                                    modalContent.addEventListener('scroll', modalContent.__lessonScrollHandler, { passive: true });
+                                }
+                            } else {
+                                modalContent.classList.remove('can-scroll');
+                            }
+                        };
+                        // defer a tick to allow DOM to layout
+                        setTimeout(checkScrollable, 50);
+                    } catch(e) { /* ignore */ }
                 }
                 function hideLessonModal() {
-                    document.getElementById('lessonModal').classList.add('hidden');
-                    document.getElementById('lessonModalContent').innerHTML = '';
-                    document.body.classList.remove('overflow-hidden'); // Restore scroll
+                    const modal = document.getElementById('lessonModal');
+                    const modalContent = document.getElementById('lessonModalContent');
+                    modal.classList.add('hidden');
+                    modalContent.innerHTML = '';
+                    // Mark app back to dashboard and remove body markers
+                    try { if (!window.BaristaApp.state) window.BaristaApp.state = {}; window.BaristaApp.state.page = 'dashboard'; } catch(e){}
+                    try { window.BaristaApp.ui && typeof window.BaristaApp.ui.updateHeroVisibility === 'function' && window.BaristaApp.ui.updateHeroVisibility(); } catch(e){}
+                    document.body.classList.remove('overflow-hidden', 'modal-open', 'lesson-open');
+                    // Remove scroll indicator handlers if present
+                    try {
+                        if (modalContent && modalContent.__lessonScrollHandler) {
+                            modalContent.removeEventListener('scroll', modalContent.__lessonScrollHandler);
+                            delete modalContent.__lessonScrollHandler;
+                        }
+                        modalContent.classList.remove('can-scroll');
+                    } catch(e) { /* ignore */ }
+                    // Restore testimonials floating button visibility on the home screen
+                    const tbtn = document.getElementById('openTestimonialsBtn'); if (tbtn) tbtn.style.display = '';
+                    // Update testimonials visibility for current page
+                    updateTestimonialsVisibility();
                 }
                 const _closeLessonModalBtn = document.getElementById('closeLessonModal'); if (_closeLessonModalBtn) _closeLessonModalBtn.onclick = hideLessonModal;
                 // Accessibility: Add missing alt/aria-labels for images and buttons
@@ -2475,7 +4220,18 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                             }
                             const _closeWelcomeModal = document.getElementById('closeWelcomeModal'); if (_closeWelcomeModal) _closeWelcomeModal.onclick = hideWelcomeModal;
                             const _closeWelcomeModal2 = document.getElementById('closeWelcomeModal2'); if (_closeWelcomeModal2) _closeWelcomeModal2.onclick = hideWelcomeModal;
-                            const _skipWelcomeModal = document.getElementById('skipWelcomeModal'); if (_skipWelcomeModal) _skipWelcomeModal.onclick = hideWelcomeModal;
+                            const _skipWelcomeModal = document.getElementById('skipWelcomeModal');
+                            if (_skipWelcomeModal) _skipWelcomeModal.onclick = function(){
+                                try { hideWelcomeModal(); } catch(e) {}
+                                try {
+                                    if (window.BaristaApp && window.BaristaApp.lessonManager && typeof window.BaristaApp.lessonManager.openPage === 'function') {
+                                        window.BaristaApp.lessonManager.openPage(1);
+                                    } else {
+                                        // If BaristaApp not ready yet, delay slightly
+                                        setTimeout(() => { try { window.BaristaApp.lessonManager.openPage(1); } catch(e) { console.warn('Failed to open first lesson after welcome:', e); } }, 200);
+                                    }
+                                } catch (err) { console.warn('skipWelcomeModal openPage error', err); }
+                            };
 
                                         // Hide welcome modal and show lesson modal when a lesson is opened
                                         const dayList = document.getElementById('dayList');
@@ -3925,6 +5681,44 @@ if (window.BaristaApp && window.BaristaApp.ui) {
 
             // --- UI Update Functions ---
             ui: {
+                showNotification: (message, type = 'info') => {
+                    const notification = document.createElement('div');
+                    notification.className = `notification fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                        type === 'error' ? 'bg-red-500' : 
+                        type === 'success' ? 'bg-green-500' : 
+                        'bg-blue-500'
+                    } text-white`;
+                    notification.textContent = message;
+                    document.body.appendChild(notification);
+                    
+                    if (window.gsap) {
+                        gsap.fromTo(notification,
+                            { y: -20, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
+                        );
+                        gsap.to(notification, {
+                            opacity: 0,
+                            y: 20,
+                            delay: 2.5,
+                            duration: 0.3,
+                            ease: "power2.in",
+                            onComplete: () => notification.remove()
+                        });
+                    } else {
+                        // Fallback to CSS animation
+                        notification.style.animation = 'fadeInOut 3s ease-in-out forwards';
+                        setTimeout(() => notification.remove(), 3000);
+                    }
+                },
+                
+                showError: (message) => {
+                    BaristaApp.ui.showNotification(message, 'error');
+                },
+                
+                showSuccess: (message) => {
+                    BaristaApp.ui.showNotification(message, 'success');
+                },
+                
                 applyTheme: () => {
                     if (!BaristaApp.elements.appBody) return;
                     BaristaApp.elements.appBody.classList.toggle("high-contrast", BaristaApp.state.theme === "light");
@@ -3954,8 +5748,26 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                 updateProgressDisplay: () => {
                     const completed = BaristaApp.state.progress.filter(Boolean).length;
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
-                    if (BaristaApp.elements.progress) BaristaApp.elements.progress.textContent = `${t.progress}: ${completed}/${BaristaApp.state.totalDays}`;
-                    if (BaristaApp.elements.progressBarFill) gsap.to(BaristaApp.elements.progressBarFill, { width: `${(BaristaApp.state.totalDays > 0 ? (completed / BaristaApp.state.totalDays) : 0) * 100}%`, duration: 0.6, ease: "power2.out" });
+                    if (BaristaApp.elements.progress) {
+                        BaristaApp.elements.progress.textContent = `${t.progress}: ${completed}/${BaristaApp.state.totalDays}`;
+                    }
+                    
+                    if (BaristaApp.elements.progressBarFill) {
+                        const progressPercent = (BaristaApp.state.totalDays > 0 ? (completed / BaristaApp.state.totalDays) : 0) * 100;
+                        if (window.gsap) {
+                            gsap.to(BaristaApp.elements.progressBarFill, {
+                                width: `${progressPercent}%`,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                            // Mark GSAP as available
+                            document.body.classList.add('gsap-loaded');
+                        } else {
+                            // Fallback to CSS transition
+                            BaristaApp.elements.progressBarFill.style.width = `${progressPercent}%`;
+                        }
+                    }
+                    
                     localStorage.setItem("baristaIO_progress", JSON.stringify(BaristaApp.state.progress));
                     // persist readProgress as well if present
                     if (BaristaApp.state.readProgress) localStorage.setItem("baristaIO_readProgress", JSON.stringify(BaristaApp.state.readProgress));
@@ -4079,23 +5891,17 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                 updateLeaderboardDisplay: () => { if (!BaristaApp.elements.leaderboardList) return; const e = BaristaApp.state.user.email || `anon_${Date.now()}@barista.io`; BaristaApp.elements.leaderboardList.innerHTML = BaristaApp.state.leaderboard.map((entry, i) => `<li class="py-2.5 px-4 rounded-md flex justify-between items-center text-sm ${entry.name===BaristaApp.state.user.name&&entry.email===e ? 'current-user-highlight' : (BaristaApp.state.theme==='light'?'hover:bg-gray-200':'hover:bg-gray-700/50')}"><span>${i+1}. ${entry.name}</span><span class="font-semibold">${entry.points} pts</span></li>`).join("") || "<li class='p-3 text-gray-500'>No scores yet.</li>"; },
                 populateGlossary: (filter = "") => { if (!BaristaApp.elements.glossaryList || !CONTENT.glossary) return; const l = filter.toLowerCase(), f = CONTENT.glossary.filter(i=>i.term.toLowerCase().includes(l)||i.definition.toLowerCase().includes(l)); if(f.length===0){BaristaApp.elements.glossaryList.innerHTML=`<li class="p-3 text-gray-400">No terms matching "${filter}".</li>`;return;} BaristaApp.elements.glossaryList.innerHTML = f.map(i => `<li class="py-2.5 px-3 rounded-md ${BaristaApp.state.theme==='light'?'hover:bg-gray-200':'hover:bg-gray-700/50'} transition-colors"><strong class="text-amber-400">${i.term}</strong>: <span class="text-sm">${i.definition}</span></li>`).join(""); },
                 showCertificate: () => {
-                    if (!BaristaApp.elements.dashboard || !BaristaApp.elements.lessonPage || !BaristaApp.elements.certificate || !BaristaApp.elements.traineeName || !BaristaApp.elements.certDate || !BaristaApp.elements.certPoints) { console.error("Missing cert elements."); return; }
-                    BaristaApp.elements.dashboard.classList.add("hidden"); BaristaApp.elements.dashboard.classList.remove("active");
-                    BaristaApp.elements.lessonPage.classList.add("hidden"); BaristaApp.elements.lessonPage.classList.remove("active");
-                    BaristaApp.elements.certificate.classList.remove("hidden"); BaristaApp.elements.certificate.classList.add("active");
-                    BaristaApp.ui.ads.manageContentAdsVisibility(null); // Hide ads on certificate page
-                    BaristaApp.elements.traineeName.textContent = BaristaApp.state.user.name;
-                    BaristaApp.elements.certDate.textContent = new Date().toLocaleDateString(BaristaApp.state.language==='ne'?'ne-NP':'en-US',{year:'numeric',month:'long',day:'numeric'});
-                    BaristaApp.elements.certPoints.textContent = `${BaristaApp.state.user.points} Points`;
-                    if (BaristaApp.elements.lottieCertificate && typeof lottie !== 'undefined'){
-                        if(BaristaApp.elements.lottieCertificate.animInstance){ BaristaApp.elements.lottieCertificate.animInstance.destroy(); BaristaApp.elements.lottieCertificate.innerHTML=''; }
-                        try{ const p="lottie/certificate-animation.json";
-                            if(window.location.protocol==="file:"){ console.warn("Lottie cert anim might not load from file://"); if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-gray-500">(Anim disabled)</p>';}
-                            else{ fetch(p).then(r=>{if(!r.ok)throw new Error(`Failed Lottie fetch: ${r.status} from ${p}`);return r.json();}).then(d=>{BaristaApp.elements.lottieCertificate.animInstance=lottie.loadAnimation(BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieCertificate,p,false));}).catch(e=>{console.error("Lottie cert anim error:",e);if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-red-500">(Anim failed)</p>';});}
-                        }catch(e){console.error("Lottie cert setup error:",e);if(BaristaApp.elements.lottieCertificate)BaristaApp.elements.lottieCertificate.innerHTML='<p class="text-xs text-red-500">(Anim setup error)</p>';}
-                    }
-                    gsap.fromTo(BaristaApp.elements.certificate.querySelector(".glass"),{opacity:0,y:30,scale:0.95},{opacity:1,y:0,scale:1,duration:0.7,ease:"elastic.out(1,0.65)"});
-                    BaristaApp.util.trackAnalytics("Viewed Certificate");
+                    // Certificates are a paid/verified product. Instead of showing the certificate page automatically,
+                    // inform the user and point to verification/purchase flow if needed.
+                    try {
+                        const msg = "Verified certificates are a paid service and are not included automatically. Visit the Verify page for more information or contact support.";
+                        if (BaristaApp.util && typeof BaristaApp.util.showError === 'function') {
+                            BaristaApp.util.showError(msg);
+                        } else {
+                            alert(msg);
+                        }
+                        BaristaApp.util && BaristaApp.util.trackAnalytics && BaristaApp.util.trackAnalytics('ShowCertificateBlocked');
+                    } catch (e) { console.warn('showCertificate stub error', e); }
                 },
                 ads: {
                     _getAdConfig: (selector) => {
@@ -4253,26 +6059,61 @@ if (window.BaristaApp && window.BaristaApp.ui) {
                     if(overviewCards.length > 0) gsap.from(overviewCards, { opacity: 0, y: 25, stagger: 0.12, duration: 0.5, delay:0.3, ease: "power2.out" });
                 },
                 animateLessonContentLoaded: (container) => {
-                    if (container && container.children.length > 0) {
-                        const theoryElements = gsap.utils.toArray('.gsap-fade-in, .gsap-slide-in-left, .gsap-slide-in-up', container);
-                        if (theoryElements.length > 0) {
-                            ScrollTrigger.batch(theoryElements, {
-                                onEnter: batch => gsap.to(batch, {opacity: 1, y: 0, x:0, stagger: 0.1, duration:0.5, ease:'power1.out'}),
+                    if (!container || !container.children.length) {
+                        BaristaApp.ui.ads.manageContentAdsVisibility(null); // Ensure ad is hidden if no content
+                        return;
+                    }
+
+                    const theoryElements = container.querySelectorAll('.gsap-fade-in, .gsap-slide-in-left, .gsap-slide-in-up');
+                    
+                    if (window.BaristaApp.dependencies.animation.scrollTrigger) {
+                        // Use GSAP ScrollTrigger if available
+                        const elements = gsap.utils.toArray(theoryElements);
+                        if (elements.length > 0) {
+                            ScrollTrigger.batch(elements, {
+                                onEnter: batch => gsap.to(batch, {
+                                    opacity: 1,
+                                    y: 0,
+                                    x: 0,
+                                    stagger: 0.1,
+                                    duration: 0.5,
+                                    ease: 'power1.out'
+                                }),
                                 start: 'top 90%',
                             });
                         }
-                     // --- ADSENSE POLICY CHANGE ---
-                    setTimeout(() => { // Keep delay to allow content to fully render and be measurable
+                        if (ScrollTrigger.getAll().length > 0) {
+                            ScrollTrigger.refresh();
+                        }
+                    } else {
+                        // Fallback to Intersection Observer
+                        const observerCallback = (entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('visible');
+                                }
+                            });
+                        };
+
+                        const observer = new IntersectionObserver(observerCallback, {
+                            threshold: 0.1,
+                            rootMargin: '50px'
+                        });
+
+                        theoryElements.forEach(element => {
+                            element.classList.add('theory-section');
+                            observer.observe(element);
+                        });
+                    }
+
+                    // --- ADSENSE POLICY CHANGE ---
+                    setTimeout(() => {
                         BaristaApp.ui.ads.manageContentAdsVisibility('#lessonPageAd');
                     }, 400);
                     // --- END ADSENSE POLICY CHANGE ---
-                    } else {
-                         BaristaApp.ui.ads.manageContentAdsVisibility(null); // Ensure ad is hidden if no content
-                    }
-                     if(ScrollTrigger.getAll().length > 0) ScrollTrigger.refresh();
                 },
                 lottieOptions: (container, path, loop = true) => ({ container: container, path: path, renderer: "svg", loop: loop, autoplay: true, name: container.id }),
-                loadLottieAnimations: () => { if (typeof lottie === 'undefined') { console.warn("Lottie lib not loaded."); return; } if (BaristaApp.elements.lottieProgress) { if (BaristaApp.elements.lottieProgress.animInstance) BaristaApp.elements.lottieProgress.animInstance.destroy(); BaristaApp.elements.lottieProgress.innerHTML = ''; try { BaristaApp.elements.lottieProgress.animInstance = lottie.loadAnimation( BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieProgress, "lottie/progress-animation.json")); } catch (e) { console.error("Lottie progress error:", e); } } },
+                loadLottieAnimations: () => { if (typeof lottie === 'undefined') { if (!__IS_LOCAL_FILE) console.warn("Lottie lib not loaded."); else console.info("Lottie lib not loaded (skipped in local dev)."); return; } if (BaristaApp.elements.lottieProgress) { if (BaristaApp.elements.lottieProgress.animInstance) BaristaApp.elements.lottieProgress.animInstance.destroy(); BaristaApp.elements.lottieProgress.innerHTML = ''; try { BaristaApp.elements.lottieProgress.animInstance = lottie.loadAnimation( BaristaApp.ui.lottieOptions(BaristaApp.elements.lottieProgress, "lottie/progress-animation.json")); } catch (e) { console.error("Lottie progress error:", e); } } },
                 updateTranslations: () => {
                     const t = CONTENT.translations[BaristaApp.state.language] || CONTENT.translations.en;
                     if(BaristaApp.elements.search) BaristaApp.elements.search.placeholder = t.search;
@@ -4304,22 +6145,64 @@ if (window.BaristaApp && window.BaristaApp.ui) {
             modalManager: {
                 _openModal: (modalElement, focusElement = null) => {
                     if (!modalElement || !modalElement.querySelector(".modal-content-area")) return;
+                    
+                    const contentArea = modalElement.querySelector(".modal-content-area");
                     const isSignificantModal = ['onboardingModal', 'profileModal', 'quizModal', 'donationModal', 'leaderboardModal', 'glossaryModal'].includes(modalElement.id);
+                    
                     if (isSignificantModal) BaristaApp.ui.ads.hideAdsForModal();
-                    modalElement.classList.remove("hidden"); modalElement.classList.add("flex");
-                    gsap.to(modalElement.querySelector(".modal-content-area"), { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" });
-                    if (focusElement) setTimeout(() => focusElement.focus(), 100);
+                    modalElement.classList.remove("hidden");
+                    modalElement.classList.add("flex");
+
+                    if (window.gsap) {
+                        gsap.to(contentArea, {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.4,
+                            ease: "back.out(1.7)"
+                        });
+                    } else {
+                        // CSS fallback
+                        contentArea.style.opacity = '1';
+                        contentArea.style.transform = 'translateY(0) scale(1)';
+                        contentArea.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                    }
+
+                    if (focusElement) {
+                        setTimeout(() => focusElement.focus(), 100);
+                    }
                 },
+                
                 _closeModal: (modalElement) => {
                     if (!modalElement || !modalElement.querySelector(".modal-content-area")) return;
-                    gsap.to(modalElement.querySelector(".modal-content-area"), {
-                        opacity: 0, y: 10, scale: 0.95, duration: 0.3, ease: "back.in(1.7)",
-                        onComplete: () => {
-                            modalElement.classList.add("hidden"); modalElement.classList.remove("flex");
-                            const isSignificantModal = ['onboardingModal', 'profileModal', 'quizModal', 'donationModal', 'leaderboardModal', 'glossaryModal'].includes(modalElement.id);
-                            if (isSignificantModal) BaristaApp.ui.ads.restoreAdsAfterModal();
+                    
+                    const contentArea = modalElement.querySelector(".modal-content-area");
+                    const isSignificantModal = ['onboardingModal', 'profileModal', 'quizModal', 'donationModal', 'leaderboardModal', 'glossaryModal'].includes(modalElement.id);
+                    
+                    const completeClose = () => {
+                        modalElement.classList.add("hidden");
+                        modalElement.classList.remove("flex");
+                        if (isSignificantModal) {
+                            BaristaApp.ui.ads.restoreAdsAfterModal();
                         }
-                    });
+                    };
+
+                    if (window.gsap) {
+                        gsap.to(contentArea, {
+                            opacity: 0,
+                            y: 10,
+                            scale: 0.95,
+                            duration: 0.3,
+                            ease: "back.in(1.7)",
+                            onComplete: completeClose
+                        });
+                    } else {
+                        // CSS fallback
+                        contentArea.style.opacity = '0';
+                        contentArea.style.transform = 'translateY(10px) scale(0.95)';
+                        contentArea.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                        setTimeout(completeClose, 300);
+                    }
                 },
                 showOnboarding: () => BaristaApp.modalManager._openModal(BaristaApp.elements.onboardingModal, BaristaApp.elements.onboardingName),
                 showProfile: () => { if (!BaristaApp.elements.profileName || !BaristaApp.elements.profileEmail) return; BaristaApp.elements.profileName.value = BaristaApp.state.user.name; BaristaApp.elements.profileEmail.value = BaristaApp.state.user.email; BaristaApp.modalManager._openModal(BaristaApp.elements.profileModal, BaristaApp.elements.profileName); },
@@ -7453,17 +9336,31 @@ setupDay14: function() {
                 BaristaApp.setupEventListeners(); BaristaApp.ui.loadLottieAnimations(); BaristaApp.ui.updateLeaderboardDisplay();
 
                 if (typeof adsbygoogle !== 'undefined') { BaristaApp.state.adsInitialized = true; console.log("AdSense library detected."); BaristaApp.ui.ads.initSidebarAd(); }
-                else { console.warn("AdSense library not loaded. Ads will not display."); }
+                else { if (!__IS_LOCAL_FILE) console.warn("AdSense library not loaded. Ads will not display."); else console.info('AdSense skipped in local development to avoid 403 errors.'); }
 
                 if (BaristaApp.state.isFirstVisit && BaristaApp.elements.onboardingModal) { BaristaApp.ui.ads.hideAdsForModal(); BaristaApp.modalManager.showOnboarding(); }
                 else { BaristaApp.ui.animateDashboardElements(); } // This will call manageContentAdsVisibility
 
-                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { gsap.registerPlugin(ScrollTrigger); } else { console.error("GSAP or ScrollTrigger not loaded."); }
+                if (window.gsap && window.ScrollTrigger) {
+                    try {
+                        gsap.registerPlugin(ScrollTrigger);
+                        console.log("GSAP and ScrollTrigger initialized successfully");
+                    } catch (error) {
+                        console.warn("Error registering ScrollTrigger plugin:", error);
+                        document.body?.classList.add('no-scroll-animations');
+                    }
+                } else {
+                    if (!__IS_LOCAL_FILE) console.warn("GSAP or ScrollTrigger not available, falling back to CSS animations");
+                    else console.info('GSAP/ScrollTrigger not available in local dev; using CSS fallbacks.');
+                    document.body?.classList.add('no-scroll-animations');
+                }
             },
             setupEventListeners: () => {
                 if (BaristaApp.elements.backButton) {
                     BaristaApp.elements.backButton.addEventListener("click", () => {
-                        BaristaApp.elements.lessonPage?.classList.add("hidden"); BaristaApp.elements.lessonPage?.classList.remove("active");
+                        // Close lesson modal and restore scrolling
+                        BaristaApp.elements.lessonPage?.classList.add("hidden"); BaristaApp.elements.lessonPage?.classList.remove("active", "modal-overlay");
+                        try { document.body.classList.remove('overflow-hidden'); } catch(e) {}
                         BaristaApp.elements.certificate?.classList.add("hidden"); BaristaApp.elements.certificate?.classList.remove("active");
                         BaristaApp.elements.dashboard?.classList.remove("hidden"); BaristaApp.elements.dashboard?.classList.add("active");
                          // --- ADSENSE POLICY CHANGE ---
@@ -7513,6 +9410,633 @@ setupDay14: function() {
         document.addEventListener("DOMContentLoaded", () => {
             BaristaApp.init();
         });
+    </script>
+
+    <!-- Load extracted lesson manager (moved from inline index.html) -->
+    <script src="static/js/lesson.js"></script>
+    <!-- Small deeplink helper: opens lesson when ?day=N is present -->
+    <script src="static/js/deeplink.js"></script>
+
+    <script>
+    // Small app helpers: onboarding modal and progress UI updater
+    (function(){
+        function safe(fn){ try{ fn(); }catch(e){ console.warn(e); } }
+
+        function openProfileModal(){
+            safe(()=>{
+                if (window.BaristaApp && window.BaristaApp.modalManager && typeof window.BaristaApp.modalManager.closeOnboarding === 'function') {
+                    // if modal manager has onboarding hooks
+                }
+                // Close onboarding and open profile modal
+                const onb = document.getElementById('onboardingModal'); if (onb) onb.classList.add('hidden');
+                const pm = document.getElementById('profileModal'); if (pm) { pm.classList.remove('hidden'); pm.classList.add('active'); document.body.classList.add('modal-open','overflow-hidden'); }
+                try{ localStorage.setItem('onboardingSeen','1'); }catch(e){}
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            // Wire onboarding buttons (start a small multi-step flow inside the modal)
+            const startBtn = document.getElementById('startOnboardingBtn');
+            const skipBtn = document.getElementById('skipOnboardingBtn');
+            const closeBtn = document.getElementById('closeOnboardingModalBtn');
+
+            // Focus trap for modal accessibility
+            function trapFocus(element) {
+                const focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
+                const firstFocusableEl = focusableEls[0];
+                const lastFocusableEl = focusableEls[focusableEls.length - 1];
+                let currentFocus = null;
+
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Tab') {
+                        if (e.shiftKey) {
+                            if (document.activeElement === firstFocusableEl) {
+                                lastFocusableEl.focus();
+                                e.preventDefault();
+                            }
+                        } else {
+                            if (document.activeElement === lastFocusableEl) {
+                                firstFocusableEl.focus();
+                                e.preventDefault();
+                            }
+                        }
+                    }
+                    if (e.key === 'Escape') {
+                        const closeBtn = element.querySelector('#closeOnboardingModalBtn');
+                        if (closeBtn) closeBtn.click();
+                    }
+                });
+
+                // Store the element that had focus before the modal opened
+                currentFocus = document.activeElement;
+                firstFocusableEl.focus();
+
+                return function() {
+                    if (currentFocus && currentFocus.focus) {
+                        currentFocus.focus();
+                    }
+                };
+            }
+
+            // Add keyboard shortcuts for modal navigation (returns a removal function)
+            function addModalShortcuts(modalElement) {
+                function handler(e) {
+                    // Ignore when focus is inside a text input or textarea
+                    const active = document.activeElement;
+                    const isTypingField = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
+
+                    if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+                        if (!isTypingField) {
+                            const next = document.getElementById('onb_next');
+                            if (next) next.click();
+                        }
+                    }
+                    if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                        if (!isTypingField) {
+                            const back = document.getElementById('onb_back');
+                            if (back) back.click();
+                        }
+                    }
+                    if (e.key === 'Enter') {
+                        // If a primary button is visible and focus is not inside a multiline field, trigger it
+                        if (!isTypingField) {
+                            const primary = document.getElementById('onb_next') || document.getElementById('onb_finish');
+                            if (primary) primary.click();
+                        }
+                    }
+                    if (e.key === 'Escape') {
+                        const closeBtn = document.getElementById('closeOnboardingModalBtn');
+                        if (closeBtn) closeBtn.click();
+                    }
+                }
+                document.addEventListener('keydown', handler);
+                return function remove() { document.removeEventListener('keydown', handler); };
+            }
+
+            // Inline status helper (typing / checking / saved) - non-blocking messages
+            function showInlineStatus(targetId, message, type) {
+                const target = document.getElementById(targetId);
+                if (!target) return;
+                // remove previous status
+                const prev = target.parentElement.querySelector('.status-inline');
+                if (prev) prev.remove();
+                const el = document.createElement('div');
+                el.className = 'status-inline';
+                el.setAttribute('role','status');
+                el.setAttribute('aria-live','polite');
+                el.style.marginTop = '0.25rem';
+                el.style.fontSize = '0.875rem';
+                if (type === 'checking') el.style.color = 'var(--text-muted)';
+                if (type === 'saved') el.style.color = 'var(--success)';
+                if (type === 'typing') el.style.color = 'var(--text-muted)';
+                el.innerHTML = `<i class="fas fa-info-circle" aria-hidden="true" style="margin-right:.4rem"></i>${message}`;
+                target.parentElement.appendChild(el);
+            }
+
+            function startOnboardingFlow(){
+                const modal = document.getElementById('onboardingModal');
+                const content = modal.querySelector('.modal-content-area');
+                modal.classList.remove('hidden');
+                document.body.classList.add('modal-open','overflow-hidden');
+                
+                // Initialize focus trap
+                const restoreFocus = trapFocus(modal);
+                modal._restoreFocus = restoreFocus;
+
+                // Set up ARIA attributes
+                modal.setAttribute('role', 'dialog');
+                modal.setAttribute('aria-modal', 'true');
+                modal.setAttribute('aria-labelledby', 'onboardingTitle');
+
+                // state kept on modal._onboardingState
+                modal._onboardingState = { 
+                    step: 1, 
+                    name: '', 
+                    email: '', 
+                    lessonIndex: 0, 
+                    quizAnswer: null,
+                    completedSteps: []
+                };
+                
+                // install keyboard shortcuts for modal
+                modal._removeShortcuts = addModalShortcuts(modal);
+
+                renderOnboardingStep(1);
+            }
+
+            function renderOnboardingStep(step){
+                const modal = document.getElementById('onboardingModal');
+                const content = modal.querySelector('.modal-content-area');
+                if (!content) return;
+                const state = modal._onboardingState || {step:1};
+                state.step = step;
+
+                // Build step content (we replace the main grid area)
+                // No video yet, so we'll use a clean single-column layout
+                let leftHtml = '';
+                const hasMedia = false; // set to true when video/animation is added
+
+                // Step indicators (dots) with completion state
+                const completedSteps = state.completedSteps || [];
+                const stepDots = `
+                    <div class="onboarding-step-indicator" role="progressbar" aria-label="Onboarding progress">
+                        ${[1,2,3,4].map(n => `<div class="onboarding-step-dot${n === step ? ' active' : ''}${completedSteps.includes(n) ? ' completed' : ''}" 
+                             role="presentation" aria-hidden="true"></div>`).join('')}
+                    </div>`;
+                
+                // Completion tag helper
+                const completionTag = `
+                    <div class="step-complete-tag">
+                        <i class="fas fa-check"></i> Step ${step-1} completed
+                    </div>`;
+
+                if (step === 1) {
+                    leftHtml = `
+                        <div class="onboarding-step max-w-lg mx-auto">
+                            ${stepDots}
+                            <div class="text-center mb-6">
+                                <i class="fas fa-user-circle text-4xl text-amber-400 mb-3"></i>
+                                <h2 class="text-2xl font-bold text-amber-400">Create your profile</h2>
+                                <p class="text-sm text-gray-300">This will appear on your certificate and leaderboard.</p>
+                            </div>
+                            ${completedSteps.includes(step-1) ? completionTag : ''}
+                            <div class="space-y-4 mb-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-1" for="onb_name">
+                                        <i class="fas fa-id-card text-gray-400 mr-2"></i>Your Name
+                                    </label>
+                     <input id="onb_name" type="text" 
+                         placeholder="Full name for certificate" 
+                         value="${state.name || ''}" 
+                         class="onboarding-input"
+                         aria-required="true"
+                         aria-label="Your name for the certificate"
+                         aria-describedby="name-help" />
+                                    <p class="helper-text" id="name-help">This name will appear on your certificate exactly as entered.</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-300 mb-1" for="onb_email">
+                                        <i class="fas fa-envelope text-gray-400 mr-2"></i>Email Address
+                                    </label>
+                                    <input id="onb_email" type="email" 
+                                           placeholder="For progress tracking" 
+                                           value="${state.email || ''}" 
+                                           class="onboarding-input"
+                                           aria-required="true"
+                                           aria-label="Your email for progress tracking"
+                                           aria-describedby="email-help" />
+                                    <p class="helper-text" id="email-help">Used for tracking progress and certificate verification.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 justify-center">
+                                <button id="onb_next" class="onboarding-btn onboarding-btn-primary">
+                                    Next <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                                <button id="onb_skip" class="onboarding-btn onboarding-btn-secondary">
+                                    Skip for now
+                                </button>
+                            </div>
+                        </div>`;
+                } else if (step === 2) {
+                    // lesson selection with enhanced visuals
+                    let listHtml = '';
+                    try{
+                        if (typeof CONTENT !== 'undefined' && Array.isArray(CONTENT.days)){
+                            CONTENT.days.slice(0,8).forEach((d,i)=>{
+                                const checked = (i === state.lessonIndex) ? 'checked' : '';
+                                listHtml += `
+                                    <label class="onboarding-radio-label">
+                                        <input type="radio" name="onb_lesson" value="${i}" ${checked}/>
+                                        <div class="flex-1">
+                                            <div class="font-semibold flex items-center">
+                                                <i class="fas fa-coffee text-amber-400 mr-2"></i>
+                                                ${d.title || ('Day ' + (i+1))}
+                                            </div>
+                                            <div class="text-xs text-gray-400 ml-6">${d.summary || ''}</div>
+                                        </div>
+                                    </label>`;
+                            });
+                        } else {
+                            listHtml = '<div class="text-sm text-gray-400 text-center">No lessons found (using Day 1).</div>';
+                        }
+                    }catch(e){ listHtml = '<div class="text-sm text-gray-400 text-center">No lessons found.</div>'; }
+
+                    leftHtml = `
+                        <div class="onboarding-step max-w-lg mx-auto">
+                            ${stepDots}
+                            <div class="text-center mb-6">
+                                <i class="fas fa-book text-4xl text-amber-400 mb-3"></i>
+                                <h2 class="text-2xl font-bold text-amber-400">Choose your first lesson</h2>
+                                <p class="text-sm text-gray-300">Pick where you'd like to start. You can always change this later.</p>
+                            </div>
+                            <div id="onb_lesson_list" class="mb-6" aria-describedby="lesson-help">${listHtml}</div>
+                            <p id="lesson-help" class="helper-text">Choose any lesson to begin — you can switch later.</p>
+                            <div class="flex gap-3 justify-center">
+                                <button id="onb_back" class="onboarding-btn onboarding-btn-secondary">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back
+                                </button>
+                                <button id="onb_next" class="onboarding-btn onboarding-btn-primary">
+                                    Next <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>`;
+                } else if (step === 3) {
+                    // experience quiz with icons
+                    leftHtml = `
+                        <div class="onboarding-step max-w-lg mx-auto">
+                            ${stepDots}
+                            <div class="text-center mb-6">
+                                <i class="fas fa-star text-4xl text-amber-400 mb-3"></i>
+                                <h2 class="text-2xl font-bold text-amber-400">What's your experience?</h2>
+                                <p class="text-sm text-gray-300">We'll customize tips and recommendations for you.</p>
+                            </div>
+                            <div class="space-y-3 mb-6 onboarding-quiz-options" aria-describedby="quiz-help">
+                                <label class="onboarding-radio-label">
+                                    <input type="radio" name="onb_quiz" value="beginner" />
+                                    <div>
+                                        <div class="font-semibold"><i class="fas fa-seedling text-green-400 mr-2"></i> Beginner</div>
+                                        <div class="text-xs text-gray-400 ml-6">Just starting my coffee journey</div>
+                                    </div>
+                                </label>
+                                <label class="onboarding-radio-label">
+                                    <input type="radio" name="onb_quiz" value="intermediate" />
+                                    <div>
+                                        <div class="font-semibold"><i class="fas fa-mug-hot text-amber-400 mr-2"></i> Intermediate</div>
+                                        <div class="text-xs text-gray-400 ml-6">I practice regularly at home</div>
+                                    </div>
+                                </label>
+                                <label class="onboarding-radio-label">
+                                    <input type="radio" name="onb_quiz" value="pro" />
+                                    <div>
+                                        <div class="font-semibold"><i class="fas fa-award text-sky-400 mr-2"></i> Professional</div>
+                                        <div class="text-xs text-gray-400 ml-6">I work in the coffee industry</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <p id="quiz-help" class="helper-text">This helps us tailor your training experience.</p>
+                            <div class="flex gap-3 justify-center">
+                                <button id="onb_back" class="onboarding-btn onboarding-btn-secondary">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back
+                                </button>
+                                <button id="onb_next" class="onboarding-btn onboarding-btn-primary">
+                                    Next <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>`;
+                } else if (step === 4) {
+                    // summary with icons and clean layout
+                    const chosenIdx = state.lessonIndex || 0;
+                    const chosenTitle = (typeof CONTENT !== 'undefined' && CONTENT.days && CONTENT.days[chosenIdx]) ? (CONTENT.days[chosenIdx].title || ('Day ' + (chosenIdx+1))) : ('Day ' + (chosenIdx+1));
+                    leftHtml = `
+                        <div class="onboarding-step max-w-lg mx-auto">
+                            ${stepDots}
+                            <div class="text-center mb-6">
+                                <i class="fas fa-check-circle text-4xl text-green-400 mb-3"></i>
+                                <h2 class="text-2xl font-bold text-amber-400">Ready to begin!</h2>
+                                <p class="text-sm text-gray-300">Here's a summary of your preferences.</p>
+                            </div>
+                            <div class="bg-gray-800/30 rounded-lg p-4 mb-6">
+                                <div class="space-y-3 text-sm text-gray-300">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-user-circle text-amber-400 w-5 mr-3"></i>
+                                        <span class="text-gray-400">Name:</span>
+                                        <span class="ml-2 font-medium">${state.name || '—'}</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-envelope text-amber-400 w-5 mr-3"></i>
+                                        <span class="text-gray-400">Email:</span>
+                                        <span class="ml-2 font-medium">${state.email || '—'}</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-book text-amber-400 w-5 mr-3"></i>
+                                        <span class="text-gray-400">First lesson:</span>
+                                        <span class="ml-2 font-medium">${chosenTitle}</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-star text-amber-400 w-5 mr-3"></i>
+                                        <span class="text-gray-400">Experience:</span>
+                                        <span class="ml-2 font-medium">${state.quizAnswer || '—'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 justify-center">
+                                <button id="onb_back" class="onboarding-btn onboarding-btn-secondary">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back
+                                </button>
+                                <button id="onb_finish" class="onboarding-btn onboarding-btn-primary">
+                                    <i class="fas fa-play mr-2"></i> Start Learning
+                                </button>
+                            </div>
+                        </div>`;
+                }
+
+                // single column centered layout (we keep existing close button at top)
+                content.innerHTML = `
+                    <button id="closeOnboardingModalBtn" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl" aria-label="Close">×</button>
+                    <div class="max-w-lg mx-auto">
+                        ${leftHtml}
+                    </div>`;
+
+                // wire the new buttons
+                const newNext = document.getElementById('onb_next');
+                const newBack = document.getElementById('onb_back');
+                const newSkip = document.getElementById('onb_skip');
+                const newFinish = document.getElementById('onb_finish');
+
+                if (newBack) newBack.addEventListener('click', ()=>{
+                    const s = modal._onboardingState || {};
+                    renderOnboardingStep(Math.max(1, (s.step||1)-1));
+                });
+
+                if (newSkip) newSkip.addEventListener('click', ()=>{
+                    try{ localStorage.setItem('onboardingSeen','1'); }catch(e){}
+                    modal.classList.add('hidden'); document.body.classList.remove('modal-open','overflow-hidden');
+                    try{ if (modal._restoreFocus) modal._restoreFocus(); }catch(e){}
+                    try{ if (modal._removeShortcuts) modal._removeShortcuts(); }catch(e){}
+                    try{ if (modal._restoreFocus) modal._restoreFocus(); }catch(e){}
+                    try{ if (modal._removeShortcuts) modal._removeShortcuts(); }catch(e){}
+                });
+
+                // Function to show validation message
+                function showValidation(elementId, message, type = 'error') {
+                    const element = document.getElementById(elementId);
+                    if (!element) return;
+                    
+                    // Remove any existing validation message
+                    const existing = element.parentElement.querySelector('.validation-error, .validation-success');
+                    if (existing) existing.remove();
+
+                    // Add new validation message
+                    const msgEl = document.createElement('div');
+                    msgEl.className = type === 'error' ? 'validation-error' : 'validation-success';
+                    msgEl.setAttribute('role', 'status');
+                    msgEl.setAttribute('aria-live', 'polite');
+                    msgEl.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>${message}`;
+                    element.parentElement.appendChild(msgEl);
+
+                    if (type === 'error') {
+                        element.setAttribute('aria-invalid', 'true');
+                        element.focus();
+                    } else {
+                        element.setAttribute('aria-invalid', 'false');
+                    }
+                }
+
+                // Typing/checking/saved handlers (debounced) for inputs
+                modal._typingTimeouts = modal._typingTimeouts || {};
+                const nameField = document.getElementById('onb_name');
+                const emailField = document.getElementById('onb_email');
+                if (nameField) {
+                    nameField.addEventListener('input', function(){
+                        // show typing
+                        showInlineStatus('onb_name', 'Typing...', 'typing');
+                        clearTimeout(modal._typingTimeouts.name);
+                        modal._typingTimeouts.name = setTimeout(()=>{
+                            showInlineStatus('onb_name', 'Saved — this will appear on your certificate', 'saved');
+                        }, 800);
+                    });
+                }
+                if (emailField) {
+                    emailField.addEventListener('input', function(){
+                        showInlineStatus('onb_email', 'Typing...', 'typing');
+                        clearTimeout(modal._typingTimeouts.email);
+                        modal._typingTimeouts.email = setTimeout(()=>{
+                            showInlineStatus('onb_email', 'Checking email…', 'checking');
+                            // simulate server check
+                            setTimeout(()=>{
+                                // basic format check
+                                const val = (emailField.value || '').trim();
+                                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){
+                                    showInlineStatus('onb_email', 'Email looks good — we will use this for updates', 'saved');
+                                } else {
+                                    showInlineStatus('onb_email', 'Please enter a valid email address', 'error');
+                                }
+                            }, 700);
+                        }, 700);
+                    });
+                }
+
+                if (newNext) newNext.addEventListener('click', ()=>{
+                    // Save values from the step into state
+                    try{
+                        if (step === 1){
+                            const nameInput = document.getElementById('onb_name');
+                            const emailInput = document.getElementById('onb_email');
+                            const name = (nameInput?.value || '').trim();
+                            const email = (emailInput?.value || '').trim();
+                            
+                            if (!name) {
+                                showValidation('onb_name', 'Please enter your name — this will appear on your certificate');
+                                return;
+                            }
+                            if (!email) {
+                                showValidation('onb_email', 'Email is required to track your progress and send updates');
+                                return;
+                            }
+                            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                                showValidation('onb_email', 'Please enter a valid email address');
+                                return;
+                            }
+
+                            // Show success feedback
+                            showValidation('onb_name', 'Perfect! This will look great on your certificate', 'success');
+                            showValidation('onb_email', 'Great! We will keep your progress safe', 'success');
+
+                            modal._onboardingState.name = name;
+                            modal._onboardingState.email = email;
+                            // Mark step as completed
+                            modal._onboardingState.completedSteps = [...(modal._onboardingState.completedSteps || []), 1];
+                            
+                            // Short delay to show success messages
+                            setTimeout(() => renderOnboardingStep(2), 800);
+                            return;
+                        }
+                        if (step === 2){
+                            const lessonList = document.getElementById('onb_lesson_list');
+                            const sel = document.querySelector('input[name="onb_lesson"]:checked');
+                            if (!sel) {
+                                const msg = document.createElement('div');
+                                msg.className = 'validation-error';
+                                msg.setAttribute('role', 'alert');
+                                msg.innerHTML = '<i class="fas fa-exclamation-circle"></i>Select a lesson to begin your training journey';
+                                lessonList.appendChild(msg);
+                                return;
+                            }
+                            modal._onboardingState.lessonIndex = parseInt(sel.value,10);
+                            modal._onboardingState.completedSteps = [...(modal._onboardingState.completedSteps || []), 2];
+                            renderOnboardingStep(3);
+                            return;
+                        }
+                        if (step === 3){
+                            const quizContainer = document.querySelector('.onboarding-quiz-options');
+                            const q = document.querySelector('input[name="onb_quiz"]:checked');
+                            if (!q) {
+                                const msg = document.createElement('div');
+                                msg.className = 'validation-error';
+                                msg.setAttribute('role', 'alert');
+                                msg.innerHTML = '<i class="fas fa-exclamation-circle"></i>Please select your experience level';
+                                quizContainer.appendChild(msg);
+                                return;
+                            }
+                            modal._onboardingState.quizAnswer = q.value;
+                            modal._onboardingState.completedSteps = [...(modal._onboardingState.completedSteps || []), 3];
+                            // finalize
+                            renderOnboardingStep(4);
+                            return;
+                        }
+                    }catch(e){ console.warn(e); }
+                });
+
+                if (newFinish) newFinish.addEventListener('click', ()=>{
+                    // persist profile and open selected lesson
+                    const s = modal._onboardingState || {};
+                    try{
+                        if (window.BaristaApp && BaristaApp.dataManager && typeof BaristaApp.dataManager.saveProfile === 'function'){
+                            BaristaApp.dataManager.saveProfile({name: s.name, email: s.email});
+                        } else {
+                            window.BaristaApp = window.BaristaApp || {};
+                            window.BaristaApp.state = window.BaristaApp.state || {};
+                            window.BaristaApp.state.profile = {name: s.name, email: s.email};
+                        }
+                    }catch(e){ console.warn(e); }
+
+                    try{ localStorage.setItem('onboardingSeen','1'); }catch(e){}
+                    modal.classList.add('hidden'); document.body.classList.remove('modal-open','overflow-hidden');
+
+                    // open the selected lesson (lessonIndex is 0-based)
+                    try{
+                        const idx = (modal._onboardingState && modal._onboardingState.lessonIndex) ? modal._onboardingState.lessonIndex : 0;
+                        if (window.BaristaApp && BaristaApp.lessonManager && typeof BaristaApp.lessonManager.openPage === 'function'){
+                            BaristaApp.lessonManager.openPage(idx+1);
+                        } else if (window.openPage && typeof window.openPage === 'function'){
+                            window.openPage(idx+1);
+                        }
+                        // update progress UI
+                        if (window.BaristaApp && typeof BaristaApp.updateProgressUI === 'function') BaristaApp.updateProgressUI();
+                    }catch(e){ console.warn(e); }
+                });
+
+                // re-wire the modal close that lives inside content
+                const innerClose = document.getElementById('closeOnboardingModalBtn');
+                if (innerClose) innerClose.addEventListener('click', ()=>{
+                    const modalEl = document.getElementById('onboardingModal');
+                    if (modalEl) modalEl.classList.add('hidden');
+                    document.body.classList.remove('modal-open','overflow-hidden');
+                    try{ if (modal._restoreFocus) modal._restoreFocus(); }catch(e){}
+                    try{ if (modal._removeShortcuts) modal._removeShortcuts(); }catch(e){}
+                });
+            }
+
+            if (startBtn) startBtn.addEventListener('click', function(){ startOnboardingFlow(); });
+            if (skipBtn) skipBtn.addEventListener('click', function(){
+                const modalEl = document.getElementById('onboardingModal');
+                if (modalEl) modalEl.classList.add('hidden');
+                try{ localStorage.setItem('onboardingSeen','1'); }catch(e){}
+                try{ if (modalEl && modalEl._restoreFocus) modalEl._restoreFocus(); }catch(e){}
+                try{ if (modalEl && modalEl._removeShortcuts) modalEl._removeShortcuts(); }catch(e){}
+            });
+            if (closeBtn) closeBtn.addEventListener('click', function(){
+                const modalEl = document.getElementById('onboardingModal');
+                if (modalEl) modalEl.classList.add('hidden');
+                try{ if (modalEl && modalEl._restoreFocus) modalEl._restoreFocus(); }catch(e){}
+                try{ if (modalEl && modalEl._removeShortcuts) modalEl._removeShortcuts(); }catch(e){}
+            });
+
+            // Auto-show onboarding on first visit
+            try{
+                const seen = localStorage.getItem('onboardingSeen');
+                if (!seen) {
+                    const onb = document.getElementById('onboardingModal'); if (onb) onb.classList.remove('hidden');
+                }
+            }catch(e){ }
+
+            // Progress updater
+            function computeProgress(){
+                try{
+                    const state = window.BaristaApp && window.BaristaApp.state ? window.BaristaApp.state : {};
+                    const progressArr = state.progress || [];
+                    const total = (typeof CONTENT !== 'undefined' && CONTENT.days) ? CONTENT.days.length : progressArr.length || 0;
+                    const completed = Array.isArray(progressArr) ? progressArr.filter(Boolean).length : 0;
+                    const pct = total > 0 ? Math.round((completed/total)*100) : 0;
+                    return {pct, completed, total};
+                }catch(e){ return {pct:0,completed:0,total:0}; }
+            }
+
+            function updateProgressUI(){
+                const el = document.getElementById('progressPercent');
+                const bar = document.getElementById('progressBar');
+                const barFill = document.getElementById('progressBarFill') || bar;
+                const p = computeProgress();
+                if (el) el.textContent = p.pct + '%';
+                if (bar) {
+                    // If there's an inner fill element use that, otherwise set CSS var
+                    if (barFill && barFill !== bar) {
+                        barFill.style.width = p.pct + '%';
+                    } else {
+                        bar.style.setProperty('--progress-percent', p.pct + '%');
+                    }
+                }
+                // milestone badges (simple thresholds)
+                const badgeContainer = document.getElementById('milestoneBadges');
+                if (badgeContainer) {
+                    badgeContainer.innerHTML = '';
+                    const milestones = [{t:10,n:'Espresso Novice'},{t:40,n:'Espresso Pro'},{t:70,n:'Workflow Pro'},{t:100,n:'Espresso Master'}];
+                    milestones.forEach(m=>{
+                        const reached = p.pct >= m.t;
+                        const d = document.createElement('div'); d.className = 'hero-badge'; d.textContent = m.n; if (reached) d.classList.add('lesson-completed');
+                        badgeContainer.appendChild(d);
+                    });
+                }
+            }
+
+            // expose function
+            window.BaristaApp = window.BaristaApp || {};
+            window.BaristaApp.updateProgressUI = updateProgressUI;
+            // update now and every 2s to reflect state changes
+            updateProgressUI();
+            setInterval(updateProgressUI, 2000);
+        });
+    })();
     </script>
 
 </body>

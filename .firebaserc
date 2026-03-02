@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "baristatraining-488d8",
+    "firebase use barista": "barista---training",
+    "baristatraining": "baristatraining-488d8"
+  },
+  "targets": {},
+  "etags": {}
+}

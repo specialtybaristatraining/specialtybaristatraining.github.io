@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    <!-- Language-specific sitemap for en -->
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/"/>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=1</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=1"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/coffee-plantation-overview.jpg</image:loc>
+            <image:title>Panoramic view of a coffee plantation</image:title>
+            <image:caption>Panoramic view of a coffee plantation</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/coffee-cherry-anatomy.jpg</image:loc>
+            <image:title>Annotated diagram of a coffee cherry structure</image:title>
+            <image:caption>Annotated diagram of a coffee cherry structure</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/world-map-coffee-belt-detail.jpg</image:loc>
+            <image:title>Detailed map of the Coffee Belt with highlighted regions</image:title>
+            <image:caption>Detailed map of the Coffee Belt with highlighted regions</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/arabica-beans-plant.jpg</image:loc>
+            <image:title>Arabica coffee beans and plant illustration</image:title>
+            <image:caption>Arabica coffee beans and plant illustration</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/robusta-beans-plant.jpg</image:loc>
+            <image:title>Robusta coffee beans and plant illustration</image:title>
+            <image:caption>Robusta coffee beans and plant illustration</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=2</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=2"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d2-barista-station.jpg</image:loc>
+            <image:title>Barista station with espresso machine and grinder</image:title>
+            <image:caption>Barista station with espresso machine and grinder</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d2-coffee-grinder-burr.jpg</image:loc>
+            <image:title>Close-up of a burr coffee grinder</image:title>
+            <image:caption>Close-up of a burr coffee grinder</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/espresso-machine-parts.jpg</image:loc>
+            <image:title>Diagram of an espresso machine with key parts highlighted</image:title>
+            <image:caption>Diagram of an espresso machine with key parts highlighted</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=3</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=3"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d3-grind-dose-tamp.jpg</image:loc>
+            <image:title>Collage of grinding, dosing, and tamping coffee</image:title>
+            <image:caption>Collage of grinding, dosing, and tamping coffee</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d3-espresso-grind-closeup.jpg</image:loc>
+            <image:title>Close-up of fine espresso grounds</image:title>
+            <image:caption>Close-up of fine espresso grounds</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d3-dosing-grounds-portafilter.jpg</image:loc>
+            <image:title>Dosing coffee grounds into a portafilter using a scale</image:title>
+            <image:caption>Dosing coffee grounds into a portafilter using a scale</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d3-tamping-coffee.jpg</image:loc>
+            <image:title>Barista tamping coffee grounds in a portafilter</image:title>
+            <image:caption>Barista tamping coffee grounds in a portafilter</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=4</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=4"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d4-espresso-shot-pulling.jpg</image:loc>
+            <image:title>Espresso shot being pulled into a glass</image:title>
+            <image:caption>Espresso shot being pulled into a glass</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d4-dosing-scale.jpg</image:loc>
+            <image:title>Coffee grounds being weighed on a scale</image:title>
+            <image:caption>Coffee grounds being weighed on a scale</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d4-espresso-yield-scale.jpg</image:loc>
+            <image:title>Espresso shot on a scale measuring yield</image:title>
+            <image:caption>Espresso shot on a scale measuring yield</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d4-shot-timer.jpg</image:loc>
+            <image:title>Espresso shot timer display</image:title>
+            <image:caption>Espresso shot timer display</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d4-good-crema.jpg</image:loc>
+            <image:title>Close-up of a perfect espresso crema</image:title>
+            <image:caption>Close-up of a perfect espresso crema</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=5</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=5"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d5-dialing-in-espresso.jpg</image:loc>
+            <image:title>Barista tasting espresso and adjusting grinder</image:title>
+            <image:caption>Barista tasting espresso and adjusting grinder</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d5-sour-espresso-face.jpg</image:loc>
+            <image:title>Person making a sour face after tasting espresso</image:title>
+            <image:caption>Person making a sour face after tasting espresso</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d5-bitter-espresso-face.jpg</image:loc>
+            <image:title>Person making a bitter face after tasting espresso</image:title>
+            <image:caption>Person making a bitter face after tasting espresso</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d5-balanced-espresso.jpg</image:loc>
+            <image:title>A perfectly extracted espresso shot with rich crema</image:title>
+            <image:caption>A perfectly extracted espresso shot with rich crema</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=6</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=6"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-milk-variety.jpg</image:loc>
+            <image:title>Assortment of dairy and plant-based milks</image:title>
+            <image:caption>Assortment of dairy and plant-based milks</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-whole-milk.jpg</image:loc>
+            <image:title>Glass of whole milk</image:title>
+            <image:caption>Glass of whole milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-skim-milk.jpg</image:loc>
+            <image:title>Glass of skim milk</image:title>
+            <image:caption>Glass of skim milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-oat-milk.jpg</image:loc>
+            <image:title>Glass of oat milk</image:title>
+            <image:caption>Glass of oat milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-soy-milk.jpg</image:loc>
+            <image:title>Glass of soy milk</image:title>
+            <image:caption>Glass of soy milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-almond-milk.jpg</image:loc>
+            <image:title>Glass of almond milk</image:title>
+            <image:caption>Glass of almond milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d6-milk-thermometer.jpg</image:loc>
+            <image:title>Milk pitcher with a thermometer showing ideal temperature</image:title>
+            <image:caption>Milk pitcher with a thermometer showing ideal temperature</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=7</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=7"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d7-latte-art-pour.jpg</image:loc>
+            <image:title>Barista pouring latte art with perfectly steamed milk</image:title>
+            <image:caption>Barista pouring latte art with perfectly steamed milk</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d7-milk-stretching.jpg</image:loc>
+            <image:title>Close-up of steam wand tip just below milk surface during stretching</image:title>
+            <image:caption>Close-up of steam wand tip just below milk surface during stretching</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d7-milk-texturing.jpg</image:loc>
+            <image:title>Steam wand submerged creating a whirlpool in the milk pitcher</image:title>
+            <image:caption>Steam wand submerged creating a whirlpool in the milk pitcher</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=8</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=8"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d8-espresso-drinks-lineup.jpg</image:loc>
+            <image:title>Lineup of common espresso-based drinks like latte, cappuccino, americano</image:title>
+            <image:caption>Lineup of common espresso-based drinks like latte, cappuccino, americano</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d8-americano.jpg</image:loc>
+            <image:title>An Americano coffee in a glass mug</image:title>
+            <image:caption>An Americano coffee in a glass mug</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d8-latte-visual.jpg</image:loc>
+            <image:title>A latte with latte art in a cup</image:title>
+            <image:caption>A latte with latte art in a cup</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d8-cappuccino-visual.jpg</image:loc>
+            <image:title>A cappuccino with a thick foam layer in a cup</image:title>
+            <image:caption>A cappuccino with a thick foam layer in a cup</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d8-flat-white.jpg</image:loc>
+            <image:title>A flat white coffee with delicate latte art</image:title>
+            <image:caption>A flat white coffee with delicate latte art</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=9</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=9"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d9-cleaning-espresso-machine.jpg</image:loc>
+            <image:title>Barista cleaning an espresso machine group head</image:title>
+            <image:caption>Barista cleaning an espresso machine group head</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d9-steam-wand-cleaning.jpg</image:loc>
+            <image:title>Cleaning a steam wand with a cloth</image:title>
+            <image:caption>Cleaning a steam wand with a cloth</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d9-portafilter-cleaning-rinse.jpg</image:loc>
+            <image:title>Rinsing a portafilter under hot water</image:title>
+            <image:caption>Rinsing a portafilter under hot water</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d9-grouphead-brush.jpg</image:loc>
+            <image:title>Using a group head brush to clean the shower screen</image:title>
+            <image:caption>Using a group head brush to clean the shower screen</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d9-drip-tray.jpg</image:loc>
+            <image:title>Emptying and cleaning an espresso machine drip tray</image:title>
+            <image:caption>Emptying and cleaning an espresso machine drip tray</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=10</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=10"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-pour-over-setup.jpg</image:loc>
+            <image:title>A complete pour-over coffee brewing setup with dripper, kettle, and carafe</image:title>
+            <image:caption>A complete pour-over coffee brewing setup with dripper, kettle, and carafe</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-drippers-variety.jpg</image:loc>
+            <image:title>Various types of pour-over drippers like Hario V60 and Kalita Wave</image:title>
+            <image:caption>Various types of pour-over drippers like Hario V60 and Kalita Wave</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-gooseneck-kettle.jpg</image:loc>
+            <image:title>A gooseneck kettle pouring water precisely</image:title>
+            <image:caption>A gooseneck kettle pouring water precisely</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-coffee-filter.jpg</image:loc>
+            <image:title>Paper filter being rinsed in a dripper</image:title>
+            <image:caption>Paper filter being rinsed in a dripper</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-burr-grinder.jpg</image:loc>
+            <image:title>A burr grinder with coffee beans</image:title>
+            <image:caption>A burr grinder with coffee beans</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d10-coffee-bloom.jpg</image:loc>
+            <image:title>Coffee grounds blooming after initial water pour</image:title>
+            <image:caption>Coffee grounds blooming after initial water pour</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=11</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=11"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d11-french-press-brewing.jpg</image:loc>
+            <image:title>French press with coffee steeping inside</image:title>
+            <image:caption>French press with coffee steeping inside</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d11-fp-cup-texture.jpg</image:loc>
+            <image:title>Close-up of a cup of French press coffee showing its body</image:title>
+            <image:caption>Close-up of a cup of French press coffee showing its body</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d11-fp-cup-sediment.jpg</image:loc>
+            <image:title>Cup of French press coffee showing some sediment at the bottom</image:title>
+            <image:caption>Cup of French press coffee showing some sediment at the bottom</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d11-french-press-parts.jpg</image:loc>
+            <image:title>Exploded view of a French press showing its components</image:title>
+            <image:caption>Exploded view of a French press showing its components</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=12</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=12"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-coffee-tasting-setup.jpg</image:loc>
+            <image:title>Coffee tasting setup with various cups and aroma references</image:title>
+            <image:caption>Coffee tasting setup with various cups and aroma references</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-coffee-aroma.jpg</image:loc>
+            <image:title>Person smelling coffee grounds and brewed coffee</image:title>
+            <image:caption>Person smelling coffee grounds and brewed coffee</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-coffee-flavor-wheel.jpg</image:loc>
+            <image:title>SCA Coffee Taster&apos;s Flavor Wheel</image:title>
+            <image:caption>SCA Coffee Taster&apos;s Flavor Wheel</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-coffee-body-mouthfeel.jpg</image:loc>
+            <image:title>Visual representation of different coffee body textures</image:title>
+            <image:caption>Visual representation of different coffee body textures</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-coffee-aftertaste.jpg</image:loc>
+            <image:title>Person thoughtfully considering the aftertaste of coffee</image:title>
+            <image:caption>Person thoughtfully considering the aftertaste of coffee</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d12-cupping-slurp.jpg</image:loc>
+            <image:title>Barista slurping coffee during a cupping session</image:title>
+            <image:caption>Barista slurping coffee during a cupping session</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=13</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=13"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d13-barista-customer-interaction.jpg</image:loc>
+            <image:title>Friendly barista interacting with a customer at the counter</image:title>
+            <image:caption>Friendly barista interacting with a customer at the counter</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d13-barista-helping-customer.jpg</image:loc>
+            <image:title>Barista patiently helping a customer choose a drink</image:title>
+            <image:caption>Barista patiently helping a customer choose a drink</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://baristatraining-488d8.web.app/en/?day=14</loc>
+        <lastmod>2025-10-27T04:52:09.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ne" href="https://baristatraining-488d8.web.app/ne/?day=14"/>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d14-graduation-cap-coffee.jpg</image:loc>
+            <image:title>Stylized image of a graduation cap next to a cup of coffee</image:title>
+            <image:caption>Stylized image of a graduation cap next to a cup of coffee</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://baristatraining-488d8.web.appimages/d14-barista-learning-more.jpg</image:loc>
+            <image:title>Barista intently reading a book about coffee</image:title>
+            <image:caption>Barista intently reading a book about coffee</image:caption>
+        </image:image>
+    </url>
+</urlset>
